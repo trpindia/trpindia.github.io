@@ -142,7 +142,7 @@
             Enable Multiple Variants / Values in this 1 Card (Dropdown)
           </label>
           <p style="font-size: 11px; color: #94a3b8; margin: 4px 0 10px 0;">
-            Check this if this card contains multiple values (e.g. 120Ω, 330Ω, 1KΩ). Har variant ka alag price, image aur specs/description add kar sakte hain.
+            Check this if this card contains multiple values (e.g. 120Ω, 330Ω, 1KΩ).
           </p>
 
           <div id="variantsWrap" style="display: none;">
@@ -229,6 +229,7 @@
       if (hasVariantsCheck.checked && variantsList.children.length === 0) {
         const defaultName = document.getElementById("pName").value.trim() || "";
         const defaultPrice = document.getElementById("pPrice").value.trim() || "";
+        const defaultPrice = document.getElementById("pOffer").value.trim() || "";
         const defaultImg = pUrl.value.trim() || "";
         const defaultDesc = document.getElementById("pDesc").value.trim() || "";
         addVariantRow(defaultName, defaultPrice, defaultImg, false, defaultDesc);
