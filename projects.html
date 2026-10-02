@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Lottie Player Script -->
+<script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Projects - TRP Electronics</title>
@@ -10,6 +12,17 @@
 </head>
   <!-- for sticky footer css line 1510 -->
 <body class="projects-page">
+  <!-- FULLSCREEN LOADER OVERLAY -->
+<div id="page-preloader">
+  <dotlottie-player 
+    src="YAHAN_APNA_LOTTIE_URL_PASTE_KAREIN" 
+    background="transparent" 
+    speed="1" 
+    style="width: 140px; height: 140px;" 
+    loop 
+    autoplay>
+  </dotlottie-player>
+</div>
   <!-- Header / Navbar -->
   <header>
     <a href="index.html" id="logo">TRP Electronics</a>
