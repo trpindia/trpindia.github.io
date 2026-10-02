@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <!-- Lottie Player Script -->
-<script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Projects - TRP Electronics</title>
@@ -14,14 +14,7 @@
 <body class="projects-page">
   <!-- FULLSCREEN LOADER OVERLAY -->
 <div id="page-preloader">
-  <dotlottie-player 
-    src="images/loading.lottie" 
-    background="transparent" 
-    speed="1" 
-    style="width: 140px; height: 140px;" 
-    loop 
-    autoplay>
-  </dotlottie-player>
+  <div id="lottie-container" style="width: 140px; height: 140px;"></div>
 </div>
   <!-- Header / Navbar -->
   <header>
