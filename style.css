@@ -1577,3 +1577,27 @@ body.projects-page {
 body.projects-page::-webkit-scrollbar {
   display: none !important; /* Chrome / Safari / Edge me horizontal bar hide karega */
 }
+
+/* FULLSCREEN IMAGE LOADER */
+#page-preloader {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+
+/* Dark mode compatibility */
+body.dark-mode #page-preloader {
+  background-color: #0f172a;
+}
+
+#page-preloader.fade-out {
+  opacity: 0;
+  visibility: hidden;
+}
