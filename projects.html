@@ -355,7 +355,7 @@
 </script>
   <!-- 🔎 Search Script -->
   <script>
-    document.getElementById("searchBox").addEventListener("keyup", function() {
+    document.getElementById("searchBox")?.addEventListener("keyup", function() {
       let input = this.value.toLowerCase();
       let cards = document.querySelectorAll(".project-card");
 
