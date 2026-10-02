@@ -1579,18 +1579,18 @@ body.projects-page::-webkit-scrollbar {
 }
 
 /* CARD AREA PRELOADER ONLY (Header aur Category Nav visible rahenge) */
+/* CARD AREA PRELOADER (Gap bilkul khatam) */
 #page-preloader {
   position: fixed;
-  /* Header aur second-nav ki combined height (approx 120px se 130px) ke neeche se shuru hoga */
-  top: 130px; 
+  top: 110px; /* 130px se ghatakar 110px karein taaki category bar ke neeche chipak jaye */
   left: 0;
   width: 100%;
-  height: calc(100vh - 130px);
+  height: calc(100vh - 110px);
   background-color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 10; /* Header ke z-index se kam taaki nav upar rahe */
+  z-index: 80; /* second-nav (90) aur header (100) ke theek neeche */
   transition: opacity 0.4s ease, visibility 0.4s ease;
 }
 
