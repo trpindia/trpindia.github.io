@@ -440,6 +440,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
   });
 
+
+lottie.loadAnimation({
+  container: document.getElementById('lottie-container'),
+  renderer: 'svg',
+  loop: true,
+  autoplay: true,
+  path: 'images/loading.json' //
+});
+
 // Wait for all project cards images to load before hiding preloader
 window.addEventListener("DOMContentLoaded", () => {
   const preloader = document.getElementById("page-preloader");
