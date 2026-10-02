@@ -439,3 +439,32 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   });
+
+// Wait for all project cards images to load before hiding preloader
+window.addEventListener("DOMContentLoaded", () => {
+  const preloader = document.getElementById("page-preloader");
+  if (!preloader) return;
+
+  const cardImages = document.querySelectorAll(".project-card img, .card img");
+
+  // Agar page par koi image nahi hai, toh turant hata do
+  if (!cardImages.length) {
+    preloader.classList.add("fade-out");
+    setTimeout(() => preloader.remove(), 400);
+    return;
+  }
+
+  // Track each image loading
+  const imagePromises = Array.from(cardImages).map(img => {
+    if (img.complete) return Promise.resolve();
+    return new Promise(resolve => {
+      img.addEventListener("load", resolve);
+      img.addEventListener("error", resolve); // Image fail hone par bhi animation atke na
+    });
+  });
+
+  Promise.all(imagePromises).then(() => {
+    preloader.classList.add("fade-out");
+    setTimeout(() => preloader.remove(), 400);
+  });
+});
