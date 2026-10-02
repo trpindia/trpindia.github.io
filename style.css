@@ -1596,7 +1596,7 @@ body.projects-page::-webkit-scrollbar {
 
 /* Dark mode compatibility */
 body.dark-mode #page-preloader {
-  background-color: #0f172a;
+  background-color: #121212;
 }
 
 #page-preloader.fade-out {
