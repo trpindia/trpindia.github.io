@@ -448,3 +448,16 @@ lottie.loadAnimation({
   autoplay: true,
   path: 'images/loading.json' //
 });
+
+// Desktop category horizontal scroll with mouse wheel
+const catCenter = document.querySelector('.second-center');
+if (catCenter) {
+  catCenter.addEventListener('wheel', (e) => {
+    if (window.innerWidth > 768) {
+      if (e.deltaY !== 0) {
+        e.preventDefault();
+        catCenter.scrollLeft += e.deltaY;
+      }
+    }
+  }, { passive: false });
+}
