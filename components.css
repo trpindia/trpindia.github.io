@@ -1576,50 +1576,60 @@ body.dark-mode .modal-desc {
   }
 }
 
-
-/* DESKTOP-ONLY HORIZONTAL SCROLL FOR CATEGORY CHIPS */
+/* DESKTOP CATEGORY CONTAINER & SHADOW OVERLAY */
 @media (min-width: 769px) {
   .second-nav {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 15px;
+    gap: 12px;
+    position: relative;
   }
 
   .second-left {
-    flex-shrink: 0; /* Search bar pichke nahi */
+    flex-shrink: 0;
+    z-index: 5;
   }
 
   .cart-box-new {
-    flex-shrink: 0; /* Cart button apni jagah lock rahe */
+    flex-shrink: 0;
+    z-index: 5;
   }
 
+  /* Center category scroll track */
   .second-center {
-    flex: 1; /* Beach ka space use kare */
-    min-width: 0; /* Flexbox shrink bug fix */
-    overflow-x: auto;
+    flex: 1;
+    min-width: 0;
+    overflow-x: auto !important;
     overflow-y: hidden;
+    white-space: nowrap;
     scroll-behavior: smooth;
-    scrollbar-width: none; /* Firefox: hide bar */
-    -ms-overflow-style: none; /* IE/Edge: hide bar */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE/Edge */
+    position: relative;
+    /* Dono kinaron par clean smooth fade mask taaki buttons achanak na katein */
+    mask-image: linear-gradient(to right, transparent 0, black 18px, black calc(100% - 18px), transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0, black 18px, black calc(100% - 18px), transparent 100%);
+    padding: 4px 10px;
   }
 
   .second-center::-webkit-scrollbar {
-    display: none; /* Chrome/Safari: hide bar */
+    display: none; /* Chrome/Safari */
   }
 
   .category-menu-new {
-    display: inline-flex;
-    flex-wrap: nowrap !important; /* Single line me lock */
+    display: inline-flex !important;
+    flex-wrap: nowrap !important;
     gap: 8px;
     margin: 0;
-    padding: 4px 6px;
+    padding: 0;
     list-style: none;
   }
 
   .category-menu-new .cat-item {
-    flex-shrink: 0; /* Chips squish na ho */
+    flex: 0 0 auto !important; /* Kabhi pichke nahi */
     white-space: nowrap;
     cursor: pointer;
+    user-select: none;
   }
 }
