@@ -1575,3 +1575,51 @@ body.dark-mode .modal-desc {
     z-index: 10 !important;
   }
 }
+
+
+/* DESKTOP-ONLY HORIZONTAL SCROLL FOR CATEGORY CHIPS */
+@media (min-width: 769px) {
+  .second-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+  }
+
+  .second-left {
+    flex-shrink: 0; /* Search bar pichke nahi */
+  }
+
+  .cart-box-new {
+    flex-shrink: 0; /* Cart button apni jagah lock rahe */
+  }
+
+  .second-center {
+    flex: 1; /* Beach ka space use kare */
+    min-width: 0; /* Flexbox shrink bug fix */
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    scrollbar-width: none; /* Firefox: hide bar */
+    -ms-overflow-style: none; /* IE/Edge: hide bar */
+  }
+
+  .second-center::-webkit-scrollbar {
+    display: none; /* Chrome/Safari: hide bar */
+  }
+
+  .category-menu-new {
+    display: inline-flex;
+    flex-wrap: nowrap !important; /* Single line me lock */
+    gap: 8px;
+    margin: 0;
+    padding: 4px 6px;
+    list-style: none;
+  }
+
+  .category-menu-new .cat-item {
+    flex-shrink: 0; /* Chips squish na ho */
+    white-space: nowrap;
+    cursor: pointer;
+  }
+}
