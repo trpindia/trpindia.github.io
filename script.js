@@ -427,37 +427,40 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Second Nav Category Filter Click / Touch Listener (Works on Mobile + PC)
-  document.querySelectorAll(".second-center .cat-item").forEach(li => {
-    li.addEventListener("click", function(e) {
-      e.preventDefault();
-      document.querySelectorAll(".second-center .cat-item").forEach(x => x.classList.remove("active"));
-      this.classList.add("active");
-      activeProjectCat = this.getAttribute("data-cat") || this.textContent.trim();
-      applyProjectFilters();
-    });
-  });
+ // Desktop Category Horizontal Mouse Scroll & Drag
+(function initCategoryScroll() {
+  const container = document.querySelector('.second-center');
+  if (!container) return;
 
-  });
-
-
-lottie.loadAnimation({
-  container: document.getElementById('lottie-container'),
-  renderer: 'svg',
-  loop: true,
-  autoplay: true,
-  path: 'images/loading.json' //
-});
-
-// Desktop category horizontal scroll with mouse wheel
-const catCenter = document.querySelector('.second-center');
-if (catCenter) {
-  catCenter.addEventListener('wheel', (e) => {
+  // 1. Mouse wheel se left-right scroll
+  container.addEventListener('wheel', (e) => {
     if (window.innerWidth > 768) {
-      if (e.deltaY !== 0) {
+      if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
         e.preventDefault();
-        catCenter.scrollLeft += e.deltaY;
+        container.scrollLeft += e.deltaY;
       }
     }
   }, { passive: false });
-}
+
+  // 2. Click karke drag karne ka feature
+  let isDown = false;
+  let startX;
+  let scrollLeft;
+
+  container.addEventListener('mousedown', (e) => {
+    if (window.innerWidth <= 768) return;
+    isDown = true;
+    startX = e.pageX - container.offsetLeft;
+    scrollLeft = container.scrollLeft;
+  });
+
+  window.addEventListener('mouseup', () => { isDown = false; });
+
+  container.addEventListener('mousemove', (e) => {
+    if (!isDown) return;
+    e.preventDefault();
+    const x = e.pageX - container.offsetLeft;
+    const walk = (x - startX) * 1.5; // Drag speed
+    container.scrollLeft = scrollLeft - walk;
+  });
+})();
