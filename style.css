@@ -1615,7 +1615,7 @@ body.dark-mode #page-preloader {
 /* 1. Header ko flexible banayein taaki zoom par text bahar na gire */
 header {
   height: auto !important;
-  min-height: 60px;
+  min-height: 46px;
   position: sticky;
   top: 0;
   z-index: 1000;
