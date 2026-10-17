@@ -1,4 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Balsamiq+Sans:wght@700&family=Fredoka:wght@600;700&display=swap');
+html, body {
+  touch-action: pan-x pan-y; /* Pinch zoom disable karta hai mobile par */
+}
+
 /* 🚫 PREVENT SIDE OVERFLOW WITHOUT BREAKING STICKY HEADERS */
 html, body {
   max-width: 100% !important;
@@ -1602,4 +1606,41 @@ body.dark-mode #page-preloader {
 #page-preloader.fade-out {
   opacity: 0;
   visibility: hidden;
+}
+
+/* ===================================================
+   DESKTOP ZOOM OVERLAP FIX (Header & Second Nav Safe)
+   =================================================== */
+
+/* 1. Header ko flexible banayein taaki zoom par text bahar na gire */
+header {
+  height: auto !important;
+  min-height: 60px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-sizing: border-box;
+}
+
+/* 2. Nav links text kabhi doosri line par toot kar overlap na ho */
+.nav-links a, 
+.desktop-nav a,
+header nav a {
+  white-space: nowrap !important;
+}
+
+/* 3. Category bar (second-nav) header ke neeche alag layer mein rahe */
+.second-nav {
+  position: sticky;
+  top: 60px;
+  width: 100%;
+  background-color: #ffffff;
+  z-index: 900;
+  box-sizing: border-box;
+  clear: both;
+}
+
+/* Dark mode ke liye second-nav background solid rahe */
+body.dark-mode .second-nav {
+  background-color: #121212 !important;
 }
