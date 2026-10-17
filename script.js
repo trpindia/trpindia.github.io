@@ -461,7 +461,7 @@ document.addEventListener("DOMContentLoaded", () => {
     e.preventDefault();
     const x = e.pageX - container.offsetLeft;
     const walk = (x - startX) * 1.5; // Drag speed
-    container.scrollLeft = scrollLeft - walk;
+container.scrollLeft = scrollLeft - walk;
   });
   
 })();
