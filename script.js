@@ -427,41 +427,73 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-// Desktop Category Horizontal Mouse Scroll & Drag
-(function initCategoryScroll() {
-  const container = document.querySelector('.second-center');
-  if (!container) return;
 
-  // 1. Mouse wheel se left-right scroll
-  container.addEventListener('wheel', (e) => {
-    if (window.innerWidth > 768) {
-      if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
-        e.preventDefault();
-        container.scrollLeft += e.deltaY;
+                          /* ---------- 11. CATEGORY SCROLL: DRAG + AUTO-SCROLL TO CENTER ON CLICK ---------- */
+  (function initCategoryScroll() {
+    const container = document.querySelector('.second-center');
+    if (!container) return;
+
+    // 1. Mouse wheel se smooth horizontal scroll
+    container.addEventListener('wheel', (e) => {
+      if (window.innerWidth > 768) {
+        if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+          e.preventDefault();
+          container.scrollLeft += e.deltaY;
+        }
       }
-    }
-  }, { passive: false });
+    }, { passive: false });
 
-  // 2. Click karke drag karne ka feature
-  let isDown = false;
-  let startX;
-  let scrollLeft;
+    // 2. Drag & Swipe to scroll (Left/Right Mouse Drag)
+    let isDown = false;
+    let startX = 0;
+    let scrollLeft = 0;
+    let hasDragged = false;
 
-  container.addEventListener('mousedown', (e) => {
-    if (window.innerWidth <= 768) return;
-    isDown = true;
-    startX = e.pageX - container.offsetLeft;
-    scrollLeft = container.scrollLeft;
-  });
+    container.addEventListener('mousedown', (e) => {
+      if (window.innerWidth <= 768) return;
+      isDown = true;
+      hasDragged = false;
+      startX = e.pageX - container.offsetLeft;
+      scrollLeft = container.scrollLeft;
+    });
 
-  window.addEventListener('mouseup', () => { isDown = false; });
+    window.addEventListener('mouseup', () => { 
+      isDown = false; 
+    });
 
-  container.addEventListener('mousemove', (e) => {
-    if (!isDown) return;
-    e.preventDefault();
-    const x = e.pageX - container.offsetLeft;
-    const walk = (x - startX) * 1.5; // Drag speed
-container.scrollLeft = scrollLeft - walk;
-  });
-})();
+    container.addEventListener('mousemove', (e) => {
+      if (!isDown) return;
+      const x = e.pageX - container.offsetLeft;
+      const walk = (x - startX) * 1.5;
+      if (Math.abs(walk) > 4) {
+        hasDragged = true; // Drag ho raha hai, click nahi
+      }
+      e.preventDefault();
+      container.scrollLeft = scrollLeft - walk;
+    });
+
+    // 3. SYSTEM 2: Click par automatically Center & Reveal hona
+    const catItems = container.querySelectorAll('.cat-item');
+    catItems.forEach((item) => {
+      item.addEventListener('click', (e) => {
+        // Agar mouse se drag kar rahe the toh click trigger na ho
+        if (hasDragged) return;
+
+        // Container ke center aur item ke center ki exact calculation
+        const containerWidth = container.clientWidth;
+        const itemLeft = item.offsetLeft;
+        const itemWidth = item.offsetWidth;
+
+        // Formula: Click kiya hua item theek center line par aa jaye
+        const targetScrollLeft = itemLeft - (containerWidth / 2) + (itemWidth / 2);
+
+        container.scrollTo({
+          left: targetScrollLeft,
+          behavior: 'smooth'
+        });
+      });
+    });
+
+  })();
+
 });
