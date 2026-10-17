@@ -1620,6 +1620,8 @@ header {
   top: 0;
   z-index: 1000;
   box-sizing: border-box;
+  position: relative !important; /* Fixed/Sticky se overlap band hoga */
+  overflow: visible;
 }
 
 /* 2. Nav links text kabhi doosri line par toot kar overlap na ho */
@@ -1638,9 +1640,24 @@ header nav a {
   z-index: 900;
   box-sizing: border-box;
   clear: both;
+  position: sticky !important;
+  top: 0 !important;
+  width: 100% !important;
+  margin-top: 0 !important;
+  clear: both !important;
 }
 
 /* Dark mode ke liye second-nav background solid rahe */
 body.dark-mode .second-nav {
   background-color: #121212 !important;
+}
+
+/* Jab screen choti ho ya max zoom ho, desktop links ko chupayein */
+@media (max-width: 900px) {
+  /* Jo bhi class desktop nav links ki hai unhe strictly hide karein */
+  header nav:not(#mobileMenu),
+  .desktop-nav,
+  .nav-links {
+    display: none !important;
+  }
 }
