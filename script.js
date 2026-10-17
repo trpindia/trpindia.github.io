@@ -427,7 +427,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
- // Desktop Category Horizontal Mouse Scroll & Drag
+// Desktop Category Horizontal Mouse Scroll & Drag
 (function initCategoryScroll() {
   const container = document.querySelector('.second-center');
   if (!container) return;
@@ -463,4 +463,4 @@ document.addEventListener("DOMContentLoaded", () => {
     const walk = (x - startX) * 1.5; // Drag speed
     container.scrollLeft = scrollLeft - walk;
   });
-});
+})();
