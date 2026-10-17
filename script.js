@@ -463,4 +463,4 @@ document.addEventListener("DOMContentLoaded", () => {
     const walk = (x - startX) * 1.5; // Drag speed
     container.scrollLeft = scrollLeft - walk;
   });
-})();
+});
