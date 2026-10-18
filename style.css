@@ -1661,3 +1661,127 @@ body.dark-mode .second-nav {
     display: none !important;
   }
 }
+
+/* ========================================================
+   MOBILE MENU DRAWER & DARK MODE INTEGRATION
+   ======================================================== */
+
+/* 1. Backdrop Overlay */
+.menu-backdrop {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(2px);
+  z-index: 1050;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.menu-backdrop.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* 2. Mobile Drawer (Default: Screen se bahar chupa rahega) */
+.mobile-menu {
+  position: fixed;
+  top: 0;
+  right: -320px; /* By default poora bahar */
+  width: 280px;
+  max-width: 80%;
+  height: 100vh;
+  background-color: #ffffff;
+  z-index: 1100;
+  box-shadow: -4px 0 16px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Dark mode drawer background */
+body.dark-mode .mobile-menu {
+  background-color: #161b22;
+  box-shadow: -4px 0 16px rgba(0, 0, 0, 0.5);
+}
+
+/* Jab active ho tab slide hokar andar aayega */
+.mobile-menu.show {
+  right: 0 !important;
+}
+
+/* Drawer list styling */
+.mobile-nav-links {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.mobile-nav-links li a {
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 500;
+  color: #1f2937;
+  display: block;
+  padding: 8px 12px;
+  border-radius: 8px;
+  transition: background 0.2s;
+}
+
+body.dark-mode .mobile-nav-links li a {
+  color: #f3f4f6;
+}
+
+.mobile-nav-links li a:hover {
+  background: rgba(0, 82, 255, 0.08);
+}
+
+/* Drawer ke andar Dark Mode Button */
+.drawer-dark-btn {
+  width: 100%;
+  margin-top: 10px;
+  padding: 10px 14px;
+  font-size: 15px;
+  font-weight: 600;
+  background-color: #f1f5f9;
+  color: #0f172a;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+body.dark-mode .drawer-dark-btn {
+  background-color: #21262d;
+  color: #f0f6fc;
+  border-color: #30363d;
+}
+
+/* Close button on drawer */
+.close-drawer-btn {
+  align-self: flex-end;
+  background: transparent;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+  color: inherit;
+}
+
+/* 3. Small screens aur extreme zoom par desktop links gayab */
+@media (max-width: 860px) {
+  header nav:not(.mobile-menu),
+  .nav-links,
+  .desktop-nav {
+    display: none !important;
+  }
+}
