@@ -1,7 +1,7 @@
 /* script.js - TRP Electronics Single File for Shop + Cart + Projects Pages */
 document.addEventListener("DOMContentLoaded", () => {
 
-/* ---------- 1. DARK MODE TOGGLE (DESKTOP + MOBILE SYNCED) ---------- */
+/* ---------- 1. DARK MODE TOGGLE (DESKTOP + MOBILE SAFE SYNC) ---------- */
   const toggleBtn = document.getElementById("darkModeToggle");
   const mobileToggleBtn = document.getElementById("mobileDarkModeToggle");
   const body = document.body;
@@ -9,21 +9,21 @@ document.addEventListener("DOMContentLoaded", () => {
   function updateThemeDisplay(isDark) {
     if (isDark) {
       body.classList.add("dark-mode");
+      // Desktop par poora naam hi rahega
       if (toggleBtn) toggleBtn.textContent = "☀ Light Mode";
-      if (mobileToggleBtn) mobileToggleBtn.textContent = "☀ Light Mode";
+      // Mobile drawer me sirf icon dikhega
+      if (mobileToggleBtn) mobileToggleBtn.textContent = "☀";
     } else {
       body.classList.remove("dark-mode");
+      // Desktop par poora naam hi rahega
       if (toggleBtn) toggleBtn.textContent = "🌙 Dark Mode";
-      if (mobileToggleBtn) mobileToggleBtn.textContent = "🌙 Dark Mode";
+      // Mobile drawer me sirf icon dikhega
+      if (mobileToggleBtn) mobileToggleBtn.textContent = "🌙";
     }
   }
 
-  // Load saved state
-  if (localStorage.getItem("theme") === "dark") {
-    updateThemeDisplay(true);
-  } else {
-    updateThemeDisplay(false);
-  }
+  // Initial check on page load
+  updateThemeDisplay(localStorage.getItem("theme") === "dark");
 
   function handleThemeToggle() {
     body.classList.toggle("dark-mode");
@@ -32,6 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
     updateThemeDisplay(isDark);
   }
 
+  // Dono buttons par click listener (Desktop & Mobile alag-alag trigger honge)
   toggleBtn?.addEventListener("click", handleThemeToggle);
   mobileToggleBtn?.addEventListener("click", handleThemeToggle);
 
@@ -358,38 +359,53 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-    /* ---------- 9. MOBILE NAV TOGGLE & ABOUT ACCORDION (SAFE RESTORED) ---------- */
+/* ---------- 9. MOBILE DRAWER: SCROLL AUTO-CLOSE & BACK SAFE ---------- */
   const menuToggle = document.getElementById("menuToggle");
   const mobileMenu = document.getElementById("mobileMenu");
   const menuOverlay = document.getElementById("menuOverlay");
+  const drawerCloseBtn = document.getElementById("drawerCloseBtn");
 
-  function closeMobileNav() {
+  function closeMobileDrawer() {
     mobileMenu?.classList.remove("show");
     menuOverlay?.classList.remove("show");
-    document.body.style.overflow = "";
   }
 
+  function openMobileDrawer() {
+    mobileMenu?.classList.add("show");
+    menuOverlay?.classList.add("show");
+  }
+
+  // 3-lines menu toggle (sirf mobile par click hoga)
   menuToggle?.addEventListener("click", (e) => {
     e.stopPropagation();
-    const isOpen = mobileMenu?.classList.toggle("show");
-    if (isOpen) {
-      menuOverlay?.classList.add("show");
+    if (mobileMenu?.classList.contains("show")) {
+      closeMobileDrawer();
     } else {
-      menuOverlay?.classList.remove("show");
+      openMobileDrawer();
     }
   });
 
-  // Khali background / overlay par click se band hona
-  menuOverlay?.addEventListener("click", closeMobileNav);
+  // Drawer ke andar close button tap se band
+  drawerCloseBtn?.addEventListener("click", closeMobileDrawer);
 
-  // Link click hote hi menu band ho (browser back par khula na mile)
-  mobileMenu?.querySelectorAll("a").forEach(a => {
-    a.addEventListener("click", closeMobileNav);
+  // Background overlay par click se band
+  menuOverlay?.addEventListener("click", closeMobileDrawer);
+
+  // Agar menu khula hai aur user page scroll kare, toh drawer smooth close ho jaye
+  window.addEventListener("scroll", () => {
+    if (mobileMenu?.classList.contains("show")) {
+      closeMobileDrawer();
+    }
+  }, { passive: true });
+
+  // Links click hone par band
+  mobileMenu?.querySelectorAll(".drawer-link").forEach(a => {
+    a.addEventListener("click", closeMobileDrawer);
   });
 
-  // Browser BACK button navigation fix (pageshow event)
+  // Browser back button par menu band rahe
   window.addEventListener("pageshow", () => {
-    closeMobileNav();
+    closeMobileDrawer();
   });
 
   // Aapka original About section code
@@ -407,7 +423,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Aapka original Phone input code
+  // Aapka original Phone number validation code
   const phoneInput = document.getElementById("phone");
   phoneInput?.addEventListener("input", () => {
     phoneInput.value = phoneInput.value.replace(/[^0-9]/g, "");
@@ -415,7 +431,6 @@ document.addEventListener("DOMContentLoaded", () => {
       phoneInput.value = phoneInput.value.slice(0, 10);
     }
   });
-
   
  /* ---------- 10. PROJECTS PAGE SEARCH & CATEGORY FILTER ---------- */
   const projectSearchInput = document.getElementById("projectSearch");
