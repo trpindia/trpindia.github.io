@@ -94,18 +94,49 @@
       </ul>
     </nav>
     <div class="menu-icon" id="menuToggle">☰</div>
-
-    <nav class="mobile-menu" id="mobileMenu">
-      <a href="index.html">Home</a>
-      <a href="projects.html">Projects</a>
-      <a href="eshop/">E-Shop</a>
-      <a href="eapps.html">E-Apps</a>
-      <a href="contact.html">Contact</a>
-      <!-- Mobile Drawer ke andar Dark Mode Button -->
-      <button id="mobileDarkModeToggle" class="mobile-dark-btn">🌙 Dark Mode</button>
-    </nav>
   </header>
 
+<!-- Mobile Drawer -->
+  <div id="mobileMenu" class="mobile-menu">
+    <!-- Header: Full Width Royal Blue Bar -->
+    <div class="drawer-header">
+      <button id="mobileDarkModeToggle" class="drawer-icon-btn" aria-label="Toggle Dark Mode">🌙</button>
+      <span class="drawer-brand">Menu</span>
+      <button id="drawerCloseBtn" class="drawer-icon-btn" aria-label="Close">✕</button>
+    </div>
+
+    <!-- Clean Links Wrapper -->
+    <div class="drawer-links-wrap">
+      <a href="index.html" class="drawer-link">
+        <span class="drawer-link-text">Home</span>
+        <span class="drawer-arrow">›</span>
+      </a>
+      <a href="projects.html" class="drawer-link">
+        <span class="drawer-link-text">Projects</span>
+        <span class="drawer-arrow">›</span>
+      </a>
+      <a href="eshop/" class="drawer-link">
+        <span class="drawer-link-text">E-Shop</span>
+        <span class="drawer-arrow">›</span>
+      </a>
+      <a href="eapps.html" class="drawer-link">
+        <span class="drawer-link-text">E-Apps</span>
+        <span class="drawer-arrow">›</span>
+      </a>
+      <a href="contact.html" class="drawer-link">
+        <span class="drawer-link-text">Contact</span>
+        <span class="drawer-arrow">›</span>
+      </a>
+    </div>
+
+    <!-- Bottom Footer Tag -->
+    <div class="drawer-footer">
+      <p>TRP Electronics</p>
+    </div>
+  </div>
+
+  <!-- Background Dim Overlay -->
+  <div id="menuOverlay" class="menu-overlay"></div>
   <!-- Contact Section -->
   <section class="contact">
     <h2>📞 Get in Touch</h2>
