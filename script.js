@@ -1,19 +1,39 @@
 /* script.js - TRP Electronics Single File for Shop + Cart + Projects Pages */
 document.addEventListener("DOMContentLoaded", () => {
 
-  /* ---------- 1. DARK MODE TOGGLE (DRAWER INTEGRATED) ---------- */
+/* ---------- 1. DARK MODE TOGGLE (DESKTOP + MOBILE SYNCED) ---------- */
   const toggleBtn = document.getElementById("darkModeToggle");
+  const mobileToggleBtn = document.getElementById("mobileDarkModeToggle");
   const body = document.body;
 
-  function updateThemeUI(isDark) {
+  function updateThemeDisplay(isDark) {
     if (isDark) {
       body.classList.add("dark-mode");
       if (toggleBtn) toggleBtn.textContent = "☀ Light Mode";
+      if (mobileToggleBtn) mobileToggleBtn.textContent = "☀ Light Mode";
     } else {
       body.classList.remove("dark-mode");
       if (toggleBtn) toggleBtn.textContent = "🌙 Dark Mode";
+      if (mobileToggleBtn) mobileToggleBtn.textContent = "🌙 Dark Mode";
     }
   }
+
+  // Load saved state
+  if (localStorage.getItem("theme") === "dark") {
+    updateThemeDisplay(true);
+  } else {
+    updateThemeDisplay(false);
+  }
+
+  function handleThemeToggle() {
+    body.classList.toggle("dark-mode");
+    const isDark = body.classList.contains("dark-mode");
+    localStorage.setItem("theme", isDark ? "dark" : "light");
+    updateThemeDisplay(isDark);
+  }
+
+  toggleBtn?.addEventListener("click", handleThemeToggle);
+  mobileToggleBtn?.addEventListener("click", handleThemeToggle);
 
   /* ---------- 2. IMAGE LOAD EFFECT ---------- */
   document.querySelectorAll(".product-card img, .project-card img").forEach(img => {
@@ -338,46 +358,65 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-/* ---------- 9. MOBILE DRAWER: OUTSIDE CLICK + BACK-CACHE SAFE ---------- */
+    /* ---------- 9. MOBILE NAV TOGGLE & ABOUT ACCORDION (SAFE RESTORED) ---------- */
   const menuToggle = document.getElementById("menuToggle");
   const mobileMenu = document.getElementById("mobileMenu");
-  const menuBackdrop = document.getElementById("menuBackdrop");
-  const closeBtn = document.getElementById("closeMobileMenu");
+  const menuOverlay = document.getElementById("menuOverlay");
 
-  function openMenu() {
-    mobileMenu?.classList.add("show");
-    menuBackdrop?.classList.add("show");
-    document.body.style.overflow = "hidden"; // Background scroll stop
-  }
-
-  function closeMenu() {
+  function closeMobileNav() {
     mobileMenu?.classList.remove("show");
-    menuBackdrop?.classList.remove("show");
+    menuOverlay?.classList.remove("show");
     document.body.style.overflow = "";
   }
 
-  // Toggle open
   menuToggle?.addEventListener("click", (e) => {
     e.stopPropagation();
-    if (mobileMenu?.classList.contains("show")) {
-      closeMenu();
+    const isOpen = mobileMenu?.classList.toggle("show");
+    if (isOpen) {
+      menuOverlay?.classList.add("show");
     } else {
-      openMenu();
+      menuOverlay?.classList.remove("show");
     }
   });
 
-  closeBtn?.addEventListener("click", closeMenu);
+  // Khali background / overlay par click se band hona
+  menuOverlay?.addEventListener("click", closeMobileNav);
 
-  menuBackdrop?.addEventListener("click", closeMenu);
-  document.addEventListener("click", (e) => {
-    if (
-      mobileMenu?.classList.contains("show") &&
-      !mobileMenu.contains(e.target) &&
-      e.target !== menuToggle
-    ) {
-      closeMenu();
+  // Link click hote hi menu band ho (browser back par khula na mile)
+  mobileMenu?.querySelectorAll("a").forEach(a => {
+    a.addEventListener("click", closeMobileNav);
+  });
+
+  // Browser BACK button navigation fix (pageshow event)
+  window.addEventListener("pageshow", () => {
+    closeMobileNav();
+  });
+
+  // Aapka original About section code
+  const aboutHeader = document.querySelector(".about-toggle-header") || document.getElementById("aboutToggle");
+  const aboutContent = document.getElementById("aboutContent");
+  const aboutArrow = document.querySelector(".about-arrow") || document.getElementById("aboutArrow");
+
+  aboutHeader?.addEventListener("click", () => {
+    aboutHeader.classList.toggle("active");
+    if (aboutContent) {
+      aboutContent.classList.toggle("show");
     }
-  }); 
+    if (aboutArrow) {
+      aboutArrow.style.transform = aboutHeader.classList.contains("active") ? "rotate(90deg)" : "rotate(0deg)";
+    }
+  });
+
+  // Aapka original Phone input code
+  const phoneInput = document.getElementById("phone");
+  phoneInput?.addEventListener("input", () => {
+    phoneInput.value = phoneInput.value.replace(/[^0-9]/g, "");
+    if (phoneInput.value.length > 10) {
+      phoneInput.value = phoneInput.value.slice(0, 10);
+    }
+  });
+
+  
  /* ---------- 10. PROJECTS PAGE SEARCH & CATEGORY FILTER ---------- */
   const projectSearchInput = document.getElementById("projectSearch");
   const projectSearchClearBtn = document.getElementById("projectSearchClearBtn");
