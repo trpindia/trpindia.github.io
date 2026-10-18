@@ -9,8 +9,10 @@
   <link rel="stylesheet" href="cart.css" />
 </head>
 <body class="cart-page">
-<header>
-   <a href="cart.html" id="logo">TRP Electronics</a>
+
+  <!-- Header / Navbar -->
+  <header>
+    <a href="cart.html" id="logo">TRP Electronics</a>
     <nav>
       <ul>
         <li><a href="index.html">Home</a></li>
@@ -20,18 +22,18 @@
         <li><a href="contact.html">Contact</a></li>
       </ul>
     </nav>
+    <div class="menu-icon" id="menuToggle">☰</div>
 
-
-  <div class="menu-icon" id="menuToggle">☰</div>
-
-  <nav class="mobile-menu" id="mobileMenu">
-    <a href="index.html">Home</a>
-    <a href="projects.html">Projects</a>
-    <a href="eshop/">E-Shop</a>
-    <a href="eapps.html">E-Apps</a>
-    <a href="contact.html">Contact</a>
-  </nav>
-</header>
+    <nav class="mobile-menu" id="mobileMenu">
+      <a href="index.html">Home</a>
+      <a href="projects.html">Projects</a>
+      <a href="eshop/">E-Shop</a>
+      <a href="eapps.html">E-Apps</a>
+      <a href="contact.html">Contact</a>
+      <!-- Mobile Drawer ke andar Dark Mode Button -->
+      <button id="mobileDarkModeToggle" class="mobile-dark-btn">🌙 Dark Mode</button>
+    </nav>
+  </header>
 
   <main class="cart-main">
               <div style="text-align:center;">
@@ -90,5 +92,6 @@
 
   <script src="script.js"></script>
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  <div id="menuOverlay" class="menu-overlay"></div>
 </body>
 </html>
