@@ -1663,94 +1663,175 @@ body.dark-mode .second-nav {
 }
 
 /* ========================================================
-   CLEAN MOBILE DRAWER (Header se alag, 100% Solid Text)
+   PREMIUM MOBILE APP DRAWER (MOBILE ONLY: <= 768px)
    ======================================================== */
 @media (max-width: 768px) {
-  /* Desktop floating dark mode hide on mobile */
+
   #darkModeToggle {
     display: none !important;
   }
 
-  /* Overlay: Sirf normal dark background, koi blur filter nahi */
+  /* 1. Backdrop Overlay (Sirf Background Page Ko Blur Karega) */
   .menu-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 99990;
-    display: none;
-  }
-  .menu-overlay.show {
-    display: block !important;
+    position: fixed !important;
+    inset: 0 !important;
+    background: rgba(10, 15, 30, 0.45) !important;
+    backdrop-filter: blur(6px) !important; /* Page blur hoga */
+    -webkit-backdrop-filter: blur(6px) !important;
+    z-index: 9998 !important;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.35s ease, visibility 0.35s ease;
   }
 
-  /* Drawer: Solid White & Isolated */
-  #mobileMenu.mobile-menu {
-    position: fixed;
-    top: 0;
-    right: -280px;
-    left: auto;
-    width: 260px;
-    height: 100vh;
-    background-color: #ffffff !important;
+  .menu-overlay.show {
     opacity: 1 !important;
-    filter: none !important;
-    -webkit-filter: none !important;
-    z-index: 99999;
-    display: flex;
-    flex-direction: column;
-    padding: 60px 20px 20px 20px;
-    box-shadow: -4px 0 15px rgba(0, 0, 0, 0.2);
-    transition: right 0.25s ease;
-    box-sizing: border-box;
-    pointer-events: auto;
+    visibility: visible !important;
+  }
+
+  /* 2. Modern Rounded Floating Drawer */
+  #mobileMenu.mobile-menu {
+    position: fixed !important;
+    top: 0 !important;
+    right: -320px !important;
+    left: auto !important;
+    width: 285px !important;
+    max-width: 82% !important;
+    height: 100vh !important;
+    background-color: #ffffff !important;
+    border-radius: 24px 0 0 24px !important; /* Soft curved modern edge */
+    box-shadow: -10px 0 35px rgba(0, 30, 100, 0.22) !important;
+    z-index: 9999 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    padding: 0 !important; /* Header flush fit hoga */
+    overflow: hidden !important;
+    pointer-events: auto !important;
+    transition: right 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important; /* Smooth elastic slide */
   }
 
   #mobileMenu.mobile-menu.show {
     right: 0 !important;
   }
 
-  /* Links: Clear Dark Font */
-  #mobileMenu.mobile-menu a {
+  /* 3. Drawer Header (Exact Matching Header Royal Blue Color) */
+  .drawer-header {
+    background: #0052FF; /* Header ka blue shade */
+    padding: 16px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #ffffff;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.12);
+  }
+
+  .drawer-brand {
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  .drawer-icon-btn {
+    background: rgba(255, 255, 255, 0.18);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #ffffff;
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    font-size: 17px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.2s, background 0.2s;
+  }
+
+  .drawer-icon-btn:active {
+    transform: scale(0.92);
+    background: rgba(255, 255, 255, 0.3);
+  }
+
+  /* 4. Drawer Links Styling */
+  .drawer-links-wrap {
+    flex: 1;
+    padding: 24px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow-y: auto;
+  }
+
+  .drawer-link {
     text-decoration: none;
     font-size: 16px;
     font-weight: 600;
-    color: #111827 !important;
-    display: block;
-    padding: 12px 10px;
-    border-bottom: 1px solid #f1f5f9;
-    pointer-events: auto;
-    cursor: pointer;
+    color: #1e293b !important;
+    padding: 13px 16px;
+    border-radius: 12px;
+    background: #f8fafc;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border: 1px solid #e2e8f0;
+    transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
   }
 
-  /* Dark mode support */
-  body.dark-mode #mobileMenu.mobile-menu {
-    background-color: #18191a !important;
-  }
-  body.dark-mode #mobileMenu.mobile-menu a {
-    color: #ffffff !important;
-    border-bottom-color: #2e3033;
+  .link-bullet {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #0052FF;
+    transition: transform 0.2s;
   }
 
-  /* Drawer Dark Mode Button */
-  .mobile-dark-btn {
-    margin-top: 20px;
-    padding: 11px 14px;
-    font-size: 15px;
-    font-weight: 600;
-    background: #f1f5f9;
-    color: #111827;
-    border: 1px solid #d1d5db;
-    border-radius: 8px;
-    cursor: pointer;
-    pointer-events: auto;
-    width: 100%;
+  .drawer-link:active,
+  .drawer-link:hover {
+    background: #eef2ff !important;
+    color: #0052FF !important;
+    border-color: #c7d2fe !important;
+    transform: translateX(-4px);
+  }
+
+  .drawer-link:hover .link-bullet {
+    transform: scale(1.4);
+  }
+
+  /* 5. Footer inside drawer */
+  .drawer-footer {
+    padding: 16px;
     text-align: center;
+    font-size: 12px;
+    color: #94a3b8;
+    border-top: 1px solid #f1f5f9;
   }
 
-  body.dark-mode .mobile-dark-btn {
-    background: #242526;
-    color: #f9fafb;
-    border-color: #3e4042;
+  /* 6. Dark Mode Styles */
+  body.dark-mode #mobileMenu.mobile-menu {
+    background-color: #121824 !important;
+    box-shadow: -10px 0 35px rgba(0, 0, 0, 0.6) !important;
+  }
+
+  body.dark-mode .drawer-header {
+    background: #003db3; /* Deep solid blue in dark mode */
+  }
+
+  body.dark-mode .drawer-link {
+    background: #1a2233 !important;
+    color: #f1f5f9 !important;
+    border-color: #26324a !important;
+  }
+
+  body.dark-mode .drawer-link:hover,
+  body.dark-mode .drawer-link:active {
+    background: #242f47 !important;
+    color: #60a5fa !important;
+    border-color: #3b82f6 !important;
+  }
+
+  body.dark-mode .drawer-footer {
+    border-top-color: #1f293d;
+    color: #64748b;
   }
 
   header nav {
