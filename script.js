@@ -431,6 +431,20 @@ document.addEventListener("DOMContentLoaded", () => {
       phoneInput.value = phoneInput.value.slice(0, 10);
     }
   });
+
+  // Mobile drawer me current page ko automatically active karna
+  const currentPath = window.location.pathname;
+  mobileMenu?.querySelectorAll(".drawer-link").forEach(link => {
+    const href = link.getAttribute("href");
+    if (
+      (href === "index.html" && (currentPath.endsWith("/") || currentPath.endsWith("index.html"))) ||
+      (href && href !== "index.html" && currentPath.includes(href.replace("/", "")))
+    ) {
+      link.classList.add("active");
+    } else {
+      link.classList.remove("active");
+    }
+  });
   
  /* ---------- 10. PROJECTS PAGE SEARCH & CATEGORY FILTER ---------- */
   const projectSearchInput = document.getElementById("projectSearch");
