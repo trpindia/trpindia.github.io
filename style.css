@@ -1844,3 +1844,28 @@ body.dark-mode .second-nav {
     border-top-color: #1e293b !important;
   }
 }
+
+/* 7. Active Page Highlight in Mobile Drawer */
+.drawer-link.active {
+  background: #0052FF !important; /* Header ka Royal Blue */
+  color: #ffffff !important;
+  border-color: #0052FF !important;
+  box-shadow: 0 4px 12px rgba(0, 82, 255, 0.3) !important;
+}
+
+.drawer-link.active .drawer-link-text {
+  color: #ffffff !important;
+  font-weight: 700 !important;
+}
+
+.drawer-link.active .drawer-arrow {
+  color: #ffffff !important;
+  font-weight: bold !important;
+}
+
+/* Dark Mode ke liye Active State */
+body.dark-mode .drawer-link.active {
+  background: #0052FF !important;
+  border-color: #3b82f6 !important;
+  box-shadow: 0 4px 14px rgba(0, 82, 255, 0.45) !important;
+}
