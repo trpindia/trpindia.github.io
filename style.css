@@ -1663,125 +1663,117 @@ body.dark-mode .second-nav {
 }
 
 /* ========================================================
-   MOBILE MENU DRAWER & DARK MODE INTEGRATION
+   MOBILE MENU DRAWER & DARK MODE (MOBILE ONLY: <= 768px)
    ======================================================== */
+@media (max-width: 768px) {
 
-/* 1. Backdrop Overlay */
-.menu-backdrop {
-  position: fixed;
-  inset: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.45);
-  backdrop-filter: blur(2px);
-  z-index: 1050;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
-}
+  /* 1. Mobile screen par Desktop wala floating Dark button chupayein */
+  #darkModeToggle {
+    display: none !important;
+  }
 
-.menu-backdrop.show {
-  opacity: 1;
-  visibility: visible;
-}
+  /* 2. Backdrop Overlay (Khali jagah tap karke band karne ke liye) */
+  .menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(2px);
+    z-index: 1040;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
 
-/* 2. Mobile Drawer (Default: Screen se bahar chupa rahega) */
-.mobile-menu {
-  position: fixed;
-  top: 0;
-  right: -320px; /* By default poora bahar */
-  width: 280px;
-  max-width: 80%;
-  height: 100vh;
-  background-color: #ffffff;
-  z-index: 1100;
-  box-shadow: -4px 0 16px rgba(0, 0, 0, 0.15);
-  display: flex;
-  flex-direction: column;
-  transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  padding: 20px;
-  box-sizing: border-box;
-}
+  .menu-overlay.show {
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
 
-/* Dark mode drawer background */
-body.dark-mode .mobile-menu {
-  background-color: #161b22;
-  box-shadow: -4px 0 16px rgba(0, 0, 0, 0.5);
-}
+  /* 3. Mobile Right-side Drawer */
+  .mobile-menu,
+  #mobileMenu {
+    position: fixed !important;
+    top: 0 !important;
+    right: -300px !important; /* By default screen ke right side bahar */
+    left: auto !important;
+    width: 270px !important;
+    max-width: 80% !important;
+    height: 100vh !important;
+    background-color: #ffffff !important;
+    z-index: 1050 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    padding: 70px 20px 20px 20px !important;
+    box-shadow: -4px 0 16px rgba(0, 0, 0, 0.15) !important;
+    transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    box-sizing: border-box !important;
+  }
 
-/* Jab active ho tab slide hokar andar aayega */
-.mobile-menu.show {
-  right: 0 !important;
-}
+  /* Menu Toggle hone par andar slide hoga */
+  .mobile-menu.show,
+  #mobileMenu.show {
+    right: 0 !important;
+  }
 
-/* Drawer list styling */
-.mobile-nav-links {
-  list-style: none;
-  padding: 0;
-  margin: 20px 0 0 0;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
+  /* Dark mode drawer background */
+  body.dark-mode .mobile-menu,
+  body.dark-mode #mobileMenu {
+    background-color: #161b22 !important;
+    box-shadow: -4px 0 16px rgba(0, 0, 0, 0.5) !important;
+  }
 
-.mobile-nav-links li a {
-  text-decoration: none;
-  font-size: 16px;
-  font-weight: 500;
-  color: #1f2937;
-  display: block;
-  padding: 8px 12px;
-  border-radius: 8px;
-  transition: background 0.2s;
-}
+  /* 4. Drawer ke andar ke Links */
+  .mobile-menu a,
+  #mobileMenu a {
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    color: #1f2937;
+    display: block;
+    padding: 12px 14px;
+    border-radius: 8px;
+    transition: background 0.2s;
+  }
 
-body.dark-mode .mobile-nav-links li a {
-  color: #f3f4f6;
-}
+  body.dark-mode .mobile-menu a,
+  body.dark-mode #mobileMenu a {
+    color: #f3f4f6 !important;
+  }
 
-.mobile-nav-links li a:hover {
-  background: rgba(0, 82, 255, 0.08);
-}
+  .mobile-menu a:hover,
+  #mobileMenu a:hover {
+    background: rgba(0, 82, 255, 0.08);
+  }
 
-/* Drawer ke andar Dark Mode Button */
-.drawer-dark-btn {
-  width: 100%;
-  margin-top: 10px;
-  padding: 10px 14px;
-  font-size: 15px;
-  font-weight: 600;
-  background-color: #f1f5f9;
-  color: #0f172a;
-  border: 1px solid #cbd5e1;
-  border-radius: 8px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-}
+  /* 5. Mobile Drawer ke andar Dark Mode Button */
+  .mobile-dark-btn {
+    width: 100%;
+    margin-top: 20px;
+    padding: 11px 14px;
+    font-size: 15px;
+    font-weight: 600;
+    background-color: #f1f5f9;
+    color: #0f172a;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
 
-body.dark-mode .drawer-dark-btn {
-  background-color: #21262d;
-  color: #f0f6fc;
-  border-color: #30363d;
-}
+  body.dark-mode .mobile-dark-btn {
+    background-color: #21262d;
+    color: #f0f6fc;
+    border-color: #30363d;
+  }
 
-/* Close button on drawer */
-.close-drawer-btn {
-  align-self: flex-end;
-  background: transparent;
-  border: none;
-  font-size: 22px;
-  cursor: pointer;
-  color: inherit;
-}
-
-/* 3. Small screens aur extreme zoom par desktop links gayab */
-@media (max-width: 860px) {
-  header nav:not(.mobile-menu),
-  .nav-links,
-  .desktop-nav {
+  /* 6. Mobile me Desktop links hide rakhega */
+  header nav:not(.mobile-menu) {
     display: none !important;
   }
 }
