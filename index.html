@@ -10,7 +10,7 @@
 </head>
 <body>
 
-  <!-- Header / Navbar -->
+<!-- Header / Navbar -->
   <header>
     <a href="index.html" id="logo">TRP Electronics</a>
     <nav>
@@ -23,17 +23,20 @@
       </ul>
     </nav>
     <div class="menu-icon" id="menuToggle">☰</div>
-
-    <nav class="mobile-menu" id="mobileMenu">
-      <a href="index.html">Home</a>
-      <a href="projects.html">Projects</a>
-      <a href="eshop/">E-Shop</a>
-      <a href="eapps.html">E-Apps</a>
-      <a href="contact.html">Contact</a>
-      <!-- Mobile Drawer ke andar Dark Mode Button -->
-      <button id="mobileDarkModeToggle" class="mobile-dark-btn">🌙 Dark Mode</button>
-    </nav>
   </header>
+
+  <!-- Mobile Drawer: -->
+  <div id="mobileMenu" class="mobile-menu">
+    <a href="index.html">Home</a>
+    <a href="projects.html">Projects</a>
+    <a href="eshop/">E-Shop</a>
+    <a href="eapps.html">E-Apps</a>
+    <a href="contact.html">Contact</a>
+    <button id="mobileDarkModeToggle" class="mobile-dark-btn">🌙 Dark Mode</button>
+  </div>
+
+  <!-- Background overlay (header ke bahar) -->
+  <div id="menuOverlay" class="menu-overlay"></div>
 
   <!-- Hero Section -->
   <section class="hero">
