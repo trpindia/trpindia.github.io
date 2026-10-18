@@ -1,20 +1,19 @@
 /* script.js - TRP Electronics Single File for Shop + Cart + Projects Pages */
 document.addEventListener("DOMContentLoaded", () => {
-  
-  /* ---------- 1. DARK MODE TOGGLE (SHARED) ---------- */
+
+  /* ---------- 1. DARK MODE TOGGLE (DRAWER INTEGRATED) ---------- */
   const toggleBtn = document.getElementById("darkModeToggle");
   const body = document.body;
-  if (localStorage.getItem("theme") === "dark") {
-    body.classList.add("dark-mode");
-    if (toggleBtn) toggleBtn.textContent = "☀ Light Mode";
-  } else {
-    if (toggleBtn) toggleBtn.textContent = "🌙 Dark Mode";
+
+  function updateThemeUI(isDark) {
+    if (isDark) {
+      body.classList.add("dark-mode");
+      if (toggleBtn) toggleBtn.textContent = "☀ Light Mode";
+    } else {
+      body.classList.remove("dark-mode");
+      if (toggleBtn) toggleBtn.textContent = "🌙 Dark Mode";
+    }
   }
-  toggleBtn?.addEventListener("click", () => {
-    body.classList.toggle("dark-mode");
-    localStorage.setItem("theme", body.classList.contains("dark-mode") ? "dark" : "light");
-    toggleBtn.textContent = body.classList.contains("dark-mode") ? "☀ Light Mode" : "🌙 Dark Mode";
-  });
 
   /* ---------- 2. IMAGE LOAD EFFECT ---------- */
   document.querySelectorAll(".product-card img, .project-card img").forEach(img => {
@@ -339,35 +338,46 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  /* ---------- 9. MOBILE NAV TOGGLE & ABOUT ACCORDION FIXED ---------- */
+/* ---------- 9. MOBILE DRAWER: OUTSIDE CLICK + BACK-CACHE SAFE ---------- */
   const menuToggle = document.getElementById("menuToggle");
   const mobileMenu = document.getElementById("mobileMenu");
-  menuToggle?.addEventListener("click", () => {
-    mobileMenu?.classList.toggle("show");
+  const menuBackdrop = document.getElementById("menuBackdrop");
+  const closeBtn = document.getElementById("closeMobileMenu");
+
+  function openMenu() {
+    mobileMenu?.classList.add("show");
+    menuBackdrop?.classList.add("show");
+    document.body.style.overflow = "hidden"; // Background scroll stop
+  }
+
+  function closeMenu() {
+    mobileMenu?.classList.remove("show");
+    menuBackdrop?.classList.remove("show");
+    document.body.style.overflow = "";
+  }
+
+  // Toggle open
+  menuToggle?.addEventListener("click", (e) => {
+    e.stopPropagation();
+    if (mobileMenu?.classList.contains("show")) {
+      closeMenu();
+    } else {
+      openMenu();
+    }
   });
 
-  const aboutHeader = document.querySelector(".about-toggle-header") || document.getElementById("aboutToggle");
-  const aboutContent = document.getElementById("aboutContent");
-  const aboutArrow = document.querySelector(".about-arrow") || document.getElementById("aboutArrow");
+  closeBtn?.addEventListener("click", closeMenu);
 
-  aboutHeader?.addEventListener("click", () => {
-    aboutHeader.classList.toggle("active");
-    if (aboutContent) {
-      aboutContent.classList.toggle("show");
+  menuBackdrop?.addEventListener("click", closeMenu);
+  document.addEventListener("click", (e) => {
+    if (
+      mobileMenu?.classList.contains("show") &&
+      !mobileMenu.contains(e.target) &&
+      e.target !== menuToggle
+    ) {
+      closeMenu();
     }
-    if (aboutArrow) {
-      aboutArrow.style.transform = aboutHeader.classList.contains("active") ? "rotate(90deg)" : "rotate(0deg)";
-    }
-  });
-
-  const phoneInput = document.getElementById("phone");
-  phoneInput?.addEventListener("input", () => {
-    phoneInput.value = phoneInput.value.replace(/[^0-9]/g, "");
-    if (phoneInput.value.length > 10) {
-      phoneInput.value = phoneInput.value.slice(0, 10);
-    }
-  });
-
+  }); 
  /* ---------- 10. PROJECTS PAGE SEARCH & CATEGORY FILTER ---------- */
   const projectSearchInput = document.getElementById("projectSearch");
   const projectSearchClearBtn = document.getElementById("projectSearchClearBtn");
