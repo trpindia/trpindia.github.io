@@ -1674,14 +1674,14 @@ body.dark-mode .second-nav {
 
   /* 2. Backdrop Overlay (Khali jagah tap karke band karne ke liye) */
   .menu-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.45);
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    background: rgba(0, 0, 0, 0.45) !important;
     backdrop-filter: blur(2px);
-    z-index: 1040;
+    z-index: 9998 !important;
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.3s ease, visibility 0.3s ease;
@@ -1697,19 +1697,20 @@ body.dark-mode .second-nav {
   #mobileMenu {
     position: fixed !important;
     top: 0 !important;
-    right: -300px !important; /* By default screen ke right side bahar */
+    right: -300px !important;
     left: auto !important;
     width: 270px !important;
     max-width: 80% !important;
     height: 100vh !important;
     background-color: #ffffff !important;
-    z-index: 1050 !important;
+    z-index: 9999 !important;
     display: flex !important;
     flex-direction: column !important;
     padding: 70px 20px 20px 20px !important;
     box-shadow: -4px 0 16px rgba(0, 0, 0, 0.15) !important;
     transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
     box-sizing: border-box !important;
+    pointer-events: auto !important;
   }
 
   /* Menu Toggle hone par andar slide hoga */
@@ -1728,14 +1729,16 @@ body.dark-mode .second-nav {
   /* 4. Drawer ke andar ke Links */
   .mobile-menu a,
   #mobileMenu a {
-    text-decoration: none;
-    font-size: 16px;
-    font-weight: 500;
-    color: #1f2937;
-    display: block;
-    padding: 12px 14px;
-    border-radius: 8px;
-    transition: background 0.2s;
+    text-decoration: none !important;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    color: #111827 !important;
+    display: block !important;
+    padding: 12px 14px !important;
+    border-radius: 8px !important;
+    pointer-events: auto !important;
+    cursor: pointer !important;
+    transition: background 0.2s ease !important;
   }
 
   body.dark-mode .mobile-menu a,
@@ -1745,31 +1748,32 @@ body.dark-mode .second-nav {
 
   .mobile-menu a:hover,
   #mobileMenu a:hover {
-    background: rgba(0, 82, 255, 0.08);
+    background: rgba(0, 82, 255, 0.08) !important;
   }
 
   /* 5. Mobile Drawer ke andar Dark Mode Button */
   .mobile-dark-btn {
-    width: 100%;
-    margin-top: 20px;
-    padding: 11px 14px;
-    font-size: 15px;
-    font-weight: 600;
-    background-color: #f1f5f9;
-    color: #0f172a;
-    border: 1px solid #cbd5e1;
-    border-radius: 8px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
+    width: 100% !important;
+    margin-top: 20px !important;
+    padding: 11px 14px !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    background-color: #f1f5f9 !important;
+    color: #0f172a !important;
+    border: 1px solid #cbd5e1 !important;
+    border-radius: 8px !important;
+    cursor: pointer !important;
+    pointer-events: auto !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
   }
 
   body.dark-mode .mobile-dark-btn {
-    background-color: #21262d;
-    color: #f0f6fc;
-    border-color: #30363d;
+    background-color: #21262d !important;
+    color: #f0f6fc !important;
+    border-color: #30363d !important;
   }
 
   /* 6. Mobile me Desktop links hide rakhega */
