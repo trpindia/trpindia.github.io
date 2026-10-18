@@ -1663,25 +1663,26 @@ body.dark-mode .second-nav {
 }
 
 /* ========================================================
-   PREMIUM MOBILE APP DRAWER (MOBILE ONLY: <= 768px)
+   CLEAN APP-STYLE MOBILE DRAWER (ONLY MOBILE: <= 768px)
    ======================================================== */
 @media (max-width: 768px) {
 
+  /* Desktop floating dark mode button hide on mobile */
   #darkModeToggle {
     display: none !important;
   }
 
-  /* 1. Backdrop Overlay (Sirf Background Page Ko Blur Karega) */
+  /* 1. Background Overlay (Clean dark tint + subtle blur) */
   .menu-overlay {
     position: fixed !important;
     inset: 0 !important;
-    background: rgba(10, 15, 30, 0.45) !important;
-    backdrop-filter: blur(6px) !important; /* Page blur hoga */
-    -webkit-backdrop-filter: blur(6px) !important;
+    background: rgba(0, 10, 30, 0.4) !important;
+    backdrop-filter: blur(4px) !important;
+    -webkit-backdrop-filter: blur(4px) !important;
     z-index: 9998 !important;
     opacity: 0;
     visibility: hidden;
-    transition: opacity 0.35s ease, visibility 0.35s ease;
+    transition: opacity 0.25s ease, visibility 0.25s ease;
   }
 
   .menu-overlay.show {
@@ -1689,152 +1690,157 @@ body.dark-mode .second-nav {
     visibility: visible !important;
   }
 
-  /* 2. Modern Rounded Floating Drawer */
+  /* 2. Drawer Container: Full Height, Right Side, Curved Left */
   #mobileMenu.mobile-menu {
     position: fixed !important;
     top: 0 !important;
     right: -320px !important;
     left: auto !important;
-    width: 285px !important;
+    width: 280px !important;
     max-width: 82% !important;
     height: 100vh !important;
+    height: 100dvh !important; /* Mobile dynamic viewport */
     background-color: #ffffff !important;
-    border-radius: 24px 0 0 24px !important; /* Soft curved modern edge */
-    box-shadow: -10px 0 35px rgba(0, 30, 100, 0.22) !important;
+    border-radius: 20px 0 0 20px !important;
+    box-shadow: -8px 0 30px rgba(0, 0, 0, 0.25) !important;
     z-index: 9999 !important;
     display: flex !important;
     flex-direction: column !important;
-    padding: 0 !important; /* Header flush fit hoga */
+    padding: 0 !important; /* No extra padding so header fits 100% full width */
+    margin: 0 !important;
     overflow: hidden !important;
-    pointer-events: auto !important;
-    transition: right 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important; /* Smooth elastic slide */
+    transition: right 0.3s cubic-bezier(0.2, 0.9, 0.3, 1) !important;
+    box-sizing: border-box !important;
   }
 
   #mobileMenu.mobile-menu.show {
     right: 0 !important;
   }
 
-  /* 3. Drawer Header (Exact Matching Header Royal Blue Color) */
+  /* 3. Drawer Header: Flush to edges, exact Royal Blue */
   .drawer-header {
-    background: #0052FF; /* Header ka blue shade */
-    padding: 16px 18px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    color: #ffffff;
-    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.12);
+    width: 100% !important;
+    background: #0052FF !important; /* Header ka exact Blue */
+    padding: 16px 18px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    box-sizing: border-box !important;
   }
 
   .drawer-brand {
-    font-size: 17px;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
+    font-size: 18px !important;
+    font-weight: 700 !important;
+    color: #ffffff !important;
+    letter-spacing: 0.8px !important;
+    text-transform: uppercase !important;
   }
 
   .drawer-icon-btn {
-    background: rgba(255, 255, 255, 0.18);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    color: #ffffff;
-    width: 38px;
-    height: 38px;
-    border-radius: 10px;
-    font-size: 17px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: transform 0.2s, background 0.2s;
+    background: rgba(255, 255, 255, 0.2) !important;
+    border: none !important;
+    color: #ffffff !important;
+    width: 36px !important;
+    height: 36px !important;
+    border-radius: 50% !important;
+    font-size: 16px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+    transition: background 0.2s ease, transform 0.15s ease !important;
   }
 
   .drawer-icon-btn:active {
-    transform: scale(0.92);
-    background: rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.35) !important;
+    transform: scale(0.92) !important;
   }
 
-  /* 4. Drawer Links Styling */
+  /* 4. Links Section: Full Width, Uniform Cards */
   .drawer-links-wrap {
-    flex: 1;
-    padding: 24px 18px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    overflow-y: auto;
+    flex: 1 !important;
+    width: 100% !important;
+    padding: 18px 16px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 10px !important;
+    box-sizing: border-box !important;
+    overflow-y: auto !important;
   }
 
   .drawer-link {
-    text-decoration: none;
-    font-size: 16px;
-    font-weight: 600;
-    color: #1e293b !important;
-    padding: 13px 16px;
-    border-radius: 12px;
-    background: #f8fafc;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    border: 1px solid #e2e8f0;
-    transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+    width: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 13px 16px !important;
+    background: #f8fafc !important;
+    color: #0f172a !important;
+    text-decoration: none !important;
+    font-size: 15.5px !important;
+    font-weight: 600 !important;
+    border-radius: 12px !important;
+    border: 1px solid #e2e8f0 !important;
+    box-sizing: border-box !important;
+    white-space: nowrap !important; /* Text tutega nahi */
+    transition: background 0.2s ease, color 0.2s ease, transform 0.15s ease !important;
   }
 
-  .link-bullet {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: #0052FF;
-    transition: transform 0.2s;
-  }
-
-  .drawer-link:active,
-  .drawer-link:hover {
+  .drawer-link:active {
     background: #eef2ff !important;
     color: #0052FF !important;
-    border-color: #c7d2fe !important;
-    transform: translateX(-4px);
+    border-color: #cbd5e1 !important;
+    transform: scale(0.98) !important;
   }
 
-  .drawer-link:hover .link-bullet {
-    transform: scale(1.4);
+  .drawer-arrow {
+    font-size: 18px !important;
+    color: #94a3b8 !important;
+    line-height: 1 !important;
   }
 
-  /* 5. Footer inside drawer */
+  /* 5. Footer Branding */
   .drawer-footer {
-    padding: 16px;
-    text-align: center;
-    font-size: 12px;
-    color: #94a3b8;
-    border-top: 1px solid #f1f5f9;
+    width: 100% !important;
+    padding: 14px !important;
+    text-align: center !important;
+    border-top: 1px solid #f1f5f9 !important;
+    box-sizing: border-box !important;
   }
 
-  /* 6. Dark Mode Styles */
+  .drawer-footer p {
+    margin: 0 !important;
+    font-size: 12.5px !important;
+    font-weight: 500 !important;
+    color: #94a3b8 !important;
+  }
+
+  /* 6. Dark Mode Styles for Drawer */
   body.dark-mode #mobileMenu.mobile-menu {
     background-color: #121824 !important;
-    box-shadow: -10px 0 35px rgba(0, 0, 0, 0.6) !important;
+    box-shadow: -8px 0 30px rgba(0, 0, 0, 0.7) !important;
   }
 
   body.dark-mode .drawer-header {
-    background: #003db3; /* Deep solid blue in dark mode */
+    background: #0044d6 !important;
   }
 
   body.dark-mode .drawer-link {
     background: #1a2233 !important;
-    color: #f1f5f9 !important;
-    border-color: #26324a !important;
+    color: #f8fafc !important;
+    border-color: #2a344a !important;
   }
 
-  body.dark-mode .drawer-link:hover,
   body.dark-mode .drawer-link:active {
     background: #242f47 !important;
     color: #60a5fa !important;
-    border-color: #3b82f6 !important;
+  }
+
+  body.dark-mode .drawer-arrow {
+    color: #64748b !important;
   }
 
   body.dark-mode .drawer-footer {
-    border-top-color: #1f293d;
-    color: #64748b;
-  }
-
-  header nav {
-    display: none !important;
+    border-top-color: #1e293b !important;
   }
 }
