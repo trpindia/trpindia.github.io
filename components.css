@@ -1666,15 +1666,22 @@ body.dark-mode .modal-desc {
 }
 
 /* ========================================================
-   CART FIX: DESKTOP CATEGORY TRACK + MOBILE HEADER
+   HEADER & CART ALIGNMENT (DESKTOP & MOBILE CLEAN FIX)
    ======================================================== */
 
-/* 1. Desktop Track ke andar Cart */
+/* Header Right Group */
+.header-mobile-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Desktop Cart item inside category list */
 .cat-item-cart {
   display: inline-flex !important;
   align-items: center !important;
   list-style: none !important;
-  margin-left: 8px !important;
+  margin-left: 6px !important;
   flex-shrink: 0 !important;
 }
 
@@ -1683,13 +1690,15 @@ body.dark-mode .modal-desc {
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
-  padding: 8px 14px !important;
+  padding: 6px 12px !important;
   background: #f0f5ff !important;
   color: #0052FF !important;
   border: 1px solid #c7d9fe !important;
   border-radius: 20px !important;
   text-decoration: none !important;
   cursor: pointer !important;
+  height: 32px !important;
+  box-sizing: border-box !important;
 }
 
 body.dark-mode .desktop-category-cart {
@@ -1698,58 +1707,56 @@ body.dark-mode .desktop-category-cart {
   border-color: #334155 !important;
 }
 
-/* Common Badge for both */
+/* Badge (Pill Notification) */
 .cart-count-badge {
   position: absolute !important;
-  top: -6px !important;
+  top: -5px !important;
   right: -6px !important;
   background: #ff3b30 !important;
   color: #ffffff !important;
-  font-size: 11px !important;
+  font-size: 10.5px !important;
   font-weight: 700 !important;
   line-height: 1 !important;
-  padding: 3px 6px !important;
-  border-radius: 12px !important;
-  min-width: 16px !important;
+  padding: 3px 5px !important;
+  border-radius: 10px !important;
+  min-width: 15px !important;
   text-align: center !important;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2) !important;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) !important;
 }
 
-/* Default Desktop par Mobile Header wala Cart hide */
+/* Desktop par header wala mobile cart hidden rahega */
 .mobile-header-cart {
   display: none !important;
 }
 
-/* 2. Mobile Responsive (<= 768px) */
+/* ========================================================
+   MOBILE SCREENS (<= 768px)
+   ======================================================== */
 @media (max-width: 768px) {
-  /* Category track se Cart hide */
+  /* Category track se cart hide */
   .cat-item-cart {
     display: none !important;
   }
 
-  /* Header me Cart + Hamburger row align */
-  .header-mobile-right {
-    display: flex !important;
-    align-items: center !important;
-    gap: 12px !important;
-  }
-
-  /* Header Cart Button */
+  /* Header me Cart Button: ☰ icon ke barabar */
   .mobile-header-cart {
     position: relative !important;
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
-    width: 38px !important;
-    height: 38px !important;
+    width: 36px !important;
+    height: 36px !important;
     color: #ffffff !important;
     background: rgba(255, 255, 255, 0.2) !important;
     border-radius: 10px !important;
     text-decoration: none !important;
+    flex-shrink: 0 !important;
   }
 
   .mobile-header-cart svg {
     stroke: #ffffff !important;
+    width: 20px !important;
+    height: 20px !important;
   }
 
   .mobile-header-cart .cart-count-badge {
