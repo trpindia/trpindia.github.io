@@ -1666,89 +1666,93 @@ body.dark-mode .modal-desc {
 }
 
 /* ========================================================
-   MODERN CART ICON & FLOATING BADGE (Desktop + Mobile)
+   CART FIX: DESKTOP CATEGORY TRACK + MOBILE HEADER
    ======================================================== */
 
-/* Common Badge Style (Red Pill Notification) */
-.cart-count-badge {
-  position: absolute;
-  top: -6px;
-  right: -8px;
-  background: #ff3b30; /* Bright modern notification red */
-  color: #ffffff !important;
-  font-size: 11px;
-  font-weight: 700;
-  line-height: 1;
-  padding: 3px 6px;
-  border-radius: 12px;
-  min-width: 16px;
-  text-align: center;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
-  box-sizing: border-box;
+/* 1. Desktop Track ke andar Cart */
+.cat-item-cart {
+  display: inline-flex !important;
+  align-items: center !important;
+  list-style: none !important;
+  margin-left: 8px !important;
+  flex-shrink: 0 !important;
 }
 
-/* 1. DESKTOP: Category Bar Cart */
 .desktop-category-cart {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 8px 12px;
-  color: #0052FF;
-  background: #f0f5ff;
-  border: 1px solid #d0e0ff;
-  border-radius: 20px;
-  text-decoration: none;
-  cursor: pointer;
-  margin-left: 10px;
-  transition: background 0.2s, transform 0.15s;
-}
-
-.desktop-category-cart:hover {
-  background: #e0ecff;
-  transform: translateY(-1px);
+  position: relative !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 8px 14px !important;
+  background: #f0f5ff !important;
+  color: #0052FF !important;
+  border: 1px solid #c7d9fe !important;
+  border-radius: 20px !important;
+  text-decoration: none !important;
+  cursor: pointer !important;
 }
 
 body.dark-mode .desktop-category-cart {
-  color: #60a5fa;
-  background: #1e293b;
-  border-color: #334155;
+  background: #1e293b !important;
+  color: #60a5fa !important;
+  border-color: #334155 !important;
 }
 
-/* By default Desktop par Header wala cart hide rahega */
+/* Common Badge for both */
+.cart-count-badge {
+  position: absolute !important;
+  top: -6px !important;
+  right: -6px !important;
+  background: #ff3b30 !important;
+  color: #ffffff !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  line-height: 1 !important;
+  padding: 3px 6px !important;
+  border-radius: 12px !important;
+  min-width: 16px !important;
+  text-align: center !important;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2) !important;
+}
+
+/* Default Desktop par Mobile Header wala Cart hide */
 .mobile-header-cart {
-  display: none;
+  display: none !important;
 }
 
-/* 2. MOBILE RESPONSIVE (Screen <= 768px) */
+/* 2. Mobile Responsive (<= 768px) */
 @media (max-width: 768px) {
-  /* Category bar se cart hide (kyunki track scroll hota hai) */
-  .desktop-category-cart {
+  /* Category track se Cart hide */
+  .cat-item-cart {
     display: none !important;
   }
 
-  /* Header me Right Actions container */
+  /* Header me Cart + Hamburger row align */
   .header-mobile-right {
     display: flex !important;
     align-items: center !important;
-    gap: 14px !important;
+    gap: 12px !important;
   }
 
-  /* Mobile Header Cart Button (☰ icon ke bagal me) */
+  /* Header Cart Button */
   .mobile-header-cart {
     position: relative !important;
-    display: flex !important;
+    display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
     width: 38px !important;
     height: 38px !important;
     color: #ffffff !important;
-    background: rgba(255, 255, 255, 0.18) !important;
+    background: rgba(255, 255, 255, 0.2) !important;
     border-radius: 10px !important;
     text-decoration: none !important;
   }
 
+  .mobile-header-cart svg {
+    stroke: #ffffff !important;
+  }
+
   .mobile-header-cart .cart-count-badge {
-    border: 2px solid #0052FF; /* Header blue border cut */
+    border: 2px solid #0052FF !important;
   }
 }
