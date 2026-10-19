@@ -1666,22 +1666,47 @@ body.dark-mode .modal-desc {
 }
 
 /* ========================================================
-   HEADER & CART ALIGNMENT (DESKTOP & MOBILE CLEAN FIX)
+   FIXED DESKTOP CATEGORY BAR & HEADER ALIGNMENT
    ======================================================== */
 
-/* Header Right Group */
-.header-mobile-right {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+/* 1. Header Layout Alignment (Desktop par Logo Left, Nav Links Right) */
+header {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
 }
 
-/* Desktop Cart item inside category list */
-.cat-item-cart {
-  display: inline-flex !important;
+header nav {
+  margin-left: auto !important; /* Nav links ko right ki taraf align karega */
+}
+
+/* 2. Second Nav Layout (Left: Search, Center: Categories, Right: Cart) */
+.second-nav {
+  display: flex !important;
   align-items: center !important;
-  list-style: none !important;
-  margin-left: 6px !important;
+  justify-content: space-between !important;
+  padding: 8px 16px !important;
+  gap: 12px !important;
+  position: relative !important;
+}
+
+.second-left {
+  flex-shrink: 0 !important;
+}
+
+.second-center {
+  flex: 1 !important;
+  overflow-x: auto !important;
+  scrollbar-width: none !important; /* Firefox */
+}
+.second-center::-webkit-scrollbar {
+  display: none !important; /* Chrome/Safari */
+}
+
+/* 3. Fixed Right Cart Container (Desktop) */
+.second-right {
+  display: flex !important;
+  align-items: center !important;
   flex-shrink: 0 !important;
 }
 
@@ -1690,15 +1715,20 @@ body.dark-mode .modal-desc {
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
-  padding: 6px 12px !important;
+  width: 42px !important;
+  height: 42px !important;
   background: #f0f5ff !important;
   color: #0052FF !important;
-  border: 1px solid #c7d9fe !important;
-  border-radius: 20px !important;
+  border: 1.5px solid #c7d9fe !important;
+  border-radius: 50% !important; /* Perfect circular action button */
   text-decoration: none !important;
   cursor: pointer !important;
-  height: 32px !important;
-  box-sizing: border-box !important;
+  transition: all 0.2s ease !important;
+}
+
+.desktop-category-cart:hover {
+  background: #e0ecff !important;
+  transform: scale(1.05) !important;
 }
 
 body.dark-mode .desktop-category-cart {
@@ -1707,24 +1737,25 @@ body.dark-mode .desktop-category-cart {
   border-color: #334155 !important;
 }
 
-/* Badge (Pill Notification) */
+/* Common Cart Badge */
 .cart-count-badge {
   position: absolute !important;
-  top: -5px !important;
-  right: -6px !important;
+  top: -4px !important;
+  right: -4px !important;
   background: #ff3b30 !important;
   color: #ffffff !important;
-  font-size: 10.5px !important;
+  font-size: 11px !important;
   font-weight: 700 !important;
   line-height: 1 !important;
-  padding: 3px 5px !important;
-  border-radius: 10px !important;
-  min-width: 15px !important;
+  padding: 3px 6px !important;
+  border-radius: 12px !important;
+  min-width: 17px !important;
   text-align: center !important;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3) !important;
+  box-sizing: border-box !important;
 }
 
-/* Desktop par header wala mobile cart hidden rahega */
+/* Desktop screen par Header wala mobile cart hide rahega */
 .mobile-header-cart {
   display: none !important;
 }
@@ -1733,12 +1764,18 @@ body.dark-mode .desktop-category-cart {
    MOBILE SCREENS (<= 768px)
    ======================================================== */
 @media (max-width: 768px) {
-  /* Category track se cart hide */
-  .cat-item-cart {
+  /* Category bar se right side wala cart hide */
+  .second-right {
     display: none !important;
   }
 
-  /* Header me Cart Button: ☰ icon ke barabar */
+  /* Header me Cart Button ☰ ke theek left side */
+  .header-mobile-right {
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+  }
+
   .mobile-header-cart {
     position: relative !important;
     display: inline-flex !important;
@@ -1750,7 +1787,6 @@ body.dark-mode .desktop-category-cart {
     background: rgba(255, 255, 255, 0.2) !important;
     border-radius: 10px !important;
     text-decoration: none !important;
-    flex-shrink: 0 !important;
   }
 
   .mobile-header-cart svg {
