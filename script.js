@@ -78,11 +78,11 @@ document.addEventListener("DOMContentLoaded", () => {
     updateHeaderCount();
   }
 
-  function updateHeaderCount() {
-    const el = document.getElementById("cart-count");
-    if (!el) return;
+function updateHeaderCount() {
     const qty = cart.reduce((s, i) => s + (i.qty || 0), 0);
-    el.textContent = qty;
+    document.querySelectorAll(".cart-count-val").forEach(el => {
+      el.textContent = qty;
+    });
   }
   updateHeaderCount();
 
