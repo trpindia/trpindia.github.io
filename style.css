@@ -835,7 +835,7 @@ body.dark-mode .app-card p {
   background: #0044cc;
   color: white;
   font-weight: bold;
-  z-index: 1000;
+  z-index: 999;
 }
 
 .card {
