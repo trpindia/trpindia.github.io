@@ -1868,3 +1868,19 @@ body.dark-mode .drawer-link.active {
   border-color: #3b82f6 !important;
   box-shadow: 0 4px 14px rgba(0, 82, 255, 0.45) !important;
 }
+
+
+/* ========================================================
+   REUSABLE BUTTON PRESS / TAP EFFECT
+   ======================================================== */
+.tap-effect {
+  transition: transform 0.12s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.12s ease !important;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent; /* Mobile par blue highlight box hatayega */
+}
+
+/* Jab user click ya tap karega */
+.tap-effect:active {
+  transform: scale(0.94) translateY(1px) !important; /* Button halka sa dabe ga */
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2) !important; /* Depth/dabaav ka shadow */
+}
