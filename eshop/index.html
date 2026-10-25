@@ -325,13 +325,13 @@
               let actionBtnHTML = "";
               if (currentItem.outOfStock) {
                 actionBtnHTML = `
-                  <button class="cart-action-btn stock-notify-btn notify-stock-btn" data-name="${currentItem.name || p.name}" data-price="${currentItem.price}">
+                  <button class="cart-action-btn stock-notify-btn notify-stock-btn tap-effect" data-name="${currentItem.name || p.name}" data-price="${currentItem.price}">
                     <span>🔔</span> Notify
                   </button>
                 `;
               } else {
                 actionBtnHTML = `
-                  <button class="cart-action-btn add-cart" data-name="${currentItem.name || p.name}" data-price="${currentItem.price}">
+                  <button class="cart-action-btn add-cart tap-effect" data-name="${currentItem.name || p.name}" data-price="${currentItem.price}">
                     <span>🛒</span> Pick
                   </button>
                 `;
