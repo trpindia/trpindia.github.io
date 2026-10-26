@@ -1884,3 +1884,143 @@ body.dark-mode .drawer-link.active {
   transform: scale(0.94) translateY(1px) !important; /* Button halka sa dabe ga */
   box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2) !important; /* Depth/dabaav ka shadow */
 }
+
+
+/* ========================================================
+   MOBILE PRODUCT POPUP MODAL (FIXED HEADER & SCROLLABLE DESC)
+   ======================================================== */
+@media (max-width: 768px) {
+  /* 1. Modal Overlay */
+  .modal-overlay {
+    display: none;
+    position: fixed !important;
+    inset: 0 !important;
+    background: rgba(0, 0, 0, 0.65) !important;
+    backdrop-filter: blur(4px) !important;
+    z-index: 99999 !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 14px !important;
+    box-sizing: border-box !important;
+  }
+
+  /* 2. Main Modal Card (Screen se bahar nahi jayega) */
+  .modal-content {
+    width: 100% !important;
+    max-width: 360px !important;
+    max-height: 86vh !important; /* Screen ke 86% se bada nahi hoga */
+    background: #ffffff !important;
+    border-radius: 20px !important;
+    padding: 16px 14px !important;
+    position: relative !important;
+    display: flex !important;
+    flex-direction: column !important;
+    box-sizing: border-box !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3) !important;
+    overflow: hidden !important;
+  }
+
+  body.dark-mode .modal-content {
+    background: #18191a !important;
+    color: #ffffff !important;
+  }
+
+  /* 3. Modal Body Flex */
+  .modal-body {
+    display: flex !important;
+    flex-direction: column !important;
+    height: 100% !important;
+    max-height: calc(86vh - 32px) !important;
+    overflow: hidden !important;
+  }
+
+  /* 4. Top Fixed: Image */
+  .modal-left {
+    flex-shrink: 0 !important;
+    text-align: center !important;
+    margin-bottom: 4px !important;
+  }
+
+  .modal-left img {
+    max-height: 110px !important;
+    width: auto !important;
+    object-fit: contain !important;
+  }
+
+  /* 5. Middle Content Wrapper */
+  .modal-right {
+    display: flex !important;
+    flex-direction: column !important;
+    flex: 1 !important;
+    min-height: 0 !important; /* Flex child scroll allow karta hai */
+    overflow: hidden !important;
+  }
+
+  /* Title & Price Fixed */
+  .modal-right h2 {
+    font-size: 18px !important;
+    margin: 4px 0 2px 0 !important;
+    text-align: center !important;
+    flex-shrink: 0 !important;
+  }
+
+  .modal-price {
+    font-size: 17px !important;
+    font-weight: 700 !important;
+    text-align: center !important;
+    margin: 0 0 6px 0 !important;
+    flex-shrink: 0 !important;
+  }
+
+  /* 6. ONLY SCROLLABLE AREA: Description Box */
+  #modalDesc.modal-desc {
+    flex: 1 1 auto !important;
+    min-height: 60px !important;
+    max-height: 155px !important; /* ~7-8 lines ke baad scrollbar shuru */
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    padding: 6px 8px !important;
+    margin-bottom: 10px !important;
+    background: #f8fafc !important;
+    border-radius: 10px !important;
+    border: 1px solid #e2e8f0 !important;
+    font-size: 13px !important;
+    line-height: 1.45 !important;
+    text-align: left !important;
+  }
+
+  body.dark-mode #modalDesc.modal-desc {
+    background: #242526 !important;
+    border-color: #3a3b3c !important;
+    color: #e4e6eb !important;
+  }
+
+  #modalDesc ul {
+    margin: 4px 0 0 16px !important;
+    padding: 0 !important;
+  }
+
+  #modalDesc li {
+    margin-bottom: 4px !important;
+  }
+
+  /* 7. Bottom Fixed: Action Buttons */
+  .modal-actions {
+    flex-shrink: 0 !important;
+    display: flex !important;
+    gap: 8px !important;
+    margin-top: auto !important;
+  }
+
+  .modal-actions a,
+  .modal-actions button {
+    flex: 1 !important;
+    padding: 10px 6px !important;
+    font-size: 13.5px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 10px !important;
+    white-space: nowrap !important;
+  }
+}
