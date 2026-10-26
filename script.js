@@ -24,6 +24,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Initial check on page load
   updateThemeDisplay(localStorage.getItem("theme") === "dark");
+  // Mobile Back Button Safe:
+  window.addEventListener("pageshow", () => {
+    updateThemeDisplay(localStorage.getItem("theme") === "dark");
+  });
 
   function handleThemeToggle() {
     body.classList.toggle("dark-mode");
