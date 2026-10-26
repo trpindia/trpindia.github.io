@@ -1806,8 +1806,6 @@ body.dark-mode .desktop-category-cart {
 /* 1. Modal open hone par background page freeze (Desktop + Mobile) */
 body.modal-open {
   overflow: hidden !important;
-  height: 100vh !important;
-  touch-action: none !important;
 }
 
 /* 2. Mobile Specific Modal & Scroll Lock */
