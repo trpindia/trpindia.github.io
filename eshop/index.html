@@ -500,20 +500,40 @@
                 }
               }
 
-              modal.style.display = "flex";
-              document.body.classList.add("modal-open");
-            }
-          };
-        });
+              // Current scroll position lock karega
+    const currentScrollY = window.scrollY;
+    document.body.style.top = `-${currentScrollY}px`;
+    document.body.style.position = "fixed";
+    document.body.style.width = "100%";
 
-        const modal = document.getElementById("product-modal");
-        const closeModalBtn = document.getElementById("closeModal");
-        if (closeModalBtn && modal) {
-          closeModalBtn.onclick = () => { modal.style.display = "none";
-          document.body.classList.remove("modal-open");};
-          modal.onclick = (e) => { if (e.target === modal) modal.style.display = "none"; 
-          document.body.classList.remove("modal-open");};
-        }
+    modal.style.display = "flex";
+    document.body.classList.add("modal-open");
+  };
+});
+
+const modal = document.getElementById("product-modal");
+const closeModalBtn = document.getElementById("closeModal");
+
+function handleCloseModal() {
+  modal.style.display = "none";
+  document.body.classList.remove("modal-open");
+
+  // Exact usi jagah restore karega jahan user pehle tha
+  const scrollY = document.body.style.top;
+  document.body.style.position = "";
+  document.body.style.top = "";
+  document.body.style.width = "";
+  if (scrollY) {
+    window.scrollTo(0, parseInt(scrollY || "0") * -1);
+  }
+}
+
+if (closeModalBtn && modal) {
+  closeModalBtn.onclick = handleCloseModal;
+  modal.onclick = (e) => {
+    if (e.target === modal) handleCloseModal();
+  };
+}
 
         // Add to Cart
         container.querySelectorAll(".add-cart").forEach(btn => {
