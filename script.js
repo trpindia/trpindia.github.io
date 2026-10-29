@@ -450,7 +450,7 @@ function updateHeaderCount() {
     }
   });
   
- /* ---------- 10. PROJECTS PAGE SEARCH & CATEGORY FILTER ---------- */
+/* ---------- 10. PROJECTS PAGE SEARCH & CATEGORY FILTER ---------- */
   const projectSearchInput = document.getElementById("projectSearch");
   const projectSearchClearBtn = document.getElementById("projectSearchClearBtn");
   const projectCards = Array.from(document.querySelectorAll(".project-card"));
@@ -479,6 +479,7 @@ function updateHeaderCount() {
       const desc = (card.querySelector("p")?.textContent || "").toLowerCase();
       const keywords = (card.getAttribute("data-keywords") || "").toLowerCase();
 
+      // "All" par sabhi dikhenge, varna exact category match hogi
       const matchesCategory = (selectedCategory === "all" || selectedCategory === "" || cardCategory === selectedCategory);
       const matchesSearch = !q || title.includes(q) || desc.includes(q) || keywords.includes(q);
 
@@ -508,8 +509,15 @@ function updateHeaderCount() {
       projectSearchInput.focus();
     }
   });
-
-
+  
+  document.querySelectorAll(".category-menu-new .cat-item").forEach(li => {
+    li.addEventListener("click", () => {
+      document.querySelectorAll(".category-menu-new .cat-item").forEach(x => x.classList.remove("active"));
+      li.classList.add("active");
+      activeProjectCat = li.getAttribute("data-cat") || li.getAttribute("data-category") || li.textContent.trim();
+      applyProjectFilters();
+    });
+  });
                           /* ---------- 11. CATEGORY SCROLL: DRAG + AUTO-SCROLL TO CENTER ON CLICK ---------- */
   (function initCategoryScroll() {
     const container = document.querySelector('.second-center');
