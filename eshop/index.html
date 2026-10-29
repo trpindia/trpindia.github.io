@@ -644,11 +644,12 @@ document.querySelectorAll(".cart-count-val").forEach(el => {
       }
     }
 
-    function initShopFilters() {
+function initShopFilters() {
       const searchInput = document.getElementById("componentSearch");
       const searchClearBtn = document.getElementById("searchClearBtn");
       const shopHeading = document.getElementById("shopHeading");
       const strips = document.querySelectorAll(".category-row-strip");
+      const productGrid = document.getElementById("product-grid");
       let activeShopCat = "all";
 
       function runFilter() {
@@ -656,6 +657,13 @@ document.querySelectorAll(".cart-count-val").forEach(el => {
 
         if (shopHeading) {
           shopHeading.style.display = (activeShopCat.toLowerCase() === "all" && !q) ? "block" : "none";
+        }
+
+        // Agar "All" ke alawa koi category chuni ho ya search ho raha ho, toh vertical 2-column mode on hoga
+        if (activeShopCat.toLowerCase() !== "all" || q.length > 0) {
+          productGrid?.classList.add("is-filtered");
+        } else {
+          productGrid?.classList.remove("is-filtered"); // "All" par wapas normal horizontal row
         }
 
         if (searchInput) {
