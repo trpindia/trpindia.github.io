@@ -2023,8 +2023,7 @@ body.components-page #shopHeading.section-title2 {
     width: calc(50% - 5px) !important;
     margin: 0 !important;
   }
-}
-/* Khali category strips ko zabardasti 100% gayab karega */
+  /* Khali category strips ko zabardasti 100% gayab karega */
 .category-row-strip.strip-hidden {
   display: none !important;
   padding: 0 !important;
@@ -2032,3 +2031,5 @@ body.components-page #shopHeading.section-title2 {
   gap: 0 !important;
   height: 0 !important;
 }
+}
+
