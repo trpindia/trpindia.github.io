@@ -1947,20 +1947,55 @@ body.modal-open {
   }
 }
 
-/* ========================================================
-   📱 E-SHOP: FILTERED CATEGORY 2-COLUMN VERTICAL GRID FIX
-   ======================================================== */
+/* ==========================================================================
+   📱 E-SHOP: ZERO GAP + STICKY FOOTER + 2-COLUMN GRID (COMPLETE COMBO)
+   ========================================================================== */
+
+/* 1. Page ko full height flexbox banayein taaki footer hamesha bottom par lock rahe */
+html, 
+body.components-page {
+  min-height: 100vh !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+/* 2. Main content poori height occupy karega aur footer ko neeche dhakelega */
+body.components-page main {
+  flex: 1 0 auto !important;
+  min-height: auto !important;
+  margin-top: 0 !important;
+  padding: 0 !important;
+}
+
+/* 3. Footer screen ke bottom par chipka rahega (0 products par bhi) */
+body.components-page footer {
+  margin-top: auto !important;
+  width: 100% !important;
+}
+
+/* 4. Category Nav ke theek neeche ki faltu white space khatam karein */
+body.components-page .store {
+  padding-top: 4px !important;
+  margin-top: 0 !important;
+}
+
+body.components-page #shopHeading.section-title2 {
+  margin-top: 10px !important;
+  margin-bottom: 6px !important;
+}
+
+/* 5. Mobile view par Top Alignment aur Filtered 2-Column Grid */
 @media (max-width: 768px) {
-  /* 1. Category select hone par vertical space gap (centering) khatam karein */
-  main {
-    min-height: auto !important;
-  }
-  
-  .store {
-    padding-top: 10px !important;
+  body.components-page .second-nav {
+    margin-bottom: 0 !important;
   }
 
-  /* 2. Specific Category filtered hone par side-scroll band, 2-column vertical chalu */
+  body.components-page #product-grid {
+    padding-top: 4px !important;
+    gap: 12px 10px !important;
+  }
+
+  /* Specific Category filter hone par side-scroll band, 2-column vertical chalu */
   #product-grid.is-filtered {
     display: flex !important;
     flex-direction: column !important;
@@ -1971,7 +2006,7 @@ body.modal-open {
   #product-grid.is-filtered .category-row-strip {
     display: flex !important;
     flex-direction: row !important;
-    flex-wrap: wrap !important; /* Side scroll band, neeche line me wrap karega */
+    flex-wrap: wrap !important; /* Side scroll band, neeche wrap karega */
     overflow-x: visible !important;
     overflow-y: visible !important;
     gap: 12px 10px !important;
@@ -1980,7 +2015,7 @@ body.modal-open {
     align-content: flex-start !important;
   }
 
-  /* Har card 50% width ka rahega taaki 2-column me aaye */
+  /* Har card barabar 50% width ka banega */
   #product-grid.is-filtered .category-row-strip .product-card {
     flex: 0 0 calc(50% - 5px) !important;
     min-width: calc(50% - 5px) !important;
