@@ -1,38 +1,101 @@
+/* ==========================================================================
+   TABLE OF CONTENTS:
+   1. FONTS & ROOT RESETS
+   2. GLOBAL BASE & TYPOGRAPHY
+   3. FIXED HEADER & NAVIGATION
+   4. STICKY CATEGORY NAV & SEARCH (PROJECTS & E-SHOP)
+   5. HERO SECTION & AI AMBIENT GLOW ANIMATION
+   6. PROJECT & PRODUCT CARDS (DESKTOP & MOBILE RESPONSIVE)
+   7. ABOUT US ACCORDION & FEATURED VIDEOS
+   8. CONTACT PAGE & SOCIAL ICONS
+   9. APPS PAGE LAYOUT
+   10. INTERACTION EFFECTS (TAP & SHIMMER)
+   11. MOBILE DRAWER & APP-STYLE MENU
+   12. FOOTER & DARK MODE THEME STYLES
+   ========================================================================== */
+
+/* ==========================================================================
+   1. FONTS & ROOT RESETS
+   ========================================================================== */
 @import url('https://fonts.googleapis.com/css2?family=Balsamiq+Sans:wght@700&family=Fredoka:wght@600;700&display=swap');
-html, body {
-  touch-action: pan-x pan-y; /* Pinch zoom disable karta hai mobile par */
+
+@font-face {
+  font-family: 'Fountain';
+  src: url('fonts/Fountain.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
 }
 
-/* 🚫 PREVENT SIDE OVERFLOW WITHOUT BREAKING STICKY HEADERS */
-html, body {
-  max-width: 100% !important;
-  overflow-x: clip !important; /* 'hidden' sticky ko disable kar deta hai, 'clip' safe rakhta hai */
-  position: relative;
-}
-
-/* Ensure all containers stay inside screen limits */
-* {
+*,
+*::before,
+*::after {
   box-sizing: border-box !important;
-}
-/* 💻 Desktop View: Break tag ko hide karke ek single line me rakhein */
-.mobile-break {
-  display: none;
+  -webkit-tap-highlight-color: transparent !important;
 }
 
-/* 📱 Mobile View (max-width: 650px): Only mobile par break enable karein */
-@media (max-width: 650px) {
-  .hero h1 br.mobile-break,
-  h1 br.mobile-break {
-    display: block !important;
-  }
+html, body {
+  margin: 0 !important;
+  padding: 0 !important;
+  max-width: 100% !important;
+  overflow-x: clip !important; /* 'clip' prevents horizontal scroll without breaking sticky context */
+  position: relative;
+  touch-action: pan-x pan-y;
 }
-/* ===== Global Styles ===== */
+
+/* Global Selection & Dragging Restrictions */
+body,
+.project-card,
+.product-card,
+.card,
+.second-nav,
+header,
+footer {
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  user-select: none !important;
+}
+
+img {
+  -webkit-user-drag: none !important;
+  user-drag: none !important;
+  pointer-events: none !important;
+}
+
+/* Allow text selection & caret ONLY in editable form controls */
+input,
+textarea {
+  -webkit-user-select: text !important;
+  -moz-user-select: text !important;
+  -ms-user-select: text !important;
+  user-select: text !important;
+  pointer-events: auto !important;
+  caret-color: auto !important;
+}
+
+.project-card,
+.product-card,
+.card,
+.project-card *,
+.product-card *,
+.card * {
+  caret-color: transparent !important;
+  outline: none !important;
+}
+
+*:focus,
+*:active {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* ==========================================================================
+   2. GLOBAL BASE & TYPOGRAPHY
+   ========================================================================== */
 body {
   font-family: "Segoe UI", Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  background: #fff;
-  color: #333;
+  background: #ffffff;
+  color: #333333;
 }
 
 h1, h2, h3 {
@@ -48,838 +111,57 @@ a {
   display: inline-block;
   padding: 10px 20px;
   background: #ffcc00;
-  color: #000;
+  color: #000000;
   border-radius: 6px;
   font-weight: bold;
-  transition: 0.3s;
-}
-.btn:hover {
-  background: #ff9900;
-  color: #fff;
+  transition: 0.3s ease;
 }
 
+.btn:hover {
+  background: #ff9900;
+  color: #ffffff;
+}
+
+.mobile-break {
+  display: none;
+}
+
+@media (max-width: 650px) {
+  .hero h1 br.mobile-break,
+  h1 br.mobile-break {
+    display: block !important;
+  }
+}
+
+/* ==========================================================================
+   3. FIXED HEADER & NAVIGATION
+   ========================================================================== */
 header {
   height: 46px !important;
+  min-height: 46px !important;
   position: fixed !important;
   top: 0 !important;
   left: 0 !important;
   width: 100% !important;
   z-index: 1000 !important;
   background: #0037ff !important;
-  color: #fff !important;
+  color: #ffffff !important;
   display: flex !important;
   justify-content: space-between !important;
   align-items: center !important;
-  padding: 12px 20px !important;
+  padding: 0 20px !important;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12) !important;
   margin: 0 !important;
-  box-sizing: border-box !important;
-}
-
-header #logo {
-  font-size: 22px;
-  font-weight: bold;
-}
-header nav ul {
-  list-style: none;
-  display: flex;
-  gap: 20px;
-  padding: 0;
-  margin: 0;
-}
-header nav ul li a {
-  color: white;
-  font-weight: bold;
-}
-header nav ul li a.active {
-  border-bottom: 2px solid #ffcc00;
-}
-
-/* ========================================================
-   ✨ AI AMBIENT GLOW + TECH DOT GRID HERO BACKGROUND
-   ======================================================== */
-.hero,
-.hero-section {
-  position: relative;
-  overflow: hidden;
-  padding: 60px 20px 50px 20px;
-  text-align: center;
-  background-color: #ffffff;
-  /* Multi-layer Background: 
-     1. Bottom smooth fade into pure white 
-     2. Moving AI color radial mesh 
-     3. Subtle tech dot pattern */
-  background-image: 
-    linear-gradient(to bottom, transparent 60%, #ffffff 100%),
-    radial-gradient(#94a3b8 1.1px, transparent 1.1px),
-    radial-gradient(circle at 50% 30%, rgba(56, 189, 248, 0.18), rgba(99, 102, 241, 0.12), transparent 70%);
-  background-size: 100% 100%, 22px 22px, 200% 200%;
-  animation: ambientAIFlow 12s ease-in-out infinite alternate;
-}
-
-/* Dheeme-dheeme AI Ambient Color Movement Animation */
-@keyframes ambientAIFlow {
-  0% {
-    background-position: 0 0, 0 0, 0% 0%;
-  }
-  50% {
-    background-position: 0 0, 0 0, 100% 50%;
-  }
-  100% {
-    background-position: 0 0, 0 0, 0% 100%;
-  }
-}
-
-/* Subtitle clean contrast */
-.hero p,
-.hero-section p {
-  color: #475569;
-  font-size: 15px;
-  font-weight: 500;
-  margin-top: 8px;
-  position: relative;
-  z-index: 2;
-}
-
-/* Ensure Button stays on top layer */
-.hero .hero-btn-group,
-.hero-section .hero-btn-group {
-  position: relative;
-  z-index: 2;
-}
-/* Exact Desktop Look for Both Mobile & PC */
-.hero h1,
-.hero-section h1,
-h1 {
-  font-family: 'Balsamiq Sans', 'Fredoka', 'Comic Sans MS', cursive, sans-serif !important;
-  font-weight: 700 !important;
-  letter-spacing: 1.5px;
-  line-height: 1.3;
-}
-/* 🌙 Dark Mode Support for AI Hero Glow */
-body.dark-mode .hero,
-body.dark-mode .hero-section {
-  background-color: #0f172a;
-  background-image: 
-    linear-gradient(to bottom, transparent 60%, #0f172a 100%),
-    radial-gradient(#334155 1.1px, transparent 1.1px),
-    radial-gradient(circle at 50% 30%, rgba(56, 189, 248, 0.12), rgba(129, 140, 248, 0.1), transparent 70%);
-}
-
-body.dark-mode .hero p,
-body.dark-mode .hero-section p {
-  color: #94a3b8;
-}
-@font-face {
-  font-family: 'Fountain';
-  src: url('fonts/Fountain.ttf') format('truetype'); /* Font file ka sahi path dein */
-  font-weight: normal;
-  font-style: normal;
-}
-/* ========================================================
-   🌙 DARK MODE: AI AMBIENT GLOW + TECH DOTS + BOTTOM FADE
-   ======================================================== */
-body.dark-mode .hero,
-body.dark-mode .hero-section {
-  /* Match base background with your dark theme */
-  background-color: #121212 !important;
-  
-  /* Multi-layer Dark Background:
-     1. Bottom smooth fade into exact Dark body color (#121212)
-     2. Subtle glowing Tech Dots (#334155)
-     3. Deep Neon Cyan & Electric Indigo AI Ambient Glow */
-  background-image: 
-    linear-gradient(to bottom, transparent 55%, #121212 100%),
-    radial-gradient(rgba(148, 163, 184, 0.22) 1.1px, transparent 1.1px),
-    radial-gradient(circle at 50% 35%, rgba(0, 212, 255, 0.16), rgba(99, 102, 241, 0.14), rgba(15, 23, 42, 0.05) 75%) !important;
-  background-size: 100% 100%, 22px 22px, 200% 200% !important;
-  animation: ambientAIFlowDark 14s ease-in-out infinite alternate !important;
-  border-bottom: 0px solid rgba(255, 255, 255, 0.06);
-}
-
-/* Dark Mode Smooth AI Movement */
-@keyframes ambientAIFlowDark {
-  0% {
-    background-position: 0 0, 0 0, 0% 0%;
-  }
-  50% {
-    background-position: 0 0, 0 0, 100% 50%;
-  }
-  100% {
-    background-position: 0 0, 0 0, 0% 100%;
-  }
-}
-
-/* Subtitle for Dark Mode */
-body.dark-mode .hero p,
-body.dark-mode .hero-section p {
-  color: #94a3b8 !important;
-}
-
-/* ========================================================
-   🌟 ABOUT US ACCORDION SECTION (JS INTEGRATED)
-   ======================================================== */
-.about {
-  padding: 20px;
-  margin: 0 auto;
-}
-
-.about-toggle-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  cursor: pointer;
-  padding: 12px 0;
-  border-bottom: 1px solid #e2e8f0;
-  user-select: none;
-}
-
-.about-toggle-header h2 {
-  color: #0044cc;
-  margin: 0;
-  font-size: 20px;
-}
-
-.about-arrow {
-  font-size: 18px;
-  color: #0044cc;
-  display: inline-block;
-  transition: transform 0.3s ease;
-}
-
-/* Hidden state (Initial) */
-#aboutContent {
-  max-height: 0;
-  opacity: 0;
-  overflow: hidden;
-  transition: max-height 0.4s ease, opacity 0.3s ease, margin-top 0.3s ease;
-  margin-top: 0;
-}
-
-/* Show state (Jab JS .show add karega) */
-#aboutContent.show {
-  max-height: 1000px !important;
-  opacity: 1 !important;
-  margin-top: 15px !important;
-}
-
-#aboutContent p {
-  line-height: 1.6;
-  margin-bottom: 12px;
-  color: #333333;
-  font-size: 14px;
-}
-
-/* 🌙 Dark Mode Support */
-body.dark-mode .about-toggle-header h2,
-body.dark-mode .about-arrow {
-  color: #6699ff !important;
-}
-
-body.dark-mode #aboutContent p {
-  color: #cccccc !important;
-}
-}
-/* ========================================================
-   📂 1. FEATURED PROJECTS (HOME PAGE)
-   ======================================================== */
-.projects {
-  padding: 50px 20px;
-  text-align: center;
-}
-
-.cards {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 20px;
-  margin-top: 20px;
-}
-
-.card {
-  background: #ffffff;
-  padding: 15px;
-  border-radius: 12px;
-  width: 220px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.08);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  box-sizing: border-box;
-}
-
-.card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0px 8px 18px rgba(0, 0, 0, 0.12);
-}
-
-.card h3 {
-  color: #0044cc;
-  font-size: 16px;
-  margin: 10px 0;
-}
-
-.card img {
-  width: 100%;
-  height: 140px;
-  object-fit: cover;
-  border-radius: 8px;
-}
-
-.card .btn {
-  margin-top: 10px;
-  background: #0044cc;
-  color: #ffffff;
-  padding: 8px 16px;
-  border-radius: 6px;
-  text-decoration: none;
-  font-weight: 700;
-  display: inline-block;
-  transition: background 0.2s ease;
-}
-
-.card .btn:hover {
-  background: #002a80;
-}
-/* ===== All Projects Page ===== */
-.all-projects {
-  padding: 50px 20px;
-  text-align: center;
-}
-.project-grid {
-  display: flex;
-  flex-wrap: wrap;
-  padding: 30px 10px;
-  gap: 20px;
-  justify-content: center;
-  align-content: flex-start !important; /* Top alignment on desktop */
-  min-height: 300px;
-}
-
-/* Original Fixed Desktop Box Size with Click/Hover Feedback */
-.project-card {
-  width: 220px;   /* Exact Fixed width */
-  flex: 0 0 auto; /* Prevent stretching */
-  background: white;
-  border-radius: 10px;
-  padding: 10px;
-  text-align: center;
-  box-shadow: 0px 0px 6px rgba(0,0,0,0.1);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  box-sizing: border-box;
-  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s ease;
-  cursor: pointer;
-}
-
-.project-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0px 6px 14px rgba(0,0,0,0.15);
-}
-
-.project-card:active {
-  transform: scale(0.97); /* Subtle card press feedback */
-}
-
-.project-card img {
-  width: auto;
-  height: 150px;
-  object-fit: contain;
-  border-radius: 8px;
-  margin-bottom: 10px;
-  opacity: 0;
-  transform: scale(0.98);
-  transition: opacity 0.6s ease, transform 0.6s ease;
-}
-
-.project-card img.loaded {
-  opacity: 1;
-  transform: scale(1);
-}
-
-.project-card h3 {
-  color: #0044cc;
-  font-size: 14px;
-  margin: 4px 0;
-  line-height: 1.3;
-}
-
-.project-card p {
-  font-size: 11.5px;
-  color: #555555;
-  margin: 0 0 10px 0;
-  line-height: 1.35;
-  flex-grow: 1;
-}
-
-/* Open File Action Button Click Effect */
-.project-card .btn,
-.project-card a.btn {
-  background: #ffcc00;
-  color: #000000;
-  font-weight: 800;
-  font-size: 11px;
-  padding: 8px 12px;
-  border-radius: 8px;
-  text-decoration: none;
-  display: block;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  transition: transform 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease;
-}
-
-.project-card .btn:hover {
-  background: #e6b800;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-}
-
-.project-card .btn:active {
-  transform: scale(0.92); /* Crisp Button Tap Effect */
-}
-
-/* ========================================================
-   📱 MOBILE HORIZONTAL CARDS (PERFECT CENTER ALIGNED TEXT)
-   ======================================================== */
-@media (max-width: 650px) {
-
-  .project-grid {
-    display: flex !important;
-    flex-direction: column !important;
-    justify-content: flex-start !important; /* Forces cards to start from TOP */
-    align-items: stretch !important;
-    gap: 12px !important;
-    padding: 10px 12px !important;
-  }
-
-  /* Rectangular Horizontal Card Box */
-  .project-card {
-    display: flex !important;
-    flex-direction: row !important;
-    align-items: center !important;
-    justify-content: space-between !important;
-    background: #ffffff;
-    border: 1px solid #e2e8f0;
-    border-radius: 14px;
-    padding: 10px 12px;
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.04);
-    width: 100% !important;
-    box-sizing: border-box !important;
-  }
-
-  .project-card:active {
-    transform: scale(0.97) !important;
-  }
-
-  /* Left Side: Image */
-  .project-card img {
-    width: 75px !important;
-    height: 75px !important;
-    min-width: 75px !important;
-    object-fit: cover !important;
-    border-radius: 10px !important;
-    flex-shrink: 0 !important;
-    margin-bottom: 0 !important;
-    background: #f8fafc;
-  }
-
-  /* Center Area: Title & Description Container */
-  .project-card .project-info {
-    flex: 1 !important;
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    justify-content: center !important;
-    padding: 0 8px !important;
-    text-align: center !important;
-    overflow: hidden;
-  }
-
-  /* Title: Centered, Blue Theme Color */
-  .project-card .project-info h3 {
-    font-size: 13.5px !important;
-    font-weight: 700 !important;
-    color: #0044cc !important;
-    margin: 0 0 4px 0 !important;
-    line-height: 1.25 !important;
-    text-align: center !important;
-    width: 100% !important;
-  }
-
-  /* Description: Directly below title, Centered */
-  .project-card .project-info p {
-    font-size: 11px !important;
-    color: #555555 !important;
-    margin: 0 !important;
-    line-height: 1.3 !important;
-    text-align: center !important;
-    width: 100% !important;
-  }
-
-  /* Right Side: Yellow Button */
-  .project-card .btn,
-  .project-card a.btn {
-    flex-shrink: 0 !important;
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    gap: 4px !important;
-    background: #ffcc00 !important;
-    color: #000000 !important;
-    font-weight: 800 !important;
-    font-size: 10px !important;
-    padding: 8px 10px !important;
-    border-radius: 8px !important;
-    border: none !important;
-    text-decoration: none !important;
-    white-space: nowrap !important;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1) !important;
-  }
-
-  .project-card .btn::after {
-    content: " ➔";
-    font-size: 11px;
-  }
-
-  /* Dark Mode Styling */
-  body.dark-mode .project-card {
-    background: #1e1e1e !important;
-    border-color: #333333 !important;
-  }
-
-  body.dark-mode .project-card .project-info h3 {
-    color: #6699ff !important;
-  }
-
-  body.dark-mode .project-card .project-info p {
-    color: #cccccc !important;
-  }
-}
-/* ===== FEATURED VIDEOS SECTION ===== */
-.featured-videos {
-  text-align: left;
-  padding: 60px 0px;
-  background: #fff;
-}
-
-.featured-videos h2 {
-  text-align: left;              /* Text ko left align karne ke liye */
-  margin-bottom: 35px;
-  display: inline-block;         /* Background sirf text jitna hi bada rahe */
-  padding: 8px 24px 8px 16px;    /* Text ke andar space (Top Right Bottom Left) */
-  background-color: #0056b3;     /* Aapki theme se match karta hua Dark Blue color (Aap change kar sakte hain) */
-  color: #ffffff;                /* Text color white taaki dark background par saaf dikhe */
-  font-size: 1.5rem;             /* Font size (Aap apne hisab se customize kar sakte hain) */
-  font-weight: bold;
-  
-  /* Left side flat aur right side round border radius */
-  border-radius: 0px 30px 30px 0px; 
-  
-  /* Modern clean look ke liye thodi si shadow */
-  box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.1); 
-}
-
-.video-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 30px;
-  justify-items: center;
-}
-
-.video-card {
-  background: white;
-  border-radius: 15px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  padding: 15px;
-  max-width: 360px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.video-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
-}
-
-.video-card iframe {
-  width: 100%;
-  aspect-ratio: 16 / 9; /* Thumbnail ke jaisa perfect ratio */
-  border-radius: 10px;
-}
-
-.video-card h3 {
-  font-size: 1.1rem;
-  color: #222;
-  margin-top: 10px;
-}
-
-/* ===== Dark Mode Support ===== */
-body.dark-mode .featured-videos {
-  background: #121212;
-}
-
-body.dark-mode .video-card {
-  background: #1e1e1e;
-  color: white;
-}
-
-body.dark-mode .video-card h3 {
-  color: #ffffff;
-}
-
-/* Search Box */
-#searchBox {
-  width: 80%;
-  max-width: 200px;
-  padding: 10px;
-  margin: 20px auto;
-  display: block;
-  border: 2px solid #007BFF;
-  border-radius: 8px;
-  font-size: 16px;
-}
-
-/* 🔍 Dark mode search box */
-body.dark-mode .searchbox input {
-  background-color: #222;  /* Soft black look */
-  color: #fff;             /* White text */
-  border-color: #555;      /* Subtle border */
-}
-
-/* ===== Contact Page ===== */
-.contact {
-  padding: 50px 20px;
-  max-width: 800px;
-  width: 100%;
-  margin: auto;
-  text-align: center;
-  box-sizing: border-box !important;
-  overflow-x: hidden;
-}
-
-.contact h2 {
-  color: #0044cc;
-}
-
-.contact-form {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  margin: 30px auto;
-  max-width: 500px;
-  width: 100%;
-  box-sizing: border-box !important;
-}
-
-.contact-form input,
-.contact-form textarea {
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 16px;
-  width: 100%;
-  box-sizing: border-box !important;
-}
-
-.contact-form button {
-  background: #0044cc;
-  color: white;
-  border: none;
-  cursor: pointer;
-  width: 100%;
-  padding: 12px;
-  border-radius: 6px;
-  font-size: 16px;
-  box-sizing: border-box !important;
-}
-
-.contact-form button:hover {
-  background: #002a80;
-}
-
-.contact-info {
-  margin-top: 30px;
-  line-height: 1.8;
-  width: 100%;
-  box-sizing: border-box !important;
-}
-
-.contact-info a {
-  color: #0044cc;
-  font-weight: bold;
-}
-
-.app-card {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start; /* Image left, text center, button right */
-  background: #fafafa;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-  max-width: 850px;   /* bada card center me */
-  width: 90%;         /* responsive */
-  margin: 20px auto;  /* space between cards */
-  gap: 20px;          /* image aur text ke beech gap */
-}
-
-.app-img {
-  width: 100px;
-  height: auto;
-  border-radius: 8px;
-  object-fit: contain; /* image stretch na ho */
-}
-
-.app-info {
-  flex: 1;   /* text ko expand karne ke liye */
-}
-
-.app-info h2 {
-  margin: 0;
-  font-size: 20px;
-  font-weight: bold;
-  color: #333;
-}
-
-.app-info p {
-  margin: 6px 0;
-  font-size: 15px;
-  color: #555;
-}
-
-.download-btn {
-  display: inline-block;
-  padding: 10px 20px;
-  background: #28a745;  /* Green */
-  color: white;
-  font-weight: bold;
-  text-decoration: none;
-  border-radius: 30px;
-  transition: 0.3s;
-  font-size: 15px;
-  white-space: nowrap;  /* text wrap na ho */
-}
-
-.download-btn:hover {
-  background: #218838;
-  transform: translateY(-2px);
-}
-
-/* ✅ Mobile friendly */
-@media (max-width: 600px) {
-  .app-card {
-    flex-direction: column;
-    text-align: center;
-  }
-  .app-img {
-    width: 80px;
-    margin-bottom: 10px;
-  }
-  .download-btn {
-    margin-top: 10px;
-  }
-}
-
-.apps-container {
-  display: flex;
-  flex-direction: column;
-  overflow-x: auto;
-  gap: 20px;
-  padding: 20px;
-  scroll-behavior: smooth;
-}
-
-.apps-container::-webkit-scrollbar {
-  height: 8px;
-}
-
-.apps-container::-webkit-scrollbar-thumb {
-  background: #888;
-  border-radius: 4px;
-}
-/* Dark Mode Styles */
-body.dark-mode {
-  background-color: #121212;
-  color: #ffffff;
-}
-
-/* Cards in Dark Mode */
-body.dark-mode .project-card,
-body.dark-mode .app-card {
-  background: #1e1e1e;   /* Dark grey background */
-  color: #f5f5f5;        /* White text */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
-}
-
-/* Card heading links */
-body.dark-mode .project-card h3,
-body.dark-mode .app-card h3,
-body.dark-mode .app-info h2,
-body.dark-mode .contact-info a{
-  color: #ffffff;   /* white text for headings */
-}
-
-/* Card description */
-body.dark-mode .project-card p,
-body.dark-mode .app-card p {
-  color: #cccccc;   /* Light grey for descriptions */
-}
-
-/* Download button in Dark Mode */
-/* Button styling */
-#darkModeToggle {
-  position: fixed;
-  bottom: 100px;
-  right: 20px;
-  padding: 10px 15px;
-  border: none;
-  border-radius: 25px;
-  cursor: pointer;
-  background: #0044cc;
-  color: white;
-  font-weight: bold;
-  z-index: 999 !important;
-}
-
-.card {
-  position: relative;
-  overflow: hidden;
-}
-
-.card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(90deg, #e0e0e0 25%, #f5f5f5 50%, #e0e0e0 75%);
-  background-size: 200% 100%;
-  animation: loadingShimmer 1.2s infinite;
-}
-
-.card.loaded::before {
-  display: none;
-}
-
-@keyframes loadingShimmer {
-  0% {
-    background-position: -200% 0;
-  }
-  100% {
-    background-position: 200% 0;
-  }
+  overflow: visible !important;
 }
 
 #logo {
-    text-decoration: none; /* Removes default link underline */
-    cursor: pointer;       /* Ensures the mouse pointer changes to a hand */
-    display: inline-block;
-} 
-
-/* Normal text inherits theme color */
-#logo {
+  text-decoration: none;
+  cursor: pointer;
+  display: inline-block;
   font-size: 1.5rem;
-  font-family: ui-rounded;
-  color: white;
-  justify-content: space-between;
-  align-items: center;
+  font-family: ui-rounded, sans-serif;
+  color: #ffffff;
   line-height: 1;
 }
 
@@ -889,271 +171,60 @@ body.dark-mode .app-card p {
   color: inherit;
 }
 
-/* Glow effect */
 #logo span.glow {
   color: #ffcc00;
   text-shadow: 0 0 10px #ffcc00, 0 0 20px #ffaa00;
   transform: scale(1.3);
 }
 
-.heart-icon{
-  width: 1.5em;
-  height: 1.5em;
-  vertical-align: -0.30em;
-}
-/* ===== Desktop Default ===== */
-.menu-icon {
-  display: none;
-}
-
-.mobile-menu {
-  display: none;
-}
-
-/* ===== Mobile Only ===== */
-@media (max-width: 768px) {
-  
-  header nav ul {
-    display: none !important;   /* desktop menu hide */
-  }
-  
-  .menu-icon {
-    display: block;
-    font-size: 28px;
-    cursor: pointer;
-    color: #fff;
-    z-index: 10000; /* Menu khulne par bhi hamburger button sabse upar rahega */
-    position: relative;
-  }
-
-  .mobile-menu {
-    position: fixed; /* absolute ki jagah fixed taaki poori screen cover ho */
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh; /* Mobile screen ki full height */
-    background: rgba(0, 82, 255, 0.98); /* TRP Electronics ka premium blue with light transparency */
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center; /* Saare links vertical center ho jayenge */
-    align-items: center; /* Saare links horizontal center हो जाएंगे */
-    gap: 20px; /* Links ke beech ka gap */
-    z-index: 9999;
-    box-shadow: none;
-    border-radius: 0; /* Corner rounds hata diye full screen ke liye */
-    
-    /* 🌟 Smooth Slide-down Animation Setup */
-    transform: translateY(-100%);
-    transition: transform 0.4s cubic-bezier(0.1, 0.76, 0.55, 0.94);
-  }
-
-  /* Jab JS class .show toggle karega tab screen par slide-in hoga */
-  .mobile-menu.show {
-    transform: translateY(0);
-  }
-
-  .mobile-menu a {
-    color: #fff;
-    text-decoration: none;
-    padding: 15px 0;
-    font-size: 22px; /* Text thoda bada aur premium dikhe */
-    font-weight: 600;
-    width: 80%; /* Link bar line effect ki width */
-    text-align: center;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.15); /* Sleek modern white dividers */
-    transition: all 0.3s ease;
-  }
-
-  .mobile-menu a:last-child {
-    border-bottom: none;
-  }
-
-  /* Link click active state touch response */
-  .mobile-menu a:active, .mobile-menu a:hover {
-    color: #00ffcc; /* Active selection highlight color */
-    transform: scale(1.05);
-  }
-}
-.fountain-text {
-  font-family: 'Fountain', cursive;
-  font-size: clamp(40px, 6vw, 52px);
-  font-weight: 800;
-  text-align: center;
-  letter-spacing: 1px;
-
-  /* Fountain gradient */
-  background: linear-gradient(
-    120deg,
-    #ffffff,
-    #00e5ff,
-    #00ff9d,
-    #ffeb3b,
-    #ff9800,
-    #ff4081,
-    #ffffff
-  );
-
-  background-size: 300% 300%;
-  animation: fountainFlow 6s linear infinite;
-
-  /* Text-only color effect */
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* Smooth moving animation */
-@keyframes fountainFlow {
-  0% {
-    background-position: 0% 50%;
-  }
-  100% {
-    background-position: 300% 50%;
-  }
-}
-
-/* ========================================================
-   🌟 PREMIUM SOCIAL CARDS (DESKTOP + MOBILE TOUCH OPTIMIZED)
-   ======================================================== */
-.contact-links-container {
+header nav ul {
+  list-style: none;
   display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  gap: 16px;
-  margin: 35px auto 25px;
-  width: 100%;
-  max-width: 800px;
+  gap: 20px;
+  padding: 0;
+  margin: 0;
 }
 
-/* Base Card Box */
-.social-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  padding: 12px 20px;
-  border-radius: 12px;
-  background: #ffffff;
-  color: #2c3e50;
-  font-weight: 600;
-  font-size: 15px;
-  text-decoration: none;
-  border: 2px solid #e0e6ed;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
-  user-select: none;
-  -webkit-tap-highlight-color: transparent; /* Remove blue flash on mobile tap */
-  flex-shrink: 0; /* Prevents buttons from shrinking */
-}
-
-.social-btn .btn-icon {
-  font-size: 20px;
-  transition: transform 0.25s ease;
-}
-
-/* 🎨 ORIGINAL BRAND LOGO COLORS */
-.email-btn .btn-icon { color: #ea4335; }      
-.whatsapp-btn .btn-icon { color: #25d366; }   
-.youtube-btn .btn-icon { color: #ff0000; }    
-.instagram-btn .btn-icon { color: #e1306c; }  
-
-/* 🖥️ DESKTOP HOVER EFFECT */
-@media (hover: hover) {
-  .social-btn:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
-  }
-
-  .social-btn:hover .btn-icon {
-    transform: scale(1.18);
-  }
-
-  .email-btn:hover { border-color: #ea4335; }
-  .whatsapp-btn:hover { border-color: #25d366; }
-  .youtube-btn:hover { border-color: #ff0000; }
-  .instagram-btn:hover { border-color: #e1306c; }
-}
-
-/* 📱 MOBILE TAP / TOUCH ACTIVE EFFECT (Jab ungli se dabaoge) */
-.social-btn:active {
-  transform: scale(0.94) translateY(2px); /* Button press down bounce */
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-}
-
-.email-btn:active { border-color: #ea4335; background: rgba(234, 67, 53, 0.05); }
-.whatsapp-btn:active { border-color: #25d366; background: rgba(37, 211, 102, 0.05); }
-.youtube-btn:active { border-color: #ff0000; background: rgba(255, 0, 0, 0.05); }
-.instagram-btn:active { border-color: #e1306c; background: rgba(225, 48, 108, 0.05); }
-
-/* 📱 MOBILE ONE-LINE SCROLLABLE LAYOUT */
-@media (max-width: 650px) {
-  .contact-links-container {
-    justify-content: flex-start;
-    overflow-x: auto;
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
-    padding: 10px 15px;
-    gap: 12px;
-    
-    /* Side Fade Gradient mask for smooth scroll indication */
-    mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
-    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
-  }
-
-  .contact-links-container::-webkit-scrollbar {
-    display: none; /* Clean look, no scrollbar */
-  }
-
-  .social-btn {
-    padding: 10px 16px;
-    font-size: 14px;
-    border-radius: 10px;
-  }
-}
-
-/* 🌙 DARK MODE SUPPORT */
-body.dark-mode .social-btn {
-  background: #1e1e1e;
-  border-color: #333333;
+header nav ul li a {
   color: #ffffff;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  font-weight: bold;
+  white-space: nowrap !important;
 }
 
-body.dark-mode .email-btn:active { border-color: #ea4335; }
-body.dark-mode .whatsapp-btn:active { border-color: #25d366; }
-body.dark-mode .youtube-btn:active { border-color: #ff0000; }
-body.dark-mode .instagram-btn:active { border-color: #e1306c; }
+header nav ul li a.active {
+  border-bottom: 2px solid #ffcc00;
+}
 
-@media (max-width: 700px) {
-  .second-nav {
-    top: 52px !important;
+/* Desktop links hide on smaller screens or high browser zoom */
+@media (max-width: 900px) {
+  header nav:not(#mobileMenu),
+  .desktop-nav,
+  .nav-links {
+    display: none !important;
   }
 }
 
-/* ========================================================
-   🌟 SECOND NAV & CATEGORY BAR STYLES (PROJECTS PAGE)
-   ======================================================== */
-/* ===== Sticky Category Second Nav (Projects & Components) ===== */
+/* Push page content down so it does not hide behind the 46px fixed header */
+body > *:not(header):not(.mobile-menu):not(.menu-overlay):first-of-type {
+  margin-top: 46px !important;
+}
+
+/* ==========================================================================
+   4. STICKY CATEGORY NAV & SEARCH (PROJECTS & E-SHOP)
+   ========================================================================== */
 .second-nav {
   position: sticky !important;
-  top: 45px !important; /* Header ke theek border par lock (Zero Gap) */
+  top: 46px !important; /* Locks flush under the 46px fixed header */
   z-index: 995 !important;
   width: 100% !important;
   background: #ffffff;
   border-bottom: 1px solid #dcdcdc;
-  padding: 1px 12px;
+  padding: 4px 12px;
   display: flex;
   flex-wrap: nowrap;
   align-items: center;
   gap: 15px;
-  box-shadow: 0px 6px 12px 14px rgba(255, 255, 255);
-}
-body.dark-mode .second-nav {
-  background: #000000;
-  border-bottom: 1px solid #333333;
-  box-shadow: 0px 0px 0px 0px rgba(0, 0, 0);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.05);
 }
 
 .second-left {
@@ -1170,7 +241,7 @@ body.dark-mode .second-nav {
   overflow: hidden;
 }
 
-/* 🔍 EXPANDING SEARCH BOX */
+/* Expanding Search Box */
 .search-wrapper {
   position: relative;
   display: flex;
@@ -1178,14 +249,14 @@ body.dark-mode .second-nav {
 }
 
 input#projectSearch {
-  width: 0px; /* Default Compact State */
+  width: 0px;
   height: 37px;
   padding: 0 12px 0 36px;
   border-radius: 25px;
   border: 2px solid #0044cc;
   outline: none;
   font-size: 14px;
-  background-color: #fff;
+  background-color: #ffffff;
   background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%230044cc" viewBox="0 0 16 16"><path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/></svg>');
   background-repeat: no-repeat;
   background-position: 12px center;
@@ -1200,7 +271,7 @@ input#projectSearch:focus,
 input#projectSearch.has-text {
   width: 260px;
   padding-right: 30px;
-  color: #333;
+  color: #333333;
   cursor: text;
   box-shadow: 0 4px 12px rgba(0, 68, 204, 0.15);
 }
@@ -1212,7 +283,7 @@ input#projectSearch.has-text {
   transform: translateY(-50%);
   background: none;
   border: none;
-  color: #888;
+  color: #888888;
   font-size: 14px;
   cursor: pointer;
   display: none;
@@ -1224,7 +295,7 @@ input#projectSearch.has-text {
   color: #ff3333;
 }
 
-/* 🏷️ CATEGORY MENU */
+/* Category Filter Pills */
 .category-menu-new {
   display: flex;
   gap: 10px;
@@ -1255,15 +326,14 @@ input#projectSearch.has-text {
 
 .category-menu-new .cat-item.active {
   background: #0044cc;
-  color: white;
+  color: #ffffff;
   box-shadow: 0 4px 14px rgba(0, 68, 204, 0.22);
 }
 
-/* 📱 MOBILE RESPONSIVE SCROLL & FADE */
 @media (max-width: 700px) {
   .second-nav {
     gap: 8px;
-    padding: 8px 10px;
+    padding: 6px 10px;
   }
 
   input#projectSearch:focus,
@@ -1288,145 +358,77 @@ input#projectSearch.has-text {
     padding: 0 15px;
   }
 }
-/*SECOND NAV DARKMODE */
-body.dark-mode input#projectSearch {
-  background-color: #1e1e1e;
-  border-color: #2b5cff;
-  color: #ffffff;
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%238bb3ff" viewBox="0 0 16 16"><path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/></svg>');
+
+/* Preloader for Component / Project loading */
+#page-preloader {
+  position: fixed;
+  top: 96px;
+  left: 0;
+  width: 100%;
+  height: calc(100vh - 96px);
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 80;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
 }
 
-body.dark-mode .category-menu-new .cat-item {
-  background: #1e1e1e;
-  color: #9ab6ff;
+#page-preloader.fade-out {
+  opacity: 0;
+  visibility: hidden;
 }
 
-body.dark-mode .category-menu-new .cat-item.active {
-  background: #3c6aff;
-  color: #ffffff;
-}
-/* ❌ HIDE TYPING CURSOR / CARET LINE ON ALL CARDS & CONTAINERS */
-.project-card,
-.product-card,
-.card,
-.project-card *,
-.product-card *,
-.card * {
-  caret-color: transparent !important;
-  outline: none !important;
-  -webkit-tap-highlight-color: transparent !important;
-}
-
-/* Clear selection focus ring */
-*:focus,
-*:active {
-  outline: none !important;
-  box-shadow: none !important;
+/* ==========================================================================
+   5. HERO SECTION & AI AMBIENT GLOW ANIMATION
+   ========================================================================== */
+.hero,
+.hero-section {
+  position: relative;
+  overflow: hidden;
+  padding: 60px 20px 50px 20px;
+  text-align: center;
+  background-color: #ffffff;
+  background-image: 
+    linear-gradient(to bottom, transparent 60%, #ffffff 100%),
+    radial-gradient(#94a3b8 1.1px, transparent 1.1px),
+    radial-gradient(circle at 50% 30%, rgba(56, 189, 248, 0.18), rgba(99, 102, 241, 0.12), transparent 70%);
+  background-size: 100% 100%, 22px 22px, 200% 200%;
+  animation: ambientAIFlow 12s ease-in-out infinite alternate;
 }
 
-/* Keep normal caret ONLY in actual inputs */
-input,
-textarea {
-  caret-color: auto !important;
+@keyframes ambientAIFlow {
+  0% { background-position: 0 0, 0 0, 0% 0%; }
+  50% { background-position: 0 0, 0 0, 100% 50%; }
+  100% { background-position: 0 0, 0 0, 0% 100%; }
 }
 
-.contact-links-container {
-  width: 100% !important;
-  max-width: 100% !important;
-  box-sizing: border-box;
-  overflow-x: auto; /* Enable touch scroll without overflowing parent */
-  padding: 10px;
-  padding-left: 15px;
-  padding-right: 15px;
+.hero p,
+.hero-section p {
+  color: #475569;
+  font-size: 15px;
+  font-weight: 500;
+  margin-top: 8px;
+  position: relative;
+  z-index: 2;
 }
 
-
-
-/* 🚫 DISABLE TEXT SELECTION & BLUE HIGHLIGHT ON CARDS */
-.project-card,
-.product-card,
-.card,
-.second-nav,
-header,
-footer {
-  -webkit-user-select: none !important; /* Safari / Chrome */
-  -moz-user-select: none !important;    /* Firefox */
-  -ms-user-select: none !important;     /* IE / Edge */
-  user-select: none !important;        /* Standard */
-}
-
-/* 🚫 PREVENT IMAGE DRAGGING & BLUE HIGHLIGHT */
-.project-card img,
-.product-card img,
-.card img {
-  -webkit-user-drag: none !important;
-  user-drag: none !important;
-  pointer-events: none !important; /* Prevents long-press image selection on mobile */
-}
-
-/* Allow text selection ONLY in Search Input & Textareas */
-input,
-textarea {
-  -webkit-user-select: text !important;
-  -moz-user-select: text !important;
-  -ms-user-select: text !important;
-  user-select: text !important;
-  pointer-events: auto !important;
-}
-
-/* 🚫 GLOBAL DISABLING OF TEXT SELECTION & HIGHLIGHTING */
-*,
-*::before,
-*::after {
-  -webkit-user-select: none !important; /* Safari / Chrome */
-  -moz-user-select: none !important;    /* Firefox */
-  -ms-user-select: none !important;     /* IE / Edge */
-  user-select: none !important;        /* Standard */
-  -webkit-tap-highlight-color: transparent !important; /* Mobile blue/grey box tap highlight remove */
-}
-
-/* 🚫 PREVENT ALL IMAGES FROM BEING DRAGGED OR HIGHLIGHTED */
-img {
-  -webkit-user-drag: none !important;
-  user-drag: none !important;
-  pointer-events: none !important;
-}
-
-/* ✍️ ALLOW TEXT SELECTION & TYPING ONLY FOR SEARCH/FORM INPUTS */
-input,
-textarea {
-  -webkit-user-select: text !important;
-  -moz-user-select: text !important;
-  -ms-user-select: text !important;
-  user-select: text !important;
-  pointer-events: auto !important;
-  caret-color: auto !important;
-}
-
-/* 🌟 POPUP MODAL BULLET POINTS STYLING */
-.modal-desc ul {
-  margin: 10px 0 15px 0;
-  padding-left: 20px;
-  list-style-type: disc; /* Clean Round Dots */
-}
-
-.modal-desc li {
-  font-size: 13.5px;
-  line-height: 1.6;
-  color: #444;
-  margin-bottom: 4px;
-}
-
-/* Dark Mode Bullets Color */
-body.dark-mode .modal-desc li {
-  color: #ccc;
-}
-
-/* ===== Single Hero E-Shop Button ===== */
-.hero-btn-group {
+.hero .hero-btn-group,
+.hero-section .hero-btn-group {
+  position: relative;
+  z-index: 2;
   display: flex;
   justify-content: center;
   margin-top: 25px;
+}
+
+.hero h1,
+.hero-section h1,
+h1 {
+  font-family: 'Balsamiq Sans', 'Fredoka', 'Comic Sans MS', cursive, sans-serif !important;
+  font-weight: 700 !important;
+  letter-spacing: 1.5px;
+  line-height: 1.3;
 }
 
 .hero-btn.btn-primary {
@@ -1449,7 +451,138 @@ body.dark-mode .modal-desc li {
   box-shadow: 0 8px 22px rgba(255, 170, 0, 0.55);
 }
 
-/* ===== 5th "More Projects" Card Styling ===== */
+.fountain-text {
+  font-family: 'Fountain', cursive;
+  font-size: clamp(40px, 6vw, 52px);
+  font-weight: 800;
+  text-align: center;
+  letter-spacing: 1px;
+  background: linear-gradient(120deg, #ffffff, #00e5ff, #00ff9d, #ffeb3b, #ff9800, #ff4081, #ffffff);
+  background-size: 300% 300%;
+  animation: fountainFlow 6s linear infinite;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+@keyframes fountainFlow {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 300% 50%; }
+}
+
+/* ==========================================================================
+   6. PROJECT & PRODUCT CARDS (DESKTOP & MOBILE RESPONSIVE)
+   ========================================================================== */
+.projects,
+.all-projects {
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.cards,
+.project-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  align-content: flex-start !important;
+  min-height: 300px;
+  margin-top: 20px;
+}
+
+/* Base Card Style */
+.card,
+.project-card {
+  width: 220px;
+  flex: 0 0 auto;
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 12px;
+  text-align: center;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-sizing: border-box;
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s ease;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.card:hover,
+.project-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 8px 18px rgba(0, 0, 0, 0.12);
+}
+
+.card:active,
+.project-card:active {
+  transform: scale(0.97);
+}
+
+.card img,
+.project-card img {
+  width: 100%;
+  height: 145px;
+  object-fit: contain;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  opacity: 0;
+  transform: scale(0.98);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.card img.loaded,
+.project-card img.loaded {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.card h3,
+.project-card h3 {
+  color: #0044cc;
+  font-size: 14.5px;
+  margin: 6px 0;
+  line-height: 1.3;
+}
+
+.project-card p {
+  font-size: 11.5px;
+  color: #555555;
+  margin: 0 0 10px 0;
+  line-height: 1.35;
+  flex-grow: 1;
+}
+
+/* Card Button Style */
+.card .btn,
+.project-card .btn,
+.project-card a.btn {
+  background: #ffcc00;
+  color: #000000;
+  font-weight: 800;
+  font-size: 11.5px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  text-decoration: none;
+  display: block;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.card .btn:hover,
+.project-card .btn:hover {
+  background: #e6b800;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.card .btn:active,
+.project-card .btn:active {
+  transform: scale(0.92);
+}
+
+/* 5th "More Projects" Card */
 .more-projects-card {
   text-decoration: none;
   background: linear-gradient(145deg, #f0f7ff, #e0efff) !important;
@@ -1491,15 +624,6 @@ body.dark-mode .modal-desc li {
   line-height: 1.4 !important;
 }
 
-.more-projects-card .view-all-btn {
-  background: #0056b3 !important;
-  color: #ffffff !important;
-  font-weight: 700 !important;
-  border-radius: 8px !important;
-  padding: 8px 14px !important;
-}
-
-/* Hover Effect on 5th Card */
 .more-projects-card:hover {
   transform: translateY(-6px) !important;
   border-color: #003d82 !important;
@@ -1510,170 +634,464 @@ body.dark-mode .modal-desc li {
   transform: scale(1.15) rotate(10deg);
 }
 
-/* 🌙 Dark Mode Support for 5th Card */
-body.dark-mode .more-projects-card {
-  background: linear-gradient(145deg, #182234, #121926) !important;
-  border-color: #3b82f6 !important;
+/* Mobile Horizontal Layout for Project Cards */
+@media (max-width: 650px) {
+  .project-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+    align-items: stretch !important;
+    gap: 12px !important;
+    padding: 10px 12px !important;
+  }
+
+  .project-card {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 10px 12px;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.04);
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .project-card img {
+    width: 75px !important;
+    height: 75px !important;
+    min-width: 75px !important;
+    object-fit: cover !important;
+    border-radius: 10px !important;
+    flex-shrink: 0 !important;
+    margin-bottom: 0 !important;
+    background: #f8fafc;
+  }
+
+  .project-card .project-info {
+    flex: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 8px !important;
+    text-align: center !important;
+    overflow: hidden;
+  }
+
+  .project-card .project-info h3 {
+    font-size: 13.5px !important;
+    font-weight: 700 !important;
+    color: #0044cc !important;
+    margin: 0 0 4px 0 !important;
+    line-height: 1.25 !important;
+    text-align: center !important;
+    width: 100% !important;
+  }
+
+  .project-card .project-info p {
+    font-size: 11px !important;
+    color: #555555 !important;
+    margin: 0 !important;
+    line-height: 1.3 !important;
+    text-align: center !important;
+    width: 100% !important;
+  }
+
+  .project-card .btn,
+  .project-card a.btn {
+    flex-shrink: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 4px !important;
+    background: #ffcc00 !important;
+    color: #000000 !important;
+    font-weight: 800 !important;
+    font-size: 10px !important;
+    padding: 8px 10px !important;
+    border-radius: 8px !important;
+    white-space: nowrap !important;
+  }
+
+  .project-card .btn::after {
+    content: " ➔";
+    font-size: 11px;
+  }
 }
 
-body.dark-mode .more-projects-card h3 {
-  color: #60a5fa !important;
+/* Modal Description Bullet List */
+.modal-desc ul {
+  margin: 10px 0 15px 0;
+  padding-left: 20px;
+  list-style-type: disc;
 }
 
-body.dark-mode .more-projects-card p {
-  color: #9ca3af !important;
-}
-/* ===== Footer ===== */
-footer {
-  background: #0044cc !important;
-  color: white !important;
-  text-align: center !important;
-  padding: 15px !important;
-  margin-top: 40px !important;
-}
-/* ===== Footer ===== */
-footercart {
-  background: #0044cc !important;
-  color: white !important;
-  text-align: center !important;
-  padding: 15px !important;
-  margin-top: 90px !important;
+.modal-desc li {
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: #444444;
+  margin-bottom: 4px;
 }
 
-/* ========================================================
-   ⚓ STICKY FOOTER (ONLY FOR PROJECTS PAGE)
-   ======================================================== */
-html, 
-body.projects-page {
-  height: 100%;
-  margin: 0;
+/* ==========================================================================
+   7. ABOUT US ACCORDION & FEATURED VIDEOS
+   ========================================================================== */
+.about {
+  padding: 20px;
+  margin: 0 auto;
 }
 
-body.projects-page {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
-/* Push footer down ONLY on Projects page */
-body.projects-page .all-projects,
-body.projects-page .project-grid {
-  flex: 1 0 auto;
-}
-
-body.projects-page footer,
-body.projects-page .footer {
-  margin-top: auto;
-  width: 100%;
-}
-/* PROJECT.HTML */
-/* Projects page sticky fix (Safe: No horizontal scrollbar, 100% full-page stickiness) */
-html:has(.projects-page) {
-  overflow-x: clip !important;
-  overflow-y: auto !important;
-}
-
-/* Projects page sticky fix (Safe for all other pages) */
-body.projects-page {
-  overflow-x: auto !important;
-  overflow-y: visible !important;
-  scrollbar-width: none !important; /* Firefox me horizontal bar hide karega */
-}
-
-body.projects-page::-webkit-scrollbar {
-  display: none !important; /* Chrome / Safari / Edge me horizontal bar hide karega */
-}
-
-/* CARD AREA PRELOADER ONLY (Header aur Category Nav visible rahenge) */
-/* CARD AREA PRELOADER (Gap bilkul khatam) */
-#page-preloader {
-  position: fixed;
-  top: 110px; /* 130px se ghatakar 110px karein taaki category bar ke neeche chipak jaye */
-  left: 0;
-  width: 100%;
-  height: calc(100vh - 110px);
-  background-color: #ffffff;
+.about-toggle-header {
   display: flex;
   align-items: center;
-  justify-content: center;
-  z-index: 80; /* second-nav (90) aur header (100) ke theek neeche */
-  transition: opacity 0.4s ease, visibility 0.4s ease;
+  justify-content: space-between;
+  cursor: pointer;
+  padding: 12px 0;
+  border-bottom: 1px solid #e2e8f0;
+  user-select: none;
 }
 
-/* Dark mode compatibility */
-body.dark-mode #page-preloader {
-  background-color: #121212;
+.about-toggle-header h2 {
+  color: #0044cc;
+  margin: 0;
+  font-size: 20px;
 }
 
-#page-preloader.fade-out {
+.about-arrow {
+  font-size: 18px;
+  color: #0044cc;
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+#aboutContent {
+  max-height: 0;
   opacity: 0;
-  visibility: hidden;
+  overflow: hidden;
+  transition: max-height 0.4s ease, opacity 0.3s ease, margin-top 0.3s ease;
+  margin-top: 0;
 }
 
-/* ===================================================
-   DESKTOP ZOOM OVERLAP FIX (Header & Second Nav Safe)
-   =================================================== */
-
-/* 1. Header ko flexible banayein taaki zoom par text bahar na gire */
-header {
-  min-height: 46px;
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  box-sizing: border-box;
-  position: relative !important; /* Fixed/Sticky se overlap band hoga */
-  overflow: visible;
+#aboutContent.show {
+  max-height: 1000px !important;
+  opacity: 1 !important;
+  margin-top: 15px !important;
 }
 
-/* 2. Nav links text kabhi doosri line par toot kar overlap na ho */
-.nav-links a, 
-.desktop-nav a,
-header nav a {
-  white-space: nowrap !important;
+#aboutContent p {
+  line-height: 1.6;
+  margin-bottom: 12px;
+  color: #333333;
+  font-size: 14px;
 }
 
-/* 3. Category bar (second-nav) header ke neeche alag layer mein rahe */
-.second-nav {
-  position: sticky;
-  top: 60px;
+.featured-videos {
+  text-align: left;
+  padding: 60px 0px;
+  background: #ffffff;
+}
+
+.featured-videos h2 {
+  text-align: left;
+  margin-bottom: 35px;
+  display: inline-block;
+  padding: 8px 24px 8px 16px;
+  background-color: #0056b3;
+  color: #ffffff;
+  font-size: 1.5rem;
+  font-weight: bold;
+  border-radius: 0px 30px 30px 0px;
+  box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.video-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  justify-items: center;
+}
+
+.video-card {
+  background: #ffffff;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  max-width: 360px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.video-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.video-card iframe {
   width: 100%;
-  background-color: #ffffff;
-  z-index: 900;
+  aspect-ratio: 16 / 9;
+  border-radius: 10px;
+}
+
+.video-card h3 {
+  font-size: 1.1rem;
+  color: #222222;
+  margin-top: 10px;
+}
+
+/* ==========================================================================
+   8. CONTACT PAGE & SOCIAL ICONS
+   ========================================================================== */
+.contact {
+  padding: 50px 20px;
+  max-width: 800px;
+  width: 100%;
+  margin: auto;
+  text-align: center;
+}
+
+.contact h2 {
+  color: #0044cc;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin: 30px auto;
+  max-width: 500px;
+  width: 100%;
+}
+
+.contact-form input,
+.contact-form textarea {
+  padding: 12px;
+  border: 1px solid #cccccc;
+  border-radius: 6px;
+  font-size: 16px;
+  width: 100%;
+}
+
+.contact-form button {
+  background: #0044cc;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  padding: 12px;
+  border-radius: 6px;
+  font-size: 16px;
+  transition: background 0.2s ease;
+}
+
+.contact-form button:hover {
+  background: #002a80;
+}
+
+.contact-info {
+  margin-top: 30px;
+  line-height: 1.8;
+  width: 100%;
+}
+
+.contact-info a {
+  color: #0044cc;
+  font-weight: bold;
+}
+
+.contact-links-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin: 35px auto 25px;
+  width: 100%;
+  max-width: 800px;
   box-sizing: border-box;
-  clear: both;
-  position: sticky !important;
-  top: 0 !important;
-  width: 100% !important;
-  margin-top: 0 !important;
-  clear: both !important;
 }
 
-/* Dark mode ke liye second-nav background solid rahe */
-body.dark-mode .second-nav {
-  background-color: #121212 !important;
+.social-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px 20px;
+  border-radius: 12px;
+  background: #ffffff;
+  color: #2c3e50;
+  font-weight: 600;
+  font-size: 15px;
+  text-decoration: none;
+  border: 2px solid #e0e6ed;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
+  user-select: none;
+  flex-shrink: 0;
 }
 
-/* Jab screen choti ho ya max zoom ho, desktop links ko chupayein */
-@media (max-width: 900px) {
-  /* Jo bhi class desktop nav links ki hai unhe strictly hide karein */
-  header nav:not(#mobileMenu),
-  .desktop-nav,
-  .nav-links {
-    display: none !important;
+.social-btn .btn-icon {
+  font-size: 20px;
+  transition: transform 0.25s ease;
+}
+
+.email-btn .btn-icon { color: #ea4335; }      
+.whatsapp-btn .btn-icon { color: #25d366; }   
+.youtube-btn .btn-icon { color: #ff0000; }    
+.instagram-btn .btn-icon { color: #e1306c; }  
+
+@media (hover: hover) {
+  .social-btn:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
   }
+  .social-btn:hover .btn-icon { transform: scale(1.18); }
+  .email-btn:hover { border-color: #ea4335; }
+  .whatsapp-btn:hover { border-color: #25d366; }
+  .youtube-btn:hover { border-color: #ff0000; }
+  .instagram-btn:hover { border-color: #e1306c; }
 }
 
-/* ========================================================
-   CLEAN APP-STYLE MOBILE DRAWER (ONLY MOBILE: <= 768px)
-   ======================================================== */
+.social-btn:active {
+  transform: scale(0.94) translateY(2px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.email-btn:active { border-color: #ea4335; background: rgba(234, 67, 53, 0.05); }
+.whatsapp-btn:active { border-color: #25d366; background: rgba(37, 211, 102, 0.05); }
+.youtube-btn:active { border-color: #ff0000; background: rgba(255, 0, 0, 0.05); }
+.instagram-btn:active { border-color: #e1306c; background: rgba(225, 48, 108, 0.05); }
+
+@media (max-width: 650px) {
+  .contact-links-container {
+    justify-content: flex-start;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    padding: 10px 15px;
+    gap: 12px;
+    mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
+  }
+  .contact-links-container::-webkit-scrollbar { display: none; }
+  .social-btn { padding: 10px 16px; font-size: 14px; border-radius: 10px; }
+}
+
+/* ==========================================================================
+   9. APPS PAGE LAYOUT
+   ========================================================================= */
+.apps-container {
+  display: flex;
+  flex-direction: column;
+  overflow-x: auto;
+  gap: 20px;
+  padding: 20px;
+  scroll-behavior: smooth;
+}
+
+.apps-container::-webkit-scrollbar { height: 8px; }
+.apps-container::-webkit-scrollbar-thumb { background: #888888; border-radius: 4px; }
+
+.app-card {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  background: #fafafa;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-width: 850px;
+  width: 90%;
+  margin: 20px auto;
+  gap: 20px;
+}
+
+.app-img {
+  width: 100px;
+  height: auto;
+  border-radius: 8px;
+  object-fit: contain;
+}
+
+.app-info { flex: 1; }
+.app-info h2 { margin: 0; font-size: 20px; font-weight: bold; color: #333333; }
+.app-info p { margin: 6px 0; font-size: 15px; color: #555555; }
+
+.download-btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background: #28a745;
+  color: #ffffff;
+  font-weight: bold;
+  text-decoration: none;
+  border-radius: 30px;
+  transition: 0.3s ease;
+  font-size: 15px;
+  white-space: nowrap;
+}
+
+.download-btn:hover {
+  background: #218838;
+  transform: translateY(-2px);
+}
+
+@media (max-width: 600px) {
+  .app-card { flex-direction: column; text-align: center; }
+  .app-img { width: 80px; margin-bottom: 10px; }
+  .download-btn { margin-top: 10px; }
+}
+
+/* ==========================================================================
+   10. INTERACTION EFFECTS (TAP & SHIMMER)
+   ========================================================================== */
+.tap-effect {
+  transition: transform 0.12s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.12s ease !important;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.tap-effect:active {
+  transform: scale(0.94) translateY(1px) !important;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2) !important;
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, #e0e0e0 25%, #f5f5f5 50%, #e0e0e0 75%);
+  background-size: 200% 100%;
+  animation: loadingShimmer 1.2s infinite;
+}
+
+.card.loaded::before { display: none; }
+
+@keyframes loadingShimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* ==========================================================================
+   11. MOBILE DRAWER & APP-STYLE MENU
+   ========================================================================== */
+.menu-icon { display: none; }
+.mobile-menu { display: none; }
+
 @media (max-width: 768px) {
+  header nav ul { display: none !important; }
 
-  /* Desktop floating dark mode button hide on mobile */
-  #darkModeToggle {
-    display: none !important;
+  .menu-icon {
+    display: block;
+    font-size: 28px;
+    cursor: pointer;
+    color: #ffffff;
+    z-index: 10000;
+    position: relative;
   }
 
-  /* 1. Background Overlay (Clean dark tint + subtle blur) */
+  #darkModeToggle { display: none !important; }
+
   .menu-overlay {
     position: fixed !important;
     inset: 0 !important;
@@ -1691,7 +1109,6 @@ body.dark-mode .second-nav {
     visibility: visible !important;
   }
 
-  /* 2. Drawer Container: Full Height, Right Side, Curved Left */
   #mobileMenu.mobile-menu {
     position: fixed !important;
     top: 0 !important;
@@ -1700,33 +1117,28 @@ body.dark-mode .second-nav {
     width: 280px !important;
     max-width: 82% !important;
     height: 100vh !important;
-    height: 100dvh !important; /* Mobile dynamic viewport */
+    height: 100dvh !important;
     background-color: #ffffff !important;
     border-radius: 20px 0 0 20px !important;
     box-shadow: -8px 0 30px rgba(0, 0, 0, 0.25) !important;
     z-index: 9999 !important;
     display: flex !important;
     flex-direction: column !important;
-    padding: 0 !important; /* No extra padding so header fits 100% full width */
+    padding: 0 !important;
     margin: 0 !important;
     overflow: hidden !important;
     transition: right 0.3s cubic-bezier(0.2, 0.9, 0.3, 1) !important;
-    box-sizing: border-box !important;
   }
 
-  #mobileMenu.mobile-menu.show {
-    right: 0 !important;
-  }
+  #mobileMenu.mobile-menu.show { right: 0 !important; }
 
-  /* 3. Drawer Header: Flush to edges, exact Royal Blue */
   .drawer-header {
     width: 100% !important;
-    background: #0037FF !important; /* Header ka exact Blue */
+    background: #0037ff !important;
     padding: 16px 18px !important;
     display: flex !important;
     align-items: center !important;
     justify-content: space-between !important;
-    box-sizing: border-box !important;
   }
 
   .drawer-brand {
@@ -1757,7 +1169,6 @@ body.dark-mode .second-nav {
     transform: scale(0.92) !important;
   }
 
-  /* 4. Links Section: Full Width, Uniform Cards */
   .drawer-links-wrap {
     flex: 1 !important;
     width: 100% !important;
@@ -1765,7 +1176,6 @@ body.dark-mode .second-nav {
     display: flex !important;
     flex-direction: column !important;
     gap: 10px !important;
-    box-sizing: border-box !important;
     overflow-y: auto !important;
   }
 
@@ -1782,14 +1192,13 @@ body.dark-mode .second-nav {
     font-weight: 600 !important;
     border-radius: 12px !important;
     border: 1px solid #e2e8f0 !important;
-    box-sizing: border-box !important;
-    white-space: nowrap !important; /* Text tutega nahi */
+    white-space: nowrap !important;
     transition: background 0.2s ease, color 0.2s ease, transform 0.15s ease !important;
   }
 
   .drawer-link:active {
     background: #eef2ff !important;
-    color: #0052FF !important;
+    color: #0052ff !important;
     border-color: #cbd5e1 !important;
     transform: scale(0.98) !important;
   }
@@ -1800,13 +1209,11 @@ body.dark-mode .second-nav {
     line-height: 1 !important;
   }
 
-  /* 5. Footer Branding */
   .drawer-footer {
     width: 100% !important;
     padding: 14px !important;
     text-align: center !important;
     border-top: 1px solid #f1f5f9 !important;
-    box-sizing: border-box !important;
   }
 
   .drawer-footer p {
@@ -1815,91 +1222,216 @@ body.dark-mode .second-nav {
     font-weight: 500 !important;
     color: #94a3b8 !important;
   }
-
-  /* 6. Dark Mode Styles for Drawer */
-  body.dark-mode #mobileMenu.mobile-menu {
-    background-color: #121824 !important;
-    box-shadow: -8px 0 30px rgba(0, 0, 0, 0.7) !important;
-  }
-
-  body.dark-mode .drawer-header {
-    background: #0044d6 !important;
-  }
-
-  body.dark-mode .drawer-link {
-    background: #1a2233 !important;
-    color: #f8fafc !important;
-    border-color: #2a344a !important;
-  }
-
-  body.dark-mode .drawer-link:active {
-    background: #242f47 !important;
-    color: #60a5fa !important;
-  }
-
-  body.dark-mode .drawer-arrow {
-    color: #64748b !important;
-  }
-
-  body.dark-mode .drawer-footer {
-    border-top-color: #1e293b !important;
-  }
 }
 
-/* 7. Active Page Highlight in Mobile Drawer */
 .drawer-link.active {
-  background: #0052FF !important; /* Header ka Royal Blue */
+  background: #0052ff !important;
   color: #ffffff !important;
-  border-color: #0052FF !important;
+  border-color: #0052ff !important;
   box-shadow: 0 4px 12px rgba(0, 82, 255, 0.3) !important;
 }
 
-.drawer-link.active .drawer-link-text {
+.drawer-link.active .drawer-link-text,
+.drawer-link.active .drawer-arrow {
   color: #ffffff !important;
   font-weight: 700 !important;
 }
 
-.drawer-link.active .drawer-arrow {
+/* ==========================================================================
+   12. FOOTER & DARK MODE THEME STYLES
+   ========================================================================== */
+footer {
+  background: #0044cc !important;
   color: #ffffff !important;
-  font-weight: bold !important;
+  text-align: center !important;
+  padding: 15px !important;
+  margin-top: 40px !important;
 }
 
-/* Dark Mode ke liye Active State */
+footercart {
+  background: #0044cc !important;
+  color: #ffffff !important;
+  text-align: center !important;
+  padding: 15px !important;
+  margin-top: 90px !important;
+}
+
+/* Sticky Footer on Projects Page */
+body.projects-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+body.projects-page .all-projects,
+body.projects-page .project-grid {
+  flex: 1 0 auto;
+}
+
+body.projects-page footer {
+  margin-top: auto;
+  width: 100%;
+}
+
+/* Floating Dark Mode Button (Desktop) */
+#darkModeToggle {
+  position: fixed;
+  bottom: 100px;
+  right: 20px;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  background: #0044cc;
+  color: #ffffff;
+  font-weight: bold;
+  z-index: 999 !important;
+}
+
+/* Global Dark Mode Overrides */
+body.dark-mode {
+  background-color: #121212;
+  color: #ffffff;
+}
+
+body.dark-mode .hero,
+body.dark-mode .hero-section {
+  background-color: #121212 !important;
+  background-image: 
+    linear-gradient(to bottom, transparent 55%, #121212 100%),
+    radial-gradient(rgba(148, 163, 184, 0.22) 1.1px, transparent 1.1px),
+    radial-gradient(circle at 50% 35%, rgba(0, 212, 255, 0.16), rgba(99, 102, 241, 0.14), rgba(15, 23, 42, 0.05) 75%) !important;
+  background-size: 100% 100%, 22px 22px, 200% 200% !important;
+  animation: ambientAIFlowDark 14s ease-in-out infinite alternate !important;
+}
+
+@keyframes ambientAIFlowDark {
+  0% { background-position: 0 0, 0 0, 0% 0%; }
+  50% { background-position: 0 0, 0 0, 100% 50%; }
+  100% { background-position: 0 0, 0 0, 0% 100%; }
+}
+
+body.dark-mode .hero p,
+body.dark-mode .hero-section p {
+  color: #94a3b8 !important;
+}
+
+body.dark-mode .about-toggle-header h2,
+body.dark-mode .about-arrow {
+  color: #6699ff !important;
+}
+
+body.dark-mode #aboutContent p {
+  color: #cccccc !important;
+}
+
+body.dark-mode .project-card,
+body.dark-mode .app-card,
+body.dark-mode .video-card {
+  background: #1e1e1e !important;
+  color: #f5f5f5 !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+  border-color: #333333 !important;
+}
+
+body.dark-mode .project-card h3,
+body.dark-mode .app-card h3,
+body.dark-mode .app-info h2,
+body.dark-mode .video-card h3,
+body.dark-mode .contact-info a {
+  color: #ffffff !important;
+}
+
+body.dark-mode .project-card p,
+body.dark-mode .app-card p {
+  color: #cccccc !important;
+}
+
+body.dark-mode .featured-videos {
+  background: #121212;
+}
+
+body.dark-mode .more-projects-card {
+  background: linear-gradient(145deg, #182234, #121926) !important;
+  border-color: #3b82f6 !important;
+}
+
+body.dark-mode .more-projects-card h3 {
+  color: #60a5fa !important;
+}
+
+body.dark-mode .more-projects-card p {
+  color: #9ca3af !important;
+}
+
+body.dark-mode .second-nav {
+  background: #000000 !important;
+  border-bottom: 1px solid #333333 !important;
+  box-shadow: none !important;
+}
+
+body.dark-mode input#projectSearch {
+  background-color: #1e1e1e;
+  border-color: #2b5cff;
+  color: #ffffff;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%238bb3ff" viewBox="0 0 16 16"><path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/></svg>');
+}
+
+body.dark-mode .category-menu-new .cat-item {
+  background: #1e1e1e;
+  color: #9ab6ff;
+}
+
+body.dark-mode .category-menu-new .cat-item.active {
+  background: #3c6aff;
+  color: #ffffff;
+}
+
+body.dark-mode #page-preloader {
+  background-color: #121212;
+}
+
+body.dark-mode .social-btn {
+  background: #1e1e1e;
+  border-color: #333333;
+  color: #ffffff;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+body.dark-mode #mobileMenu.mobile-menu {
+  background-color: #121824 !important;
+  box-shadow: -8px 0 30px rgba(0, 0, 0, 0.7) !important;
+}
+
+body.dark-mode .drawer-header {
+  background: #0044d6 !important;
+}
+
+body.dark-mode .drawer-link {
+  background: #1a2233 !important;
+  color: #f8fafc !important;
+  border-color: #2a344a !important;
+}
+
+body.dark-mode .drawer-link:active {
+  background: #242f47 !important;
+  color: #60a5fa !important;
+}
+
+body.dark-mode .drawer-arrow {
+  color: #64748b !important;
+}
+
+body.dark-mode .drawer-footer {
+  border-top-color: #1e293b !important;
+}
+
 body.dark-mode .drawer-link.active {
-  background: #0052FF !important;
+  background: #0052ff !important;
   border-color: #3b82f6 !important;
   box-shadow: 0 4px 14px rgba(0, 82, 255, 0.45) !important;
 }
 
-
-/* ========================================================
-   REUSABLE BUTTON PRESS / TAP EFFECT
-   ======================================================== */
-.tap-effect {
-  transition: transform 0.12s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.12s ease !important;
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent; /* Mobile par blue highlight box hatayega */
-}
-
-/* Jab user click ya tap karega */
-.tap-effect:active {
-  transform: scale(0.94) translateY(1px) !important; /* Button halka sa dabe ga */
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2) !important; /* Depth/dabaav ka shadow */
-}
-
-/* 1. Header ke upar ki white patti khatam karne ke liye */
-html, body {
-  margin: 0 !important;
-  padding: 0 !important;
-}
-
-/* 2. Body par padding nahi denge (isse white space banti hai),
-      balki header ke theek baad aane wale pehle container ko halka space denge */
-body > *:not(header):not(.mobile-menu):not(.mobile-overlay):first-of-type {
-  margin-top: 46px !important;
-}
-
-/* 3. E-Shop page par category row ko header ke barabar rakhne ke liye */
-body.components-page .second-nav {
-  margin-top: 46px !important;
+body.dark-mode .modal-desc li {
+  color: #cccccc;
 }
