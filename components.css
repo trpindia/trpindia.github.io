@@ -2024,3 +2024,11 @@ body.components-page #shopHeading.section-title2 {
     margin: 0 !important;
   }
 }
+/* Khali category strips ko zabardasti 100% gayab karega */
+.category-row-strip.strip-hidden {
+  display: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  gap: 0 !important;
+  height: 0 !important;
+}
