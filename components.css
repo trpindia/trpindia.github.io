@@ -1946,3 +1946,46 @@ body.modal-open {
     white-space: nowrap !important;
   }
 }
+
+/* ========================================================
+   📱 E-SHOP: FILTERED CATEGORY 2-COLUMN VERTICAL GRID FIX
+   ======================================================== */
+@media (max-width: 768px) {
+  /* 1. Category select hone par vertical space gap (centering) khatam karein */
+  main {
+    min-height: auto !important;
+  }
+  
+  .store {
+    padding-top: 10px !important;
+  }
+
+  /* 2. Specific Category filtered hone par side-scroll band, 2-column vertical chalu */
+  #product-grid.is-filtered {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+    padding-top: 6px !important;
+  }
+
+  #product-grid.is-filtered .category-row-strip {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important; /* Side scroll band, neeche line me wrap karega */
+    overflow-x: visible !important;
+    overflow-y: visible !important;
+    gap: 12px 10px !important;
+    padding: 0 4px !important;
+    justify-content: flex-start !important;
+    align-content: flex-start !important;
+  }
+
+  /* Har card 50% width ka rahega taaki 2-column me aaye */
+  #product-grid.is-filtered .category-row-strip .product-card {
+    flex: 0 0 calc(50% - 5px) !important;
+    min-width: calc(50% - 5px) !important;
+    max-width: calc(50% - 5px) !important;
+    width: calc(50% - 5px) !important;
+    margin: 0 !important;
+  }
+}
