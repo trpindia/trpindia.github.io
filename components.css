@@ -61,12 +61,12 @@ header {
 .second-nav {
   position: sticky !important;
   /* Header ke bottom se chipakne ke liye exact height match (gap = 0px) */
-  top: 47px !important;
+  top: 46px !important;
   z-index: 995 !important;
   width: 100% !important;
   background: #ffffff;
   border-bottom: 1px solid #dcdcdc;
-  padding: 1px 12px;
+  padding: 4px 12px;
   display: flex;
   flex-wrap: nowrap;
   align-items: center;
