@@ -674,7 +674,7 @@ function initShopFilters() {
           }
         }
 
-        strips.forEach(strip => {
+strips.forEach(strip => {
           const stripCat = (strip.getAttribute("data-category") || "").toLowerCase();
           const cards = strip.querySelectorAll(".product-card");
           let visibleInStrip = 0;
@@ -694,7 +694,14 @@ function initShopFilters() {
             }
           });
 
-          strip.style.display = visibleInStrip > 0 ? "" : "none";
+          // Invisible strips ko completely collapse karega taaki Boards/LEDs neeche na jayein
+          if (visibleInStrip > 0) {
+            strip.classList.remove("strip-hidden");
+            strip.style.setProperty("display", "", "");
+          } else {
+            strip.classList.add("strip-hidden");
+            strip.style.setProperty("display", "none", "important");
+          }
         });
       }
 
