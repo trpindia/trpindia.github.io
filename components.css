@@ -1935,6 +1935,7 @@ body.modal-open {
 
   .modal-actions a,
   .modal-actions button {
+    height: auto;
     flex: 1 !important;
     padding: 10px 6px !important;
     font-size: 13.5px !important;
