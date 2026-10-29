@@ -444,70 +444,71 @@
         });
 
         // Modal Specs
-        container.querySelectorAll(".expand-btn").forEach(btn => {
-          btn.onclick = (e) => {
-            e.stopPropagation();
-            const card = btn.closest(".product-card");
-            const title = card.getAttribute("data-name") || card.querySelector("h3")?.innerText || "";
-            const price = card.getAttribute("data-price") || card.querySelector(".price-amount")?.innerText.replace("₹", "").trim() || "0";
-            const img = card.getAttribute("data-image") || card.querySelector("img")?.src || "../images/logo.png";
-            const desc = card.getAttribute("data-desc") || "High quality electronic component for DIY projects.";
-            const isOut = card.getAttribute("data-out-of-stock") === "true";
-            const datasheet = card.getAttribute("data-datasheet") || "";
+container.querySelectorAll(".expand-btn").forEach(btn => {
+  btn.onclick = (e) => {
+    e.stopPropagation();
+    const card = btn.closest(".product-card");
+    const title = card.getAttribute("data-name") || card.querySelector("h3")?.innerText || "";
+    const price = card.getAttribute("data-price") || card.querySelector(".price-amount")?.innerText.replace("₹", "").trim() || "0";
+    const img = card.getAttribute("data-image") || card.querySelector("img")?.src || "../images/logo.png";
+    const desc = card.getAttribute("data-desc") || "High quality electronic component for DIY projects.";
+    const isOut = card.getAttribute("data-out-of-stock") === "true";
+    const datasheet = card.getAttribute("data-datasheet") || "";
 
-            const modal = document.getElementById("product-modal");
-            if (modal) {
-              const modalImg = document.getElementById("modalImg");
-              const modalTitle = document.getElementById("modalTitle");
-              const modalPrice = document.getElementById("modalPrice");
-              const modalDesc = document.getElementById("modalDesc");
-              const modalCartBtn = document.getElementById("modalAddCart");
-              const modalPdfBtn = document.getElementById("modalDatasheet");
+    const modal = document.getElementById("product-modal");
+    if (modal) {
+      const modalImg = document.getElementById("modalImg");
+      const modalTitle = document.getElementById("modalTitle");
+      const modalPrice = document.getElementById("modalPrice");
+      const modalDesc = document.getElementById("modalDesc");
+      const modalCartBtn = document.getElementById("modalAddCart");
+      const modalPdfBtn = document.getElementById("modalDatasheet");
 
-              if (modalImg) modalImg.src = img;
-              if (modalTitle) modalTitle.innerText = title;
-              if (modalPrice) modalPrice.innerText = `₹${price}`;
-              if (modalDesc) modalDesc.innerHTML = formatDescription(desc);
+      if (modalImg) modalImg.src = img;
+      if (modalTitle) modalTitle.innerText = title;
+      if (modalPrice) modalPrice.innerText = `₹${price}`;
+      if (modalDesc) modalDesc.innerHTML = formatDescription(desc);
 
-              if (modalCartBtn) {
-                modalCartBtn.setAttribute("data-name", title);
-                modalCartBtn.setAttribute("data-price", price);
+      if (modalCartBtn) {
+        modalCartBtn.setAttribute("data-name", title);
+        modalCartBtn.setAttribute("data-price", price);
 
-                if (isOut) {
-                  modalCartBtn.className = "cart-action-btn stock-notify-btn notify-stock-btn";
-                  modalCartBtn.innerHTML = "<span>🔔</span> Notify";
-                  modalCartBtn.onclick = (event) => {
-                    event.stopPropagation();
-                    handleStockNotify(title, price, modalCartBtn);
-                  };
-                } else {
-                  modalCartBtn.className = "cart-action-btn add-cart";
-                  modalCartBtn.innerHTML = "<span>🛒</span> Pick";
-                  modalCartBtn.onclick = (event) => {
-                    event.stopPropagation();
-                    triggerAddToCart(title, parseFloat(price), img);
-                  };
-                }
-              }
+        if (isOut) {
+          modalCartBtn.className = "cart-action-btn stock-notify-btn notify-stock-btn";
+          modalCartBtn.innerHTML = "<span>🔔</span> Notify";
+          modalCartBtn.onclick = (event) => {
+            event.stopPropagation();
+            handleStockNotify(title, price, modalCartBtn);
+          };
+        } else {
+          modalCartBtn.className = "cart-action-btn add-cart";
+          modalCartBtn.innerHTML = "<span>🛒</span> Pick";
+          modalCartBtn.onclick = (event) => {
+            event.stopPropagation();
+            triggerAddToCart(title, parseFloat(price), img);
+          };
+        }
+      }
 
-              if (modalPdfBtn) {
-                if (datasheet) {
-                  modalPdfBtn.href = datasheet;
-                  modalPdfBtn.style.display = "inline-flex";
-                  modalPdfBtn.innerText = "📥 Download Datasheet";
-                } else {
-                  modalPdfBtn.style.display = "none";
-                }
-              }
+      if (modalPdfBtn) {
+        if (datasheet) {
+          modalPdfBtn.href = datasheet;
+          modalPdfBtn.style.display = "inline-flex";
+          modalPdfBtn.innerText = "📥 Download Datasheet";
+        } else {
+          modalPdfBtn.style.display = "none";
+        }
+      }
 
-              // Current scroll position lock karega
-    const currentScrollY = window.scrollY;
-    document.body.style.top = `-${currentScrollY}px`;
-    document.body.style.position = "fixed";
-    document.body.style.width = "100%";
+      // Current scroll position lock karega
+      const currentScrollY = window.scrollY;
+      document.body.style.top = `-${currentScrollY}px`;
+      document.body.style.position = "fixed";
+      document.body.style.width = "100%";
 
-    modal.style.display = "flex";
-    document.body.classList.add("modal-open");
+      modal.style.display = "flex";
+      document.body.classList.add("modal-open");
+    } // <<-- Yeh if(modal) ka bracket missing tha!
   };
 });
 
@@ -515,6 +516,7 @@ const modal = document.getElementById("product-modal");
 const closeModalBtn = document.getElementById("closeModal");
 
 function handleCloseModal() {
+  if (!modal) return;
   modal.style.display = "none";
   document.body.classList.remove("modal-open");
 
