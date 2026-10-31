@@ -1549,27 +1549,27 @@ body.dark-mode .custom-variant-item.selected {
 }
 
 /* =======================================================
-   📱 MOBILE: FULL-CARD VARIANT OVERLAY (ZERO BOX CUT)
+   📱 MOBILE: FULL-CARD VARIANT OVERLAY (BELOW HEADER FIX)
    ======================================================= */
 @media (max-width: 768px) {
-  /* 1. Card container khud reference banega */
+  /* 1. Card container khud boundary banega */
   .product-card {
     position: relative !important;
-    overflow: hidden !important;
+    overflow: hidden !important; /* Box ko card se 1px bhi bahar nahi jaane dega */
   }
 
-  /* 2. Beech ke sabhi wrappers ko static banayein taaki menu unme na fanda rahe */
+  /* 2. Card ka z-index Header (1000) aur Second-Nav (995) se chhota rahega */
+  .product-card:has(.custom-variant-wrap.active) {
+    z-index: 850 !important; /* Header aur Category bar ke hamesha peeche rahega */
+  }
+
+  /* 3. Wrappers ko static banayein taaki overlay pure card par baithe */
   .product-info,
   .custom-variant-wrap {
     position: static !important;
   }
 
-  /* 3. Variant khulte hi card sabke upar float kare */
-  .product-card:has(.custom-variant-wrap.active) {
-    z-index: 999 !important;
-  }
-
-  /* 4. Poore card par 100% fail jayega (Image + Button sab gayab) */
+  /* 4. Poore card ke andar 100% fit overlay (Top 0 se Bottom 0 tak) */
   .custom-variant-wrap.active .custom-variant-menu {
     display: flex !important;
     flex-direction: column !important;
@@ -1583,14 +1583,14 @@ body.dark-mode .custom-variant-item.selected {
     max-height: 100% !important;
     background: #ffffff !important;
     border-radius: inherit !important;
-    border: 2px solid #0052ff !important;
-    z-index: 9999 !important; /* Image aur button ke upar aa jayega */
-    padding: 12px 10px !important;
+    border: 0px solid #ffffff !important;
+    z-index: 50 !important; /* Card ke andar sabse upar, lekin header se safe */
+    padding: 10px 8px !important;
     margin: 0 !important;
     box-sizing: border-box !important;
     overflow-y: auto !important;
     -webkit-overflow-scrolling: touch;
-    gap: 8px !important;
+    gap: 6px !important;
   }
 
   body.dark-mode .custom-variant-wrap.active .custom-variant-menu {
@@ -1598,12 +1598,12 @@ body.dark-mode .custom-variant-item.selected {
     border-color: #3b82f6 !important;
   }
 
-  /* 5. Clean List Items */
+  /* 5. Variant Item Styling */
   .custom-variant-item {
     width: 100% !important;
     box-sizing: border-box !important;
-    padding: 12px 10px !important;
-    font-size: 13px !important;
+    padding: 10px 8px !important;
+    font-size: 12.5px !important;
     font-weight: 600 !important;
     color: #1e293b !important;
     background: #f1f5f9 !important;
