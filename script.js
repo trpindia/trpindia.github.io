@@ -363,6 +363,20 @@ function updateHeaderCount() {
     });
   }
 
+  /* ---------- CART PAGE NAVIGATION HISTORY REPLACEMENT ---------- */
+if (window.location.pathname.includes("cart.html") || document.body.classList.contains("cart-page")) {
+  document.querySelectorAll("header nav a, .drawer-links-wrap a, #logo").forEach(link => {
+    link.addEventListener("click", (e) => {
+      const destination = link.getAttribute("href");
+      if (destination && !destination.startsWith("#")) {
+        e.preventDefault();
+        // window.location.replace se Cart page browser history se erase ho jata hai
+        window.location.replace(destination);
+      }
+    });
+  });
+}
+
 /* ---------- 9. MOBILE DRAWER: SCROLL AUTO-CLOSE & BACK SAFE ---------- */
   const menuToggle = document.getElementById("menuToggle");
   const mobileMenu = document.getElementById("mobileMenu");
@@ -454,6 +468,7 @@ function updateHeaderCount() {
   const projectSearchInput = document.getElementById("projectSearch");
   const projectSearchClearBtn = document.getElementById("projectSearchClearBtn");
   const projectCards = Array.from(document.querySelectorAll(".project-card"));
+  const projectsContainer = document.querySelector(".project-grid") || document.querySelector(".cards");
   let activeProjectCat = "all";
 
   function applyProjectFilters() {
@@ -471,6 +486,8 @@ function updateHeaderCount() {
       }
     }
 
+    let totalVisibleProjects = 0;
+
     projectCards.forEach(card => {
       const cardCategory = (card.getAttribute("data-category") || "").toLowerCase().trim();
       const selectedCategory = activeProjectCat.toLowerCase().trim();
@@ -486,10 +503,42 @@ function updateHeaderCount() {
       // setProperty se Mobile aur Desktop dono par 100% force hide/show hoga
       if (matchesCategory && matchesSearch) {
         card.style.removeProperty("display");
+        totalVisibleProjects++;
       } else {
         card.style.setProperty("display", "none", "important");
       }
     });
+
+    // 🔍 Empty State Notification (Jab koi project match na ho)
+    let emptyNotice = document.getElementById("projectEmptyNotice");
+    if (totalVisibleProjects === 0) {
+      if (!emptyNotice && projectsContainer) {
+        emptyNotice = document.createElement("div");
+        emptyNotice.id = "projectEmptyNotice";
+        emptyNotice.className = "no-results-box";
+        emptyNotice.innerHTML = `
+          <div class="no-results-icon">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              <line x1="8" y1="11" x2="14" y2="11"></line>
+            </svg>
+          </div>
+          <h3>No Projects Found</h3>
+          <p>We couldn't find any projects matching your search. Please check the spelling or try different keywords.</p>
+          <button type="button" class="no-results-btn" id="resetProjectSearch">Show All Projects</button>
+        `;
+        projectsContainer.appendChild(emptyNotice);
+
+        document.getElementById("resetProjectSearch")?.addEventListener("click", () => {
+          if (projectSearchInput) projectSearchInput.value = "";
+          const allBtn = document.querySelector('.category-menu-new [data-cat="all"]') || document.querySelector('.category-menu-new li:first-child');
+          allBtn?.click();
+        });
+      }
+    } else {
+      emptyNotice?.remove();
+    }
   }
 
   if (projectSearchInput) {
@@ -509,7 +558,7 @@ function updateHeaderCount() {
       projectSearchInput.focus();
     }
   });
-  
+
   document.querySelectorAll(".category-menu-new .cat-item").forEach(li => {
     li.addEventListener("click", () => {
       document.querySelectorAll(".category-menu-new .cat-item").forEach(x => x.classList.remove("active"));
@@ -518,7 +567,14 @@ function updateHeaderCount() {
       applyProjectFilters();
     });
   });
-                          /* ---------- 11. CATEGORY SCROLL: DRAG + AUTO-SCROLL TO CENTER ON CLICK ---------- */
+
+
+  
+                        
+  /* ---------- 11. CATEGORY SCROLL: DRAG + AUTO-SCROLL TO CENTER ON CLICK ---------- */
+
+
+  
   (function initCategoryScroll() {
     const container = document.querySelector('.second-center');
     if (!container) return;
