@@ -706,10 +706,14 @@ function runFilter() {
             strip.style.setProperty("display", "none", "important");
           }
         });
+  
 
-        // 🔍 Agar search result na mile toh Empty Notice box dikhayega
+  // 🔍 Agar search result na mile toh Empty Notice box dikhayega
         let emptyBox = document.getElementById("shopEmptyNotice");
         if (totalVisibleInPage === 0) {
+          const currentSearchText = searchInput ? searchInput.value.trim() : "";
+          const displayKeyword = currentSearchText !== "" ? currentSearchText : activeShopCat;
+
           if (!emptyBox) {
             emptyBox = document.createElement("div");
             emptyBox.id = "shopEmptyNotice";
@@ -723,7 +727,7 @@ function runFilter() {
                 </svg>
               </div>
               <h3>No Components Found</h3>
-              <p>We couldn't find any results for "<strong>${q || activeShopCat}</strong>". Check your spelling or try another keyword.</p>
+              <p>We couldn't find any results for "<strong id="emptySearchTerm"></strong>". Check your spelling or try another keyword.</p>
               <button type="button" class="no-results-btn" id="resetShopSearch">Reset Search</button>
             `;
             productGrid?.appendChild(emptyBox);
@@ -733,11 +737,16 @@ function runFilter() {
               document.querySelector('.category-menu-new [data-cat="all"]')?.click();
             });
           }
+
+          // Exact typed full text bina kisi cut ke update karega
+          const termEl = document.getElementById("emptySearchTerm");
+          if (termEl) termEl.textContent = displayKeyword;
+
         } else {
           emptyBox?.remove();
         }
-      }
 
+  
       searchInput?.addEventListener("input", runFilter);
       searchClearBtn?.addEventListener("click", () => {
         if (searchInput) {
