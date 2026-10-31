@@ -651,6 +651,18 @@
       const productGrid = document.getElementById("product-grid");
       let activeShopCat = "all";
 
+      // Screen scroll hone par options turant close honge
+window.addEventListener("scroll", () => {
+  document.querySelectorAll(".custom-variant-wrap.active").forEach(w => w.classList.remove("active"));
+}, { passive: true });
+
+// Horizontal row-strip scroll hone par bhi close honge
+document.querySelectorAll(".category-row-strip").forEach(strip => {
+  strip.addEventListener("scroll", () => {
+    document.querySelectorAll(".custom-variant-wrap.active").forEach(w => w.classList.remove("active"));
+  }, { passive: true });
+});
+
       function runFilter() {
         const q = (searchInput?.value || "").toLowerCase().trim();
 
