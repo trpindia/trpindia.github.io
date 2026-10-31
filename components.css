@@ -1549,43 +1549,48 @@ body.dark-mode .custom-variant-item.selected {
 }
 
 /* =======================================================
-   📱 MOBILE: FULL-CARD VARIANT REPLACEMENT (PURE CARD FILL)
+   📱 MOBILE: FULL-CARD VARIANT OVERLAY (ZERO BOX CUT)
    ======================================================= */
 @media (max-width: 768px) {
-  /* 1. Card khud absolute container banega */
+  /* 1. Card container khud reference banega */
   .product-card {
     position: relative !important;
     overflow: hidden !important;
   }
 
-  /* 2. Options khulte hi baki sab cards se upar rahe */
-  .product-card:has(.custom-variant-wrap.active) {
-    z-index: 120 !important;
+  /* 2. Beech ke sabhi wrappers ko static banayein taaki menu unme na fanda rahe */
+  .product-info,
+  .custom-variant-wrap {
+    position: static !important;
   }
 
-  /* 3. Poora Card banega Option Chart (0px Top, Bottom, Left, Right) */
+  /* 3. Variant khulte hi card sabke upar float kare */
+  .product-card:has(.custom-variant-wrap.active) {
+    z-index: 999 !important;
+  }
+
+  /* 4. Poore card par 100% fail jayega (Image + Button sab gayab) */
   .custom-variant-wrap.active .custom-variant-menu {
     display: flex !important;
     flex-direction: column !important;
     position: absolute !important;
     top: 0 !important;
+    bottom: 0 !important;
     left: 0 !important;
     right: 0 !important;
-    bottom: 0 !important;
     width: 100% !important;
     height: 100% !important;
     max-height: 100% !important;
     background: #ffffff !important;
     border-radius: inherit !important;
     border: 2px solid #0052ff !important;
-    z-index: 99 !important; /* Image aur button sab chup jayenge */
-    padding: 12px 8px !important;
+    z-index: 9999 !important; /* Image aur button ke upar aa jayega */
+    padding: 12px 10px !important;
     margin: 0 !important;
     box-sizing: border-box !important;
     overflow-y: auto !important;
     -webkit-overflow-scrolling: touch;
     gap: 8px !important;
-    animation: fullCardFade 0.2s ease-out !important;
   }
 
   body.dark-mode .custom-variant-wrap.active .custom-variant-menu {
@@ -1593,13 +1598,7 @@ body.dark-mode .custom-variant-item.selected {
     border-color: #3b82f6 !important;
   }
 
-  /* Extra labels hataye gaye */
-  .custom-variant-menu::before {
-    display: none !important;
-    content: none !important;
-  }
-
-  /* 4. Options Box Styling (Full width rounded cards inside) */
+  /* 5. Clean List Items */
   .custom-variant-item {
     width: 100% !important;
     box-sizing: border-box !important;
@@ -1614,7 +1613,6 @@ body.dark-mode .custom-variant-item.selected {
     justify-content: space-between !important;
     align-items: center !important;
     flex-shrink: 0 !important;
-    line-height: 1.3 !important;
     text-align: left !important;
     cursor: pointer;
   }
@@ -1639,16 +1637,6 @@ body.dark-mode .custom-variant-item.selected {
   }
 }
 
-@keyframes fullCardFade {
-  from {
-    opacity: 0;
-    transform: scale(0.96);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
 /* MODAL DESCRIPTION FORMATTING */
 .modal-desc {
   white-space: pre-line; /* Enter key aur new lines preserve karega */
