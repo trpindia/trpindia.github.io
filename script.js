@@ -437,7 +437,7 @@ if (window.location.pathname.includes("cart.html") || document.body.classList.co
       aboutContent.classList.toggle("show");
     }
     if (aboutArrow) {
-      aboutArrow.style.transform = aboutHeader.classList.contains("active") ? "rotate(90deg)" : "rotate(0deg)";
+      aboutArrow.style.transform = aboutHeader.classList.contains("active") ? "rotate(120deg)" : "rotate(0deg)";
     }
   });
 
