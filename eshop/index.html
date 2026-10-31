@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>E-Shop - TRP Electronics</title>
   <link rel="icon" type="image/png" href="../images/favicon-32x32.png">
   <link rel="stylesheet" href="../style.css" />
@@ -13,7 +13,7 @@
     ✅ Added to cart!
   </div>
 
-<!-- Header / Navbar -->
+  <!-- Header / Navbar -->
   <header>
     <a href="../index.html" id="logo">TRP Electronics</a>
     <nav>
@@ -25,7 +25,7 @@
         <li><a href="../contact.html">Contact</a></li>
       </ul>
     </nav>
- <!-- Header ke andar right side: Mobile Cart + Hamburger Menu -->
+    <!-- Header ke andar right side: Mobile Cart + Hamburger Menu -->
     <div class="header-mobile-right">
       <a href="../cart.html" class="mobile-header-cart tap-effect" aria-label="Cart">
         <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -37,18 +37,16 @@
       </a>
       <div class="menu-icon" id="menuToggle">☰</div>
     </div>
-</header>
+  </header>
 
   <!-- Mobile Drawer -->
   <div id="mobileMenu" class="mobile-menu">
-    <!-- Header: Full Width Royal Blue Bar -->
     <div class="drawer-header">
       <button id="mobileDarkModeToggle" class="drawer-icon-btn" aria-label="Toggle Dark Mode">🌙</button>
       <span class="drawer-brand">Menu</span>
       <button id="drawerCloseBtn" class="drawer-icon-btn" aria-label="Close">✕</button>
     </div>
 
-    <!-- Clean Links Wrapper -->
     <div class="drawer-links-wrap">
       <a href="../index.html" class="drawer-link">
         <span class="drawer-link-text">Home</span>
@@ -72,7 +70,6 @@
       </a>
     </div>
 
-    <!-- Bottom Footer Tag -->
     <div class="drawer-footer">
       <p>TRP Electronics</p>
     </div>
@@ -80,9 +77,8 @@
 
   <!-- Background Dim Overlay -->
   <div id="menuOverlay" class="menu-overlay"></div>
-  
 
-<!-- SECOND NAV ROW -->
+  <!-- SECOND NAV ROW -->
   <div class="second-nav">
     <!-- LEFT: Search Bar -->
     <div class="second-left">
@@ -111,7 +107,7 @@
       </ul>
     </div>
 
-    <!-- RIGHT: Desktop Fixed Cart (Search bar ki tarah stand rahega) -->
+    <!-- RIGHT: Desktop Fixed Cart -->
     <div class="second-right">
       <a href="../cart.html" class="desktop-category-cart" aria-label="Cart">
         <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -170,7 +166,7 @@
             </div>
           </div>
         </div>
-          <div class="skeleton-card shimmer">
+        <div class="skeleton-card shimmer">
           <div class="skeleton-img"></div>
           <div class="skeleton-content">
             <div class="skeleton-line title"></div>
@@ -220,7 +216,6 @@
 
     const FORMSPREE_ENDPOINT = "https://formspree.io/f/xljewbda";
 
-    // Helper: Local images ko ../ dega aur online images ko waise hi rakhega
     function resolveImg(url) {
       if (!url) return "../images/logo.png";
       if (url.startsWith("http://") || url.startsWith("https://")) return url;
@@ -300,12 +295,17 @@
                   </div>
                 `).join("");
 
+                // 🌟 NAYA LAYERS STACK ICON (Arrow ki jagah)
                 titleHTML = `
                   <div class="custom-variant-wrap">
-                    <div class="custom-variant-trigger">
+                    <div class="custom-variant-trigger" title="Select Option">
                       <h3 class="custom-variant-title">${currentItem.name}</h3>
                       <span class="custom-variant-arrow">
-                        <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                          <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                          <polyline points="2 17 12 22 22 17"></polyline>
+                          <polyline points="2 12 12 17 22 12"></polyline>
+                        </svg>
                       </span>
                     </div>
                     <div class="custom-variant-menu">
@@ -437,103 +437,104 @@
           });
         });
 
-        window.addEventListener("click", () => {
-          document.querySelectorAll(".custom-variant-wrap.active").forEach(w => w.classList.remove("active"));
+        // 🌟 BAHAR TAP KARNE PAR KAHIN BHI CLOSE
+        document.addEventListener("click", (e) => {
+          if (!e.target.closest(".custom-variant-wrap")) {
+            document.querySelectorAll(".custom-variant-wrap.active").forEach(w => w.classList.remove("active"));
+          }
         });
 
         // Modal Specs
-container.querySelectorAll(".expand-btn").forEach(btn => {
-  btn.onclick = (e) => {
-    e.stopPropagation();
-    const card = btn.closest(".product-card");
-    const title = card.getAttribute("data-name") || card.querySelector("h3")?.innerText || "";
-    const price = card.getAttribute("data-price") || card.querySelector(".price-amount")?.innerText.replace("₹", "").trim() || "0";
-    const img = card.getAttribute("data-image") || card.querySelector("img")?.src || "../images/logo.png";
-    const desc = card.getAttribute("data-desc") || "High quality electronic component for DIY projects.";
-    const isOut = card.getAttribute("data-out-of-stock") === "true";
-    const datasheet = card.getAttribute("data-datasheet") || "";
+        container.querySelectorAll(".expand-btn").forEach(btn => {
+          btn.onclick = (e) => {
+            e.stopPropagation();
+            const card = btn.closest(".product-card");
+            const title = card.getAttribute("data-name") || card.querySelector("h3")?.innerText || "";
+            const price = card.getAttribute("data-price") || card.querySelector(".price-amount")?.innerText.replace("₹", "").trim() || "0";
+            const img = card.getAttribute("data-image") || card.querySelector("img")?.src || "../images/logo.png";
+            const desc = card.getAttribute("data-desc") || "High quality electronic component for DIY projects.";
+            const isOut = card.getAttribute("data-out-of-stock") === "true";
+            const datasheet = card.getAttribute("data-datasheet") || "";
 
-    const modal = document.getElementById("product-modal");
-    if (modal) {
-      const modalImg = document.getElementById("modalImg");
-      const modalTitle = document.getElementById("modalTitle");
-      const modalPrice = document.getElementById("modalPrice");
-      const modalDesc = document.getElementById("modalDesc");
-      const modalCartBtn = document.getElementById("modalAddCart");
-      const modalPdfBtn = document.getElementById("modalDatasheet");
+            const modal = document.getElementById("product-modal");
+            if (modal) {
+              const modalImg = document.getElementById("modalImg");
+              const modalTitle = document.getElementById("modalTitle");
+              const modalPrice = document.getElementById("modalPrice");
+              const modalDesc = document.getElementById("modalDesc");
+              const modalCartBtn = document.getElementById("modalAddCart");
+              const modalPdfBtn = document.getElementById("modalDatasheet");
 
-      if (modalImg) modalImg.src = img;
-      if (modalTitle) modalTitle.innerText = title;
-      if (modalPrice) modalPrice.innerText = `₹${price}`;
-      if (modalDesc) modalDesc.innerHTML = formatDescription(desc);
+              if (modalImg) modalImg.src = img;
+              if (modalTitle) modalTitle.innerText = title;
+              if (modalPrice) modalPrice.innerText = `₹${price}`;
+              if (modalDesc) modalDesc.innerHTML = formatDescription(desc);
 
-      if (modalCartBtn) {
-        modalCartBtn.setAttribute("data-name", title);
-        modalCartBtn.setAttribute("data-price", price);
+              if (modalCartBtn) {
+                modalCartBtn.setAttribute("data-name", title);
+                modalCartBtn.setAttribute("data-price", price);
 
-        if (isOut) {
-          modalCartBtn.className = "cart-action-btn stock-notify-btn notify-stock-btn";
-          modalCartBtn.innerHTML = "<span>🔔</span> Notify";
-          modalCartBtn.onclick = (event) => {
-            event.stopPropagation();
-            handleStockNotify(title, price, modalCartBtn);
+                if (isOut) {
+                  modalCartBtn.className = "cart-action-btn stock-notify-btn notify-stock-btn";
+                  modalCartBtn.innerHTML = "<span>🔔</span> Notify";
+                  modalCartBtn.onclick = (event) => {
+                    event.stopPropagation();
+                    handleStockNotify(title, price, modalCartBtn);
+                  };
+                } else {
+                  modalCartBtn.className = "cart-action-btn add-cart";
+                  modalCartBtn.innerHTML = "<span>🛒</span> Pick";
+                  modalCartBtn.onclick = (event) => {
+                    event.stopPropagation();
+                    triggerAddToCart(title, parseFloat(price), img);
+                  };
+                }
+              }
+
+              if (modalPdfBtn) {
+                if (datasheet) {
+                  modalPdfBtn.href = datasheet;
+                  modalPdfBtn.style.display = "inline-flex";
+                  modalPdfBtn.innerText = "📥 Download Datasheet";
+                } else {
+                  modalPdfBtn.style.display = "none";
+                }
+              }
+
+              const currentScrollY = window.scrollY;
+              document.body.style.top = `-${currentScrollY}px`;
+              document.body.style.position = "fixed";
+              document.body.style.width = "100%";
+
+              modal.style.display = "flex";
+              document.body.classList.add("modal-open");
+            }
           };
-        } else {
-          modalCartBtn.className = "cart-action-btn add-cart";
-          modalCartBtn.innerHTML = "<span>🛒</span> Pick";
-          modalCartBtn.onclick = (event) => {
-            event.stopPropagation();
-            triggerAddToCart(title, parseFloat(price), img);
+        });
+
+        const modal = document.getElementById("product-modal");
+        const closeModalBtn = document.getElementById("closeModal");
+
+        function handleCloseModal() {
+          if (!modal) return;
+          modal.style.display = "none";
+          document.body.classList.remove("modal-open");
+
+          const scrollY = document.body.style.top;
+          document.body.style.position = "";
+          document.body.style.top = "";
+          document.body.style.width = "";
+          if (scrollY) {
+            window.scrollTo(0, parseInt(scrollY || "0") * -1);
+          }
+        }
+
+        if (closeModalBtn && modal) {
+          closeModalBtn.onclick = handleCloseModal;
+          modal.onclick = (e) => {
+            if (e.target === modal) handleCloseModal();
           };
         }
-      }
-
-      if (modalPdfBtn) {
-        if (datasheet) {
-          modalPdfBtn.href = datasheet;
-          modalPdfBtn.style.display = "inline-flex";
-          modalPdfBtn.innerText = "📥 Download Datasheet";
-        } else {
-          modalPdfBtn.style.display = "none";
-        }
-      }
-
-      // Current scroll position lock karega
-      const currentScrollY = window.scrollY;
-      document.body.style.top = `-${currentScrollY}px`;
-      document.body.style.position = "fixed";
-      document.body.style.width = "100%";
-
-      modal.style.display = "flex";
-      document.body.classList.add("modal-open");
-    } // <<-- Yeh if(modal) ka bracket missing tha!
-  };
-});
-
-const modal = document.getElementById("product-modal");
-const closeModalBtn = document.getElementById("closeModal");
-
-function handleCloseModal() {
-  if (!modal) return;
-  modal.style.display = "none";
-  document.body.classList.remove("modal-open");
-
-  // Exact usi jagah restore karega jahan user pehle tha
-  const scrollY = document.body.style.top;
-  document.body.style.position = "";
-  document.body.style.top = "";
-  document.body.style.width = "";
-  if (scrollY) {
-    window.scrollTo(0, parseInt(scrollY || "0") * -1);
-  }
-}
-
-if (closeModalBtn && modal) {
-  closeModalBtn.onclick = handleCloseModal;
-  modal.onclick = (e) => {
-    if (e.target === modal) handleCloseModal();
-  };
-}
 
         // Add to Cart
         container.querySelectorAll(".add-cart").forEach(btn => {
@@ -597,10 +598,10 @@ if (closeModalBtn && modal) {
       }
       localStorage.setItem("cart", JSON.stringify(cart));
 
-const totalQty = cart.reduce((sum, item) => sum + (item.qty || 1), 0);
-document.querySelectorAll(".cart-count-val").forEach(el => {
-  el.innerText = totalQty;
-});
+      const totalQty = cart.reduce((sum, item) => sum + (item.qty || 1), 0);
+      document.querySelectorAll(".cart-count-val").forEach(el => {
+        el.innerText = totalQty;
+      });
 
       const alertBox = document.getElementById("cart-alert");
       if (alertBox) {
@@ -642,7 +643,7 @@ document.querySelectorAll(".cart-count-val").forEach(el => {
       }
     }
 
-function initShopFilters() {
+    function initShopFilters() {
       const searchInput = document.getElementById("componentSearch");
       const searchClearBtn = document.getElementById("searchClearBtn");
       const shopHeading = document.getElementById("shopHeading");
@@ -650,18 +651,17 @@ function initShopFilters() {
       const productGrid = document.getElementById("product-grid");
       let activeShopCat = "all";
 
-function runFilter() {
+      function runFilter() {
         const q = (searchInput?.value || "").toLowerCase().trim();
 
         if (shopHeading) {
           shopHeading.style.display = (activeShopCat.toLowerCase() === "all" && !q) ? "block" : "none";
         }
 
-        // Agar "All" ke alawa koi category chuni ho ya search ho raha ho, toh vertical 2-column mode on hoga
         if (activeShopCat.toLowerCase() !== "all" || q.length > 0) {
           productGrid?.classList.add("is-filtered");
         } else {
-          productGrid?.classList.remove("is-filtered"); // "All" par wapas normal horizontal row
+          productGrid?.classList.remove("is-filtered");
         }
 
         if (searchInput) {
@@ -697,7 +697,6 @@ function runFilter() {
             }
           });
 
-          // Invisible strips ko completely collapse karega taaki Boards/LEDs neeche na jayein
           if (visibleInStrip > 0) {
             strip.classList.remove("strip-hidden");
             strip.style.setProperty("display", "", "");
@@ -706,9 +705,8 @@ function runFilter() {
             strip.style.setProperty("display", "none", "important");
           }
         });
-  
 
-  // 🔍 Agar search result na mile toh Empty Notice box dikhayega
+        // 🔍 Agar search result na mile toh Empty Notice box dikhayega
         let emptyBox = document.getElementById("shopEmptyNotice");
         if (totalVisibleInPage === 0) {
           const currentSearchText = searchInput ? searchInput.value.trim() : "";
@@ -738,16 +736,14 @@ function runFilter() {
             });
           }
 
-          // Exact typed full text bina kisi cut ke update karega
           const termEl = document.getElementById("emptySearchTerm");
           if (termEl) termEl.textContent = displayKeyword;
 
         } else {
           emptyBox?.remove();
         }
-}
+      }
 
-  
       searchInput?.addEventListener("input", runFilter);
       searchClearBtn?.addEventListener("click", () => {
         if (searchInput) {
