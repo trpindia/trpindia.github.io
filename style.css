@@ -1437,24 +1437,28 @@ body.dark-mode .modal-desc li {
 }
 
 /* ========================================================
-  13.  🔍 NO RESULTS FOUND ANIMATED STATE
+   13. 🔍 NO RESULTS FOUND ANIMATED STATE
    ======================================================== */
 .no-results-box {
   width: 100% !important;
-  max-width: 420px;
+  max-width: 480px !important;
   margin: 40px auto !important;
-  padding: 30px 20px;
-  text-align: center;
+  padding: 30px 20px !important;
+  text-align: center !important;
   background: #ffffff;
   border: 1px dashed #cbd5e1;
   border-radius: 16px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  box-sizing: border-box;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-sizing: border-box !important;
   animation: fadeInEmpty 0.3s ease-out;
+
+  /* E-Shop Grid me side me jane se rok kar desktop & mobile dono par center karega */
+  grid-column: 1 / -1 !important;
+  justify-self: center !important;
 }
 
 body.dark-mode .no-results-box {
@@ -1497,6 +1501,7 @@ body.dark-mode .no-results-box h3 {
   color: #64748b;
   margin: 0 0 16px 0;
   line-height: 1.4;
+  word-break: break-word; /* Lamba search query text box ke bahar nahi niklega */
 }
 
 body.dark-mode .no-results-box p {
