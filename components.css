@@ -1547,6 +1547,69 @@ body.dark-mode .custom-variant-item.selected {
     transform: translateY(0);
   }
 }
+
+/* =======================================================
+   💎 PERFECT DOWNWARD DROPDOWN (ALL CATEGORIES + MOBILE)
+   ======================================================= */
+
+/* 1. Strip ko allow karein ki dropdown neeche bina kate bahar nikal sake */
+@media (max-width: 768px) {
+  #product-grid {
+    overflow: visible !important;
+  }
+
+  .category-row-strip {
+    overflow-y: visible !important; /* 👉 Neeche se cut hone ki problem solve */
+    padding-bottom: 25px !important; /* Thoda safe space taaki card neeche touch na ho */
+  }
+
+  /* Active dropdown wala card hamesha sabke upar float karega */
+  .category-row-strip .product-card:has(.custom-variant-wrap.active) {
+    z-index: 100 !important;
+  }
+}
+
+/* 2. Menu hamesha NEECHE (Downwards) hi khulega aur exact fit hoga */
+.custom-variant-menu {
+  display: none;
+  position: absolute !important;
+  top: calc(100% + 4px) !important;
+  bottom: auto !important; /* Upar khulna band */
+  left: 0 !important;
+  right: 0 !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  background: #ffffff;
+  border-radius: 10px;
+  border: 1.5px solid #0052ff;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.18), 0 4px 10px rgba(0, 82, 255, 0.12) !important;
+  z-index: 900 !important;
+  max-height: 150px;
+  overflow-y: auto;
+  padding: 4px;
+  animation: dropSlideDown 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+body.dark-mode .custom-variant-menu {
+  background: #182234;
+  border-color: #3b82f6;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6) !important;
+}
+
+.custom-variant-wrap.active .custom-variant-menu {
+  display: block !important;
+}
+
+@keyframes dropSlideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 /* MODAL DESCRIPTION FORMATTING */
 .modal-desc {
   white-space: pre-line; /* Enter key aur new lines preserve karega */
