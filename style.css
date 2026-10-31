@@ -12,6 +12,7 @@
    10. INTERACTION EFFECTS (TAP & SHIMMER)
    11. MOBILE DRAWER & APP-STYLE MENU
    12. FOOTER & DARK MODE THEME STYLES
+   13. NO RESULTS FOUND ANIMATED STATE
    ========================================================================== */
 
 /* ==========================================================================
@@ -1433,4 +1434,98 @@ body.dark-mode .drawer-link.active {
 
 body.dark-mode .modal-desc li {
   color: #cccccc;
+}
+
+/* ========================================================
+  13.  🔍 NO RESULTS FOUND ANIMATED STATE
+   ======================================================== */
+.no-results-box {
+  width: 100% !important;
+  max-width: 420px;
+  margin: 40px auto !important;
+  padding: 30px 20px;
+  text-align: center;
+  background: #ffffff;
+  border: 1px dashed #cbd5e1;
+  border-radius: 16px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  animation: fadeInEmpty 0.3s ease-out;
+}
+
+body.dark-mode .no-results-box {
+  background: #182234 !important;
+  border-color: #334155 !important;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.no-results-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: #eff6ff;
+  color: #0052ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 14px;
+  animation: floatSearchIcon 2.5s ease-in-out infinite;
+}
+
+body.dark-mode .no-results-icon {
+  background: #242f47;
+  color: #60a5fa;
+}
+
+.no-results-box h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 6px 0;
+}
+
+body.dark-mode .no-results-box h3 {
+  color: #f8fafc;
+}
+
+.no-results-box p {
+  font-size: 13.5px;
+  color: #64748b;
+  margin: 0 0 16px 0;
+  line-height: 1.4;
+}
+
+body.dark-mode .no-results-box p {
+  color: #94a3b8;
+}
+
+.no-results-btn {
+  background: #0052ff;
+  color: #ffffff !important;
+  border: none;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 8px 18px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.no-results-btn:hover {
+  background: #003ebd;
+  transform: scale(1.04);
+}
+
+@keyframes floatSearchIcon {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes fadeInEmpty {
+  from { opacity: 0; transform: scale(0.96); }
+  to { opacity: 1; transform: scale(1); }
 }
