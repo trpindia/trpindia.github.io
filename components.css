@@ -1342,17 +1342,25 @@ main {
   overflow: visible !important;
 }
 
+
 /* =======================================================
-   FINAL CUSTOM VARIANT DROPDOWN & FLOATING FIX
+   💎 FINAL CUSTOM VARIANT DROPDOWN & FLOATING FIX (SAFE)
    ======================================================= */
 
 /* Card aur Info wrappers */
 .product-card {
   position: relative;
+  overflow: visible !important;
+}
+
+/* 1. Header (1000) aur Category-Nav (995) se chhota z-index taaki unke upar na chadhe */
+.product-card:has(.custom-variant-wrap.active) {
+  z-index: 850 !important;
 }
 
 .product-info {
   position: relative;
+  overflow: visible !important;
 }
 
 .product-img-wrapper {
@@ -1361,69 +1369,78 @@ main {
   border-top-right-radius: inherit;
 }
 
-/* Active hone par card sabhi aage-piche ke cards ke upar rahe */
-.product-card:has(.custom-variant-wrap.active) {
-  z-index: 9999 !important;
-}
-
 /* Custom Variant Container */
 .custom-variant-wrap {
   position: relative;
-  display: inline-block;
+  display: block;
   width: 100%;
   margin-bottom: 8px;
 }
 
 /* Title & Arrow Alignment */
 .custom-variant-trigger {
-  display: inline-flex !important;
+  display: flex !important;
   align-items: center !important;
-  vertical-align: middle;
+  justify-content: space-between !important;
   gap: 6px;
   cursor: pointer;
   user-select: none;
-  width: auto;
-  max-width: 100%;
+  width: 100%;
+  padding: 4px 6px;
+  border-radius: 6px;
+  background: rgba(0, 82, 255, 0.04);
+  border: 1px solid rgba(0, 82, 255, 0.12);
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.custom-variant-trigger:hover {
+  background: rgba(0, 82, 255, 0.08);
+  border-color: #0052ff;
+}
+
+body.dark-mode .custom-variant-trigger {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.12);
 }
 
 .custom-variant-title {
-  font-size: 15px;
-  font-weight: 700;
+  font-size: 13.5px !important;
+  font-weight: 700 !important;
   color: var(--card-title, #0f172a);
   margin: 0 !important;
   padding: 0 !important;
-  line-height: 1 !important;
+  line-height: 1.25 !important;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  display: inline-block;
+  flex: 1;
+  text-align: left;
 }
 
 /* Center-balanced Chevron Arrow */
 .custom-variant-arrow {
-  width: 12px;
-  height: 12px;
-  min-width: 12px;
+  width: 14px;
+  height: 14px;
+  min-width: 14px;
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
-  transition: transform 0.25s ease;
-  position: relative;
-  top: 1px;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .custom-variant-arrow svg {
   width: 100%;
   height: 100%;
-  stroke: #0f172a;
-  stroke-width: 3.5;
+  stroke: #0052ff;
+  stroke-width: 3;
   fill: none;
   stroke-linecap: round;
   stroke-linejoin: round;
 }
 
 body.dark-mode .custom-variant-arrow svg {
-  stroke: #f8fafc;
+  stroke: #60a5fa;
 }
 
 /* Open State: Arrow Flip */
@@ -1431,79 +1448,105 @@ body.dark-mode .custom-variant-arrow svg {
   transform: rotate(180deg);
 }
 
-/* Floating Menu: Image ke upar float karega taaki border par na kate */
+/* 2. Floating Menu: Card ki exact 100% width aur bottom me smooth open */
 .custom-variant-menu {
   display: none;
   position: absolute !important;
-  bottom: calc(100% + 6px) !important; /* Top Drop-up */
-  top: auto !important;
+  top: calc(100% + 4px) !important;
+  bottom: auto !important;
   left: 0 !important;
-  min-width: 160px !important;
-  width: max-content !important;
-  max-width: 220px !important;
+  right: 0 !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
   background: #ffffff;
-  border-radius: 8px;
-  border: 1px solid #e2e8f0;
-  box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.2), 0 2px 6px rgba(0, 0, 0, 0.08) !important;
-  z-index: 100000 !important;
-  max-height: 150px;
+  border-radius: 10px;
+  border: 1.5px solid #0052ff;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15), 0 2px 8px rgba(0, 82, 255, 0.1) !important;
+  z-index: 880 !important;
+  max-height: 160px;
   overflow-y: auto;
-  padding: 4px 0;
+  padding: 4px;
+  animation: dropSlideDown 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 body.dark-mode .custom-variant-menu {
-  background: #1e293b;
-  border-color: #334155;
-  box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.6) !important;
+  background: #182234;
+  border-color: #3b82f6;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6) !important;
 }
 
 .custom-variant-wrap.active .custom-variant-menu {
   display: block !important;
 }
 
-/* Dropdown Items */
+/* 3. Dropdown Items with Safe Word Wrap */
 .custom-variant-item {
-  padding: 8px 12px;
-  font-size: 13px;
+  padding: 8px 10px;
+  font-size: 12.5px;
   font-weight: 600;
-  color: #1e293b;
+  color: #334155;
   cursor: pointer;
+  border-radius: 6px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 8px;
-  transition: background 0.15s ease;
+  line-height: 1.35;
+  text-align: left;
+  transition: all 0.15s ease;
+  word-break: break-word;
 }
 
 body.dark-mode .custom-variant-item {
-  color: #f8fafc;
+  color: #cbd5e1;
 }
 
 .custom-variant-item:hover {
   background: #f1f5f9;
+  color: #0052ff;
 }
 
 body.dark-mode .custom-variant-item:hover {
-  background: #334155;
+  background: #242f47;
+  color: #60a5fa;
 }
 
 .custom-variant-item.selected {
-  color: #0284c7;
-  background: #e0f2fe;
+  color: #0052ff !important;
+  background: #eef4ff !important;
+  font-weight: 700;
 }
 
 body.dark-mode .custom-variant-item.selected {
-  color: #38bdf8;
-  background: #0c4a6e;
+  color: #38bdf8 !important;
+  background: #0f2942 !important;
 }
 
 /* Out of Stock Cut-Line */
 .custom-variant-item.out-item {
   color: #94a3b8 !important;
   text-decoration: line-through;
-  opacity: 0.75;
+  opacity: 0.65;
 }
 
+.custom-variant-menu::-webkit-scrollbar {
+  width: 4px;
+}
+.custom-variant-menu::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+@keyframes dropSlideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 /* MODAL DESCRIPTION FORMATTING */
 .modal-desc {
   white-space: pre-line; /* Enter key aur new lines preserve karega */
