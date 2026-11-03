@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Cart - TRP Electronics</title>
-   <link rel="icon" type="image/png" href="images/favicon-32x32.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Your Cart - TRP Electronics</title>
+  <link rel="icon" type="image/png" href="images/favicon-32x32.png">
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="cart.css" />
 </head>
@@ -25,16 +25,14 @@
     <div class="menu-icon" id="menuToggle">☰</div>
   </header>
 
-<!-- Mobile Drawer -->
+  <!-- Mobile Drawer -->
   <div id="mobileMenu" class="mobile-menu">
-    <!-- Header: Full Width Royal Blue Bar -->
     <div class="drawer-header">
       <button id="mobileDarkModeToggle" class="drawer-icon-btn tap-effect" aria-label="Toggle Dark Mode">🌙</button>
       <span class="drawer-brand">Menu</span>
       <button id="drawerCloseBtn" class="drawer-icon-btn" aria-label="Close">✕</button>
     </div>
 
-    <!-- Clean Links Wrapper -->
     <div class="drawer-links-wrap">
       <a href="index.html" class="drawer-link">
         <span class="drawer-link-text">Home</span>
@@ -58,7 +56,6 @@
       </a>
     </div>
 
-    <!-- Bottom Footer Tag -->
     <div class="drawer-footer">
       <p>TRP Electronics</p>
     </div>
@@ -68,62 +65,98 @@
   <div id="menuOverlay" class="menu-overlay"></div>
 
   <main class="cart-main">
-              <div style="text-align:center;">
-        <p id="freeNotice" class="notice-line">
-          Order above ₹699 to get FREE DELIVERY!
-        </p>
+    <!-- Sleek Free Delivery Indicator -->
+    <div class="delivery-banner-wrapper">
+      <div id="freeNotice" class="notice-line">
+        <span class="shipping-tag">Free Shipping Offer</span>
+        <span>Order above <strong>₹699</strong> to unlock <strong>FREE DELIVERY!</strong></span>
       </div>
+    </div>
 
     <div class="cart-container">
-      <!-- LEFT: cart items list (70%) -->
+      <!-- LEFT: Cart Items & Delivery Address -->
       <div class="cart-items">
-        <h2>Your Cart</h2>
+        <div class="cart-header-title">
+          <h2>Your Cart</h2>
+          <span class="cart-subtitle">Review items & enter shipping destination</span>
+        </div>
+
         <div id="cart-items-list">
           <!-- JS will populate cart items here -->
         </div>
 
-        <!-- Address form is below cart items (user chose Y) -->
+        <!-- Address Section -->
         <section class="address-section">
-          <h3>Delivery Details</h3>
+          <h3>Shipping & Contact Information</h3>
           <div class="address-form">
-            <input id="name" type="text" placeholder="Full Name" required />
-            <input id="address" type="text" placeholder="Full Address" required />
-            <input id="pincode" type="text" placeholder="Pincode" required />
-            <input 
-              id="phone"
-              type="tel"
-              name="phone"
-              placeholder="Enter 10-digit mobile Number"
-              maxlength="10"
-              required >
+            <div class="form-row-dual">
+              <input id="name" type="text" placeholder="Full Name" required />
+              <input 
+                id="phone"
+                type="tel"
+                name="phone"
+                placeholder="10-digit mobile number"
+                maxlength="10"
+                required />
+            </div>
+            <input id="address" type="text" placeholder="Complete Street Address (Flat / House No / Landmark)" required />
+            <input id="pincode" type="text" placeholder="Postal PIN Code" maxlength="6" required />
           </div>
         </section>
       </div>
 
-      <!-- RIGHT: order summary (30%) -->
+      <!-- RIGHT: Order Summary Card -->
       <aside class="order-summary">
         <div class="summary-box">
           <h3>Order Summary</h3>
-          <p id="summary-subtotal">Subtotal: ₹0</p>
-          <p id="summary-delivery">Delivery: ₹0</p>
-          <hr />
-          <p id="summary-total" class="total-amount">Total: ₹0</p>
 
-          <button id="orderNow" class="primary-btn tap-effect">Proceed to Pay</button>
-          <a href="eshop/" class="secondary-btn tap-effect" id="backToShop">← Back to Shop</a>
+          <div class="summary-row">
+            <span>Subtotal</span>
+            <span id="summary-subtotal">Subtotal: ₹0</span>
+          </div>
+
+          <div class="summary-row">
+            <span>Delivery</span>
+            <span id="summary-delivery">Delivery: ₹0</span>
+          </div>
+
+          <div class="summary-divider"></div>
+
+          <div class="summary-total-wrap">
+            <span>Payable Amount</span>
+            <span id="summary-total" class="total-amount">Total: ₹0</span>
+          </div>
+
+          <button id="orderNow" class="primary-btn tap-effect">
+            <span>Proceed to Secure Pay</span>
+            <span class="lock-icon">🔒</span>
+          </button>
+
+          <a href="eshop/" class="secondary-btn tap-effect" id="backToShop">← Continue Shopping</a>
+
+          <!-- Trust Badges -->
+          <div class="trust-badges">
+            <div class="trust-item">
+              <span class="trust-icon">🛡️</span>
+              <span>100% Genuine Components</span>
+            </div>
+            <div class="trust-item">
+              <span class="trust-icon">⚡</span>
+              <span>Fast Tracked Dispatch</span>
+            </div>
+          </div>
         </div>
       </aside>
     </div>
   </main>
 
   <footer>
-    <p>© 2025 TRP Electronics | Made with ❤️</p>
+    <p>© 2026 TRP Electronics | Crafted for Builders & Innovators</p>
   </footer>
 
   <button id="darkModeToggle" class="tap-effect">🌙 Dark Mode</button>
 
   <script src="script.js"></script>
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-  <div id="menuOverlay" class="menu-overlay"></div>
 </body>
 </html>
