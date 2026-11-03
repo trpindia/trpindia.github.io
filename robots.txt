@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /cart.html
+Disallow: /admin.html
+Disallow: /Data Files/
+
+Sitemap: https://trpindia.github.io/sitemap.xml
