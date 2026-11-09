@@ -1,7 +1,7 @@
 /* Shimmer Container Box */
 .card-img-wrapper {
   position: relative;
-  width: 100%;
+  width: 100%; 
   aspect-ratio: 12 / 9; /* Ya aapke card image ka ratio */
   background: #ffffff;
   overflow: hidden;
