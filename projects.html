@@ -6,6 +6,7 @@
   <title>Projects - TRP Electronics</title>
    <link rel="icon" type="image/png" href="images/favicon-32x32.png">
   <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="projects.css" />
 <script src="script.js" defer></script>
 </head>
   <!-- for sticky footer css line 1510 -->
@@ -94,18 +95,28 @@
   <div class="project-grid" id="projectList">
 
     <!-- 1. Milk Overflow Alarm (Projects / Circuits) -->
-    <div class="project-card" data-category="Projects" data-keywords="milk overflow alarm buzzer sensor kitchen diy">
-      <img src="Data Files/Milk.png" alt="Milk Overflow Alarm" loading="lazy">
-      <div class="project-info">
-        <h3>Milk Overflow Alarm</h3>
-        <p>A simple circuit to alert when milk starts overflowing.</p>
-      </div>
-      <a href="pdfs/milk-overflow-alarm.pdf" class="btn" target="_blank">OPEN FILE</a>
-    </div>
+<div class="project-card" data-category="Projects" data-keywords="milk overflow alarm buzzer sensor kitchen diy">
+<div class="card-img-wrapper">
+<img src="Data Files/Milk.png" alt="Milk Overflow Alarm" loading="lazy" 
+    decoding="async"
+    onload="this.parentElement.classList.add('loaded')"
+/>
+</div>
+<div class="project-info">
+    <h3>Milk Overflow Alarm</h3>
+    <p>A simple circuit to alert when milk starts overflowing.</p>
+</div>
+    <a href="pdfs/milk-overflow-alarm.pdf" class="btn" target="_blank">OPEN FILE</a>
+</div>
 
     <!-- 2. Gas Leakage Detector (Projects / Circuits) -->
     <div class="project-card" data-category="Projects" data-keywords="gas leakage detector lpg mq2 mq6 smoke detector sensor alarm">
-      <img src="Data Files/Gas.png" alt="Gas Leakage Detector" loading="lazy">
+    <div class="card-img-wrapper">  
+      <img src="Data Files/Gas.png" alt="Gas Leakage Detector" loading="lazy"
+decoding="async"
+onload="this.parentElement.classList.add('loaded')"
+/>
+</div>
       <div class="project-info">
         <h3>Gas Leakage Detector</h3>
         <p>Detect LPG/Gas leakage with a simple sensor-based circuit.</p>
