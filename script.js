@@ -253,7 +253,7 @@ function updateHeaderCount() {
       let subtotal = 0;
       
       if (cart.length === 0) {
-        itemsContainer.innerHTML = "<p>Your cart is empty. <a href='components.html'>Continue shopping</a></p>";
+        itemsContainer.innerHTML = "<p>Your cart is empty. <a href='eshop/'>Continue shopping</a></p>";
       } else {
         cart.forEach((it, idx) => {
           subtotal += it.price * it.qty;
